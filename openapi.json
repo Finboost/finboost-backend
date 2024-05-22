@@ -1,0 +1,905 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Finboost Back-End",
+        "version": "1.0.0",
+        "description": "OpenAPI Swagger Documentation for Finboost Back-End RESTful API",
+        "contact": {
+            "name": "Arman Dwi Pangestu",
+            "email": "armandwi.pangestu7@gmail.com",
+            "url": "https://armandwipangestu.vercel.app"
+        }
+    },
+    "servers": [
+        {
+            "description": "Finboost Back-End URL Deployment",
+            "url": "https://{environment}/api/v1",
+            "variables": {
+                "environment": {
+                    "description": "Server Information",
+                    "default": "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                    "enum": [
+                        "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                        "staging---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                        "dev---finboost-backend-jzrwg5bjqq-et.a.run.app"
+                    ]
+                }
+            }
+        }
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Related to authentication"
+        },
+        {
+            "name": "User",
+            "description": "Related to users data"
+        },
+        {
+            "name": "Token",
+            "description": "Related to jwt token"
+        }
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": ["Auth", "User"],
+                "summary": "User signup",
+                "description": "Register for the new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignupOrRegisUser"
+                            },
+                            "examples": {
+                                "User": {
+                                    "description": "Example signup as User role",
+                                    "value": {
+                                        "fullName": "John Doe",
+                                        "email": "john.doe@example.com",
+                                        "gender": "Laki-laki",
+                                        "age": 23,
+                                        "phoneNumber": "081234567890",
+                                        "password": "Lts47S~^{yp^)$I",
+                                        "role": "User"
+                                    }
+                                },
+                                "Expert": {
+                                    "description": "Example signup as Expert role",
+                                    "value": {
+                                        "fullName": "Jane Doe",
+                                        "email": "jane.doe@example.com",
+                                        "gender": "Perempuan",
+                                        "age": 23,
+                                        "phoneNumber": "0987654321",
+                                        "password": "6Z[Ax6k3~yc)5Nb",
+                                        "role": "Expert"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success signup user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User": {
+                                        "description": "Success signup as User role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User created successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "Expert": {
+                                        "description": "Success signup as Expert role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User created successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed signup user because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "fullName & email empty": {
+                                        "description": "Fail signup because fullName & email field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "fullName",
+                                                    "message": "fullName is required"
+                                                },
+                                                {
+                                                    "field": "email",
+                                                    "message": "email is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "age & phoneNumber empty": {
+                                        "description": "Fail signup because age & phoneNumber field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "age",
+                                                    "message": "age is required"
+                                                },
+                                                {
+                                                    "field": "phoneNumber",
+                                                    "message": "phoneNumber is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Database connection error": {
+                                        "description": "Fail signup due to database connection issue",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "database",
+                                                    "message": "Failed to connect to the database"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "Unexpected server error": {
+                                        "description": "Fail signup due to unexpected server error",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "server",
+                                                    "message": "Unexpected condition encountered"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": ["Auth", "User"],
+                "summary": "User signin",
+                "description": "Login for the user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SigninOrLoginUser"
+                            },
+                            "examples": {
+                                "User": {
+                                    "description": "Example signin as User role",
+                                    "value": {
+                                        "email": "john.doe@example.com",
+                                        "password": "Lts47S~^{yp^)$I"
+                                    }
+                                },
+                                "Expert": {
+                                    "description": "Example signin as Expert role",
+                                    "value": {
+                                        "email": "jane.doe@example.com",
+                                        "password": "6Z[Ax6k3~yc)5Nb"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success sigin user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSiginOrLoginUser"
+                                },
+                                "examples": {
+                                    "User": {
+                                        "description": "Success sigin as User role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Login successfully",
+                                            "data": {
+                                                "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                                            }
+                                        }
+                                    },
+                                    "Expert": {
+                                        "description": "Success sigin as Expert role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Login successfully",
+                                            "data": {
+                                                "accessToken": "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.bQTnz6AuMJvmXXQsVPrxeQNvzDkimo7VNXxHeSBfClLufmCVZRUuyTwJF311JHuh"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed sigin user because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "email empty": {
+                                        "description": "Fail signin because email field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "email",
+                                                    "message": "email is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "password empty": {
+                                        "description": "Fail signin because password field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "password",
+                                                    "message": "password is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "wrong password": {
+                                        "description": "Fail signin because wrong password",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Bad request",
+                                            "errors": [
+                                                {
+                                                    "field": "password",
+                                                    "message": "wrong password"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed sigin user because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "email not found": {
+                                        "description": "Fail signin because email can't find",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "email",
+                                                    "message": "email can't find"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Database connection error": {
+                                        "description": "Fail sigin due to database connection issue",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "database",
+                                                    "message": "Failed to connect to the database"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "Unexpected server error": {
+                                        "description": "Fail sigin due to unexpected server error",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "server",
+                                                    "message": "Unexpected condition encountered"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/token/refresh": {
+            "get": {
+                "tags": ["Auth", "User", "Token"],
+                "summary": "Refresh token",
+                "description": "Refresh the JWT token to get a new access token. The refresh token is expected to be in the cookies.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully refreshed token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Refresh token successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "accessToken": {
+                                                    "type": "string",
+                                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "not provided refresh token": {
+                                        "description": "Fail to refresh token because the request not provided refresh token on cookies",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Unauthorized. Please provide `refreshToken` on cookies before request"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Fobidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "invalid refresh token": {
+                                        "description": "Fail to refresh token because invalid refresh token",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't find who the owner `refreshToken`"
+                                        }
+                                    },
+                                    "decode error": {
+                                        "description": "Fail to refresh token because decode error",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't decode or compare token with secret"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get all users data",
+                "description": "Retrieve all user data. Requires valid access token",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Get all user data by role",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true,
+                            "default": "User"
+                        },
+                        "examples": {
+                            "User": {
+                                "description": "Get all user data with User role",
+                                "value": "User"
+                            },
+                            "Expert": {
+                                "description": "Get all user data with Expert role",
+                                "value": "Expert"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllUsers"
+                                },
+                                "examples": {
+                                    "All users": {
+                                        "description": "Successfully get all user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all user data",
+                                            "data": {
+                                                "users": [
+                                                    {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "fullName": "John Doe",
+                                                        "email": "john.doe@example.com",
+                                                        "gender": "Laki-laki",
+                                                        "age": 23,
+                                                        "phoneNumber": "081234567890",
+                                                        "role": "User"
+                                                    },
+                                                    {
+                                                        "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                        "fullName": "Jane Doe",
+                                                        "email": "jane.doe@example.com",
+                                                        "gender": "Perempuan",
+                                                        "age": 23,
+                                                        "phoneNumber": "0987654321",
+                                                        "role": "Expert"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            },
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "refreshToken"
+            }
+        },
+        "schemas": {
+            "Success": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Fail": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SignupOrRegisUser": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string",
+                        "minimum": 4,
+                        "required": ["true"]
+                    },
+                    "email": {
+                        "type": "string",
+                        "required": ["true"]
+                    },
+                    "gender": {
+                        "type": "string",
+                        "required": ["true"]
+                    },
+                    "age": {
+                        "type": "integer",
+                        "required": ["true"]
+                    },
+                    "phoneNumber": {
+                        "type": "string",
+                        "minimum": 10,
+                        "required": ["true"]
+                    },
+                    "password": {
+                        "type": "string",
+                        "minimum": 8,
+                        "required": ["true"]
+                    },
+                    "role": {
+                        "type": "string",
+                        "required": ["true"]
+                    }
+                }
+            },
+            "SigninOrLoginUser": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "required": ["true"]
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": ["true"]
+                    }
+                }
+            },
+            "SuccessSignupOrRegisUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessSiginOrLoginUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "accessToken": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ZodError": {
+                "type": "object",
+                "properties": {
+                    "field": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FailValidationSignupOrRegister": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Fail"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "errors": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ZodError"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "GetUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "user": {
+                                        "$ref": "#/components/schemas/GetUser"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllUsers": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "users": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetUser"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "responses": {
+            "MiddlewareUnauthorizedError": {
+                "description": "Fail to pass through middleware because the request header not provide Authorization Bearer",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unauthorized. Please provide Bearer `accessToken` on Authorization Header"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "MiddlewareForbiddenError": {
+                "description": "Fail to pass through middleware because can't decode or comapre token with secret",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Forbidden. Can't decode or compare token with secret"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "InternalServerError": {
+                "description": "Internal server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
