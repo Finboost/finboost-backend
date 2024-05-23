@@ -505,8 +505,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "nullable": true,
-                            "default": "User"
+                            "nullable": true
                         },
                         "examples": {
                             "User": {
@@ -516,6 +515,26 @@
                             "Expert": {
                                 "description": "Get all user data with Expert role",
                                 "value": "Expert"
+                            }
+                        }
+                    },
+                    {
+                        "name": "fullName",
+                        "in": "query",
+                        "description": "Get specific user data by fullName",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User 1": {
+                                "description": "Get specific user data by fullName",
+                                "value": "John Doe"
+                            },
+                            "User 2": {
+                                "description": "Get specific user data by fullName",
+                                "value": "Jane Doe"
                             }
                         }
                     }
