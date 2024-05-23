@@ -1004,6 +1004,326 @@
                     }
                 ]
             }
+        },
+        "/users/{userId}/profile": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get user profile data by user id",
+                "description": "Get specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetProfile"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Sample user profile 1 as User role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user profile data by user id",
+                                            "data": {
+                                                "profile": {
+                                                    "id": "de5b1599-b1b7-4633-8a5d-331690ee9413",
+                                                    "avatar": "https://storage.googleapis.com/finboost/example.png",
+                                                    "maritalStatus": "Lajang",
+                                                    "certifiedStatus": null,
+                                                    "work": "Pelajar / Mahasiswa",
+                                                    "education": "SMA"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Sample user profile 2 as Expert role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user profile data by user id",
+                                            "data": {
+                                                "profile": {
+                                                    "id": "36429cef-96d1-41a7-b579-c2dc8d4f2beb",
+                                                    "avatar": "https://storage.googleapis.com/finboost/example2.png",
+                                                    "maritalStatus": "Menikah",
+                                                    "certifiedStatus": "Certified Financial Planner",
+                                                    "work": "Profesional",
+                                                    "education": "S1"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": ["User"],
+                "summary": "Update user profile data by user id",
+                "description": "Update specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldProfile"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Example request to update user profile",
+                                    "value": {
+                                        "avatar": "file",
+                                        "maritalStatus": "Menikah",
+                                        "certifiedStatus": null,
+                                        "work": "Wirausaha / Wiraswasta",
+                                        "education": "S1"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Example request to update user profile",
+                                    "value": {
+                                        "avatar": "file",
+                                        "maritalStatus": "Cerai",
+                                        "certifiedStatus": "Certified Financial Planner",
+                                        "work": "Profesional",
+                                        "education": "S2"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": ["User"],
+                "summary": "Partial update user profile data by user id",
+                "description": "Partially update specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePartialFieldProfile"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Example request to partially update user profile",
+                                    "value": {
+                                        "maritalStatus": "Lajang",
+                                        "work": "Pelajar / Mahasiswa",
+                                        "education": "SMA"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Example request to update user profile",
+                                    "value": {
+                                        "maritalStatus": "Menikah",
+                                        "work": "Profesional",
+                                        "education": "S1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["User"],
+                "summary": "Delete user profile data by user id",
+                "description": "Delete specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully deleted data user profile 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user profile data",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully deleted data user profile 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user profile data",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1320,6 +1640,98 @@
                         "type": "integer"
                     },
                     "phoneNumber": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetProfile": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "work": {
+                        "type": "string"
+                    },
+                    "education": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetProfile": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "profile": {
+                                        "$ref": "#/components/schemas/GetProfile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "UpdateAllFieldProfile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "work": {
+                        "type": "string"
+                    },
+                    "education": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "avatar",
+                    "maritalStatus",
+                    "certifiedStatus",
+                    "work",
+                    "education"
+                ]
+            },
+            "UpdatePartialFieldProfile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "work": {
+                        "type": "string"
+                    },
+                    "education": {
                         "type": "string"
                     }
                 }
