@@ -579,6 +579,271 @@
                     }
                 ]
             }
+        },
+        "/chats": {
+            "get": {
+                "tags": ["Chat"],
+                "summary": "Get all room chat",
+                "description": "Retrieve all room chat data. Requires valid access token",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved room chat data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllRoomChat"
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "description": "Successfully created new chat to AI",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Create new chat to AI successfully",
+                                            "data": [
+                                                {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "name": "AI",
+                                                    "type": "AI",
+                                                    "createdAt": "2021-08-01T00:00:00.000Z",
+                                                    "updatedAt": "2021-08-01T00:00:00.000Z"
+                                                },
+                                                {
+                                                    "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                    "name": "Expert",
+                                                    "type": "Expert",
+                                                    "createdAt": "2021-08-01T00:00:00.000Z",
+                                                    "updatedAt": "2021-08-01T00:00:00.000Z"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/chats/ai": {
+            "post": {
+                "tags": ["Chat"],
+                "summary": "New Chat to AI",
+                "description": "Create a new chat to AI",
+                "responses": {
+                    "200": {
+                        "description": "Successfully created new chat to AI",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessCreateRoomChat"
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "description": "Successfully created new chat to AI",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Create new chat to AI successfully",
+                                            "data": {
+                                                "roomChat": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "name": "AI",
+                                                    "type": "AI",
+                                                    "users": [
+                                                        {
+                                                            "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                            "fullName": "John Doe",
+                                                            "email": "john@mail.com",
+                                                            "gender": "Laki-laki",
+                                                            "age": 23,
+                                                            "phoneNumber": "081234567890",
+                                                            "role": "User"
+                                                        }
+                                                    ],
+                                                    "createdAt": "2021-08-01T00:00:00.000Z",
+                                                    "updatedAt": "2021-08-01T00:00:00.000Z"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/chats/expert": {
+            "post": {
+                "tags": ["Chat"],
+                "summary": "New Chat to Expert",
+                "description": "Create a new chat to Expert",
+                "parameters": [
+                    {
+                        "name": "expert_id",
+                        "in": "query",
+                        "description": "Expert ID (user_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "Jane": {
+                                "description": "Jane Example",
+                                "value": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully created new chat to Expert",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessCreateRoomChat"
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "description": "Successfully created new chat to Expert",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Create new chat to Expert successfully",
+                                            "data": {
+                                                "roomChat": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "name": "AI",
+                                                    "type": "AI",
+                                                    "users": [
+                                                        {
+                                                            "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                            "fullName": "John Doe",
+                                                            "email": "john@mail.com",
+                                                            "gender": "Laki-laki",
+                                                            "age": 23,
+                                                            "phoneNumber": "081234567890",
+                                                            "role": "User"
+                                                        },
+                                                        {
+                                                            "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                            "fullName": "Jane Doe",
+                                                            "email": "jane@mail.com",
+                                                            "gender": "Perempuan",
+                                                            "age": 23,
+                                                            "phoneNumber": "0987654321",
+                                                            "role": "Expert"
+                                                        }
+                                                    ],
+                                                    "createdAt": "2021-08-01T00:00:00.000Z",
+                                                    "updatedAt": "2021-08-01T00:00:00.000Z"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/chats/{id}": {
+            "get": {
+                "tags": ["Chat"],
+                "summary": "Get room chat by ID",
+                "description": "Retrieve room chat data by ID. Requires valid access token",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Room chat ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved room chat data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetRoomChat"
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "description": "Successfully get room chat data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get room chat data",
+                                            "data": {
+                                                "roomChat": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "name": "AI 1",
+                                                    "type": "AI",
+                                                    "users": [
+                                                        {
+                                                            "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                            "fullName": "John Doe",
+                                                            "email": "john@mail.com",
+                                                            "gender": "Laki-laki",
+                                                            "age": 23,
+                                                            "phoneNumber": "081234567890",
+                                                            "role": "User"
+                                                        }
+                                                    ],
+                                                    "createdAt": "2021-08-01T00:00:00.000Z",
+                                                    "updatedAt": "2021-08-01T00:00:00.000Z"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -837,7 +1102,97 @@
                         }
                     }
                 ]
+            },
+            "RoomChat": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessCreateRoomChat": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "roomChat": {
+                                        "$ref": "#/components/schemas/RoomChat"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllRoomChat": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "roomChats": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/RoomChat"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetRoomChat":{
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "roomChat": {
+                                        "$ref": "#/components/schemas/RoomChat"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
+
         },
         "responses": {
             "MiddlewareUnauthorizedError": {
