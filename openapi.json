@@ -579,6 +579,412 @@
                     }
                 ]
             }
+        },
+        "/users/{userId}": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get user data by id",
+                "description": "Get specific user by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Sample user 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user data by id",
+                                            "data": {
+                                                "user": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "fullName": "John Doe",
+                                                    "email": "john.doe@example.com",
+                                                    "gender": "Laki-laki",
+                                                    "age": 23,
+                                                    "phoneNumber": "081234567890",
+                                                    "role": "User"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Sample user 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user data by id",
+                                            "data": {
+                                                "user": {
+                                                    "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                    "fullName": "Jane Doe",
+                                                    "email": "jane.doe@example.com",
+                                                    "gender": "Perempuan",
+                                                    "age": 23,
+                                                    "phoneNumber": "0987654321",
+                                                    "role": "Expert"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": ["User"],
+                "summary": "Update all field user data by id",
+                "description": "Update all field specific user data by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldUser"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Update all field of the user 1",
+                                    "value": {
+                                        "fullName": "John Doe Updated",
+                                        "email": "john.doe.updated@example.com",
+                                        "gender": "Perempuan",
+                                        "age": 24,
+                                        "phoneNumber": "0987654321",
+                                        "role": "Expert"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Update all field of the user 2",
+                                    "value": {
+                                        "fullName": "Jane Doe Updated",
+                                        "email": "jane.doe.updated@example.com",
+                                        "gender": "Laki-laki",
+                                        "age": 24,
+                                        "phoneNumber": "081234567890",
+                                        "role": "User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update user data because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "fullName & email empty": {
+                                        "description": "Fail to update user data because fullName & email field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "fullName",
+                                                    "message": "fullName is required"
+                                                },
+                                                {
+                                                    "field": "email",
+                                                    "message": "email is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "age & phoneNumber empty": {
+                                        "description": "Fail to update user data because age & phoneNumber field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "age",
+                                                    "message": "age is required"
+                                                },
+                                                {
+                                                    "field": "phoneNumber",
+                                                    "message": "phoneNumber is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": ["User"],
+                "summary": "Partially update user data by id",
+                "description": "Partially update specific user data by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpadtePartialFieldUser"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Update some fields of the user 1",
+                                    "value": {
+                                        "fullName": "John Doe Partially Updated",
+                                        "email": "john.doe.partially.updated@example.com"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Update some fields of the user 2",
+                                    "value": {
+                                        "fullName": "Jane Doe Partially Updated",
+                                        "email": "jane.doe.partially.updated@example.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully partially updated user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully partially updated data user 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data partially updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully partially updated data user 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data partially updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Fail partially updated user data because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Fail partially updated data user 1",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "email",
+                                                    "message": "email already exist on database"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Fail partially updated data user 2",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "phoneNumber",
+                                                    "message": "phoneNumber already exist on database"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["User"],
+                "summary": "Delete user data by id",
+                "description": "Delete specific user data by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully deleted data user 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user data",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully deleted data user 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user data",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -592,6 +998,27 @@
                 "type": "apiKey",
                 "in": "cookie",
                 "name": "refreshToken"
+            }
+        },
+        "parameters": {
+            "UserId": {
+                "name": "userId",
+                "in": "path",
+                "description": "Id of the user to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "User 1": {
+                        "description": "Sample user id for user 1",
+                        "value": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                    },
+                    "User 2": {
+                        "description": "Sample user id for user 2",
+                        "value": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                    }
+                }
             }
         },
         "schemas": {
@@ -837,6 +1264,46 @@
                         }
                     }
                 ]
+            },
+            "UpdateAllFieldUser": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpadtePartialFieldUser": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    }
+                }
             }
         },
         "responses": {
@@ -894,6 +1361,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorUserNotFound": {
+                "description": "User not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
                                 }
                             }
                         }
