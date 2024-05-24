@@ -80,7 +80,7 @@
                                         "age": 23,
                                         "phoneNumber": "081234567890",
                                         "password": "Lts47S~^{yp^)$I",
-                                        "role": "User"
+                                        "roleId": "319defd8-1836-4b9d-af2d-655a43a60bde"
                                     }
                                 },
                                 "Expert": {
@@ -92,7 +92,7 @@
                                         "age": 23,
                                         "phoneNumber": "0987654321",
                                         "password": "6Z[Ax6k3~yc)5Nb",
-                                        "role": "Expert"
+                                        "roleId": "331ab05a-77eb-4c18-88b4-969515f6d2cf"
                                     }
                                 }
                             }
@@ -579,7 +579,10 @@
                                                         "gender": "Laki-laki",
                                                         "age": 23,
                                                         "phoneNumber": "081234567890",
-                                                        "role": "User"
+                                                        "role": {
+                                                            "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                            "name": "User"
+                                                        }
                                                     },
                                                     {
                                                         "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
@@ -588,7 +591,10 @@
                                                         "gender": "Perempuan",
                                                         "age": 23,
                                                         "phoneNumber": "0987654321",
-                                                        "role": "Expert"
+                                                        "role": {
+                                                            "id": "331ab05a-77eb-4c18-88b4-969515f6d2cf",
+                                                            "name": "Expert"
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -647,7 +653,10 @@
                                                     "gender": "Laki-laki",
                                                     "age": 23,
                                                     "phoneNumber": "081234567890",
-                                                    "role": "User"
+                                                    "role": {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "User"
+                                                    }
                                                 }
                                             }
                                         }
@@ -665,7 +674,10 @@
                                                     "gender": "Perempuan",
                                                     "age": 23,
                                                     "phoneNumber": "0987654321",
-                                                    "role": "Expert"
+                                                    "role": {
+                                                        "id": "331ab05a-77eb-4c18-88b4-969515f6d2cf",
+                                                        "name": "Expert"
+                                                    }
                                                 }
                                             }
                                         }
@@ -715,10 +727,8 @@
                                     "value": {
                                         "fullName": "John Doe Updated",
                                         "email": "john.doe.updated@example.com",
-                                        "gender": "Perempuan",
                                         "age": 24,
-                                        "phoneNumber": "0987654321",
-                                        "role": "Expert"
+                                        "phoneNumber": "0987654321"
                                     }
                                 },
                                 "User 2": {
@@ -726,10 +736,8 @@
                                     "value": {
                                         "fullName": "Jane Doe Updated",
                                         "email": "jane.doe.updated@example.com",
-                                        "gender": "Laki-laki",
                                         "age": 24,
-                                        "phoneNumber": "081234567890",
-                                        "role": "User"
+                                        "phoneNumber": "081234567890"
                                     }
                                 }
                             }
@@ -1051,8 +1059,14 @@
                                                     "avatar": "https://storage.googleapis.com/finboost/example.png",
                                                     "maritalStatus": "Lajang",
                                                     "certifiedStatus": null,
-                                                    "work": "Pelajar / Mahasiswa",
-                                                    "education": "SMA"
+                                                    "work": {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "Pelajar / Mahasiswa"
+                                                    },
+                                                    "education": {
+                                                        "id": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
+                                                        "name": "SMA / Sederajat"
+                                                    }
                                                 }
                                             }
                                         }
@@ -1068,8 +1082,14 @@
                                                     "avatar": "https://storage.googleapis.com/finboost/example2.png",
                                                     "maritalStatus": "Menikah",
                                                     "certifiedStatus": "Certified Financial Planner",
-                                                    "work": "Profesional",
-                                                    "education": "S1"
+                                                    "work": {
+                                                        "id": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                                        "name": "Profesional"
+                                                    },
+                                                    "education": {
+                                                        "id": "b5fbeaee-812f-4ec3-b807-22dd2794e09a",
+                                                        "name": "S1"
+                                                    }
                                                 }
                                             }
                                         }
@@ -1120,8 +1140,8 @@
                                         "avatar": "file",
                                         "maritalStatus": "Menikah",
                                         "certifiedStatus": null,
-                                        "work": "Wirausaha / Wiraswasta",
-                                        "education": "S1"
+                                        "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
                                     }
                                 },
                                 "User 2": {
@@ -1130,8 +1150,8 @@
                                         "avatar": "file",
                                         "maritalStatus": "Cerai",
                                         "certifiedStatus": "Certified Financial Planner",
-                                        "work": "Profesional",
-                                        "education": "S2"
+                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
                                     }
                                 }
                             }
@@ -1213,8 +1233,8 @@
                                         "avatar": "file",
                                         "maritalStatus": "Menikah",
                                         "certifiedStatus": null,
-                                        "work": "Wirausaha / Wiraswasta",
-                                        "education": "S1"
+                                        "workId": "72608273-18c1-4924-b67f-d67225e73faa",
+                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
                                     }
                                 },
                                 "User 2": {
@@ -1223,8 +1243,8 @@
                                         "avatar": "file",
                                         "maritalStatus": "Cerai",
                                         "certifiedStatus": "Certified Financial Planner",
-                                        "work": "Profesional",
-                                        "education": "S2"
+                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                        "educationId": "bd2bb42f-d42e-4b7d-a3f4-221a867d1836"
                                     }
                                 }
                             }
@@ -1304,16 +1324,16 @@
                                     "description": "Example request to partially update user profile",
                                     "value": {
                                         "maritalStatus": "Lajang",
-                                        "work": "Pelajar / Mahasiswa",
-                                        "education": "SMA"
+                                        "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
                                     }
                                 },
                                 "User 2": {
                                     "description": "Example request to update user profile",
                                     "value": {
                                         "maritalStatus": "Menikah",
-                                        "work": "Profesional",
-                                        "education": "S1"
+                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
                                     }
                                 }
                             }
@@ -1461,7 +1481,7 @@
                                                         "name": "User"
                                                     },
                                                     {
-                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "id": "331ab05a-77eb-4c18-88b4-969515f6d2cf",
                                                         "name": "Expert"
                                                     }
                                                 ]
@@ -1753,7 +1773,7 @@
                         "minimum": 8,
                         "required": ["true"]
                     },
-                    "role": {
+                    "roleId": {
                         "type": "string",
                         "required": ["true"]
                     }
@@ -1862,7 +1882,15 @@
                         "type": "string"
                     },
                     "role": {
-                        "type": "string"
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             },
@@ -1918,16 +1946,10 @@
                     "email": {
                         "type": "string"
                     },
-                    "gender": {
-                        "type": "string"
-                    },
                     "age": {
                         "type": "integer"
                     },
                     "phoneNumber": {
-                        "type": "string"
-                    },
-                    "role": {
                         "type": "string"
                     }
                 }
@@ -1964,10 +1986,10 @@
                     "certifiedStatus": {
                         "type": "string"
                     },
-                    "work": {
+                    "workId": {
                         "type": "string"
                     },
-                    "education": {
+                    "educationId": {
                         "type": "string"
                     }
                 }
@@ -2005,10 +2027,10 @@
                     "certifiedStatus": {
                         "type": "string"
                     },
-                    "work": {
+                    "workId": {
                         "type": "string"
                     },
-                    "education": {
+                    "educationId": {
                         "type": "string"
                     }
                 }
@@ -2026,10 +2048,10 @@
                     "certifiedStatus": {
                         "type": "string"
                     },
-                    "work": {
+                    "workId": {
                         "type": "string"
                     },
-                    "education": {
+                    "educationId": {
                         "type": "string"
                     }
                 },
@@ -2054,10 +2076,10 @@
                     "certifiedStatus": {
                         "type": "string"
                     },
-                    "work": {
+                    "workId": {
                         "type": "string"
                     },
-                    "education": {
+                    "educationId": {
                         "type": "string"
                     }
                 }
