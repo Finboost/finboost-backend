@@ -33,12 +33,28 @@
             "description": "Related to authentication"
         },
         {
+            "name": "Token",
+            "description": "Related to jwt token"
+        },
+        {
             "name": "User",
             "description": "Related to users data"
         },
         {
-            "name": "Token",
-            "description": "Related to jwt token"
+            "name": "Profile",
+            "description": "Related to users profile"
+        },
+        {
+            "name": "Role",
+            "description": "Related to role user"
+        },
+        {
+            "name": "Work",
+            "description": "Related to work profile user"
+        },
+        {
+            "name": "Education",
+            "description": "Related to education profile user"
         }
     ],
     "paths": {
@@ -1007,7 +1023,7 @@
         },
         "/users/{userId}/profile": {
             "get": {
-                "tags": ["User"],
+                "tags": ["User", "Profile"],
                 "summary": "Get user profile data by user id",
                 "description": "Get specific user profile by user id. Requires valid access token",
                 "parameters": [
@@ -1082,7 +1098,7 @@
                 ]
             },
             "put": {
-                "tags": ["User"],
+                "tags": ["User", "Profile"],
                 "summary": "Update user profile data by user id",
                 "description": "Update specific user profile by user id. Requires valid access token",
                 "parameters": [
@@ -1175,7 +1191,7 @@
                 ]
             },
             "patch": {
-                "tags": ["User"],
+                "tags": ["User", "Profile"],
                 "summary": "Partial update user profile data by user id",
                 "description": "Partially update specific user profile by user id. Requires valid access token",
                 "parameters": [
@@ -1264,7 +1280,7 @@
                 ]
             },
             "delete": {
-                "tags": ["User"],
+                "tags": ["User", "Profile"],
                 "summary": "Delete user profile data by user id",
                 "description": "Delete specific user profile by user id. Requires valid access token",
                 "parameters": [
@@ -1323,6 +1339,202 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/roles": {
+            "get": {
+                "tags": ["Role", "User"],
+                "summary": "Get all user role",
+                "description": "Retrieve all user role",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all user role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllRoles"
+                                },
+                                "examples": {
+                                    "All roles": {
+                                        "description": "Successfully get all user role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all user role",
+                                            "data": {
+                                                "roles": [
+                                                    {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "User"
+                                                    },
+                                                    {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "Expert"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/works": {
+            "get": {
+                "tags": ["Work", "User", "Profile"],
+                "summary": "Get all work profile user",
+                "description": "Retrieve all work profile user",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all work profile user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllWorks"
+                                },
+                                "examples": {
+                                    "All works": {
+                                        "description": "Successfully get all work profile user",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all work profile user",
+                                            "data": {
+                                                "works": [
+                                                    {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "Pelajar / Mahasiswa"
+                                                    },
+                                                    {
+                                                        "id": "8adb9efe-1170-45e0-9dfb-ec7820000a40",
+                                                        "name": "Ibu Rumah Tangga"
+                                                    },
+                                                    {
+                                                        "id": "72608273-18c1-4924-b67f-d67225e73faa",
+                                                        "name": "Wirausaha / Wiraswasta"
+                                                    },
+                                                    {
+                                                        "id": "8e7d0af4-9ac4-4a3d-a1c8-6ef369c8b813",
+                                                        "name": "Pegawai Negeri Sipil"
+                                                    },
+                                                    {
+                                                        "id": "9f11cd80-8993-4436-88f1-22f14ea8cb8f",
+                                                        "name": "TNI / Polri"
+                                                    },
+                                                    {
+                                                        "id": "23619247-f0eb-407a-a526-156d43eb4edf",
+                                                        "name": "Pensiunan"
+                                                    },
+                                                    {
+                                                        "id": "9cf6dc84-9212-4aa4-bc7a-c3dea3f7bd82",
+                                                        "name": "Guru"
+                                                    },
+                                                    {
+                                                        "id": "46759438-5120-4e9a-a3de-c4116bd7db49",
+                                                        "name": "Pegawai Swasta"
+                                                    },
+                                                    {
+                                                        "id": "4bcd82af-d53b-4e75-b6fa-be009cd21f5b",
+                                                        "name": "Pegawai Otoritas / Lembaga / BUMN / BUMD"
+                                                    },
+                                                    {
+                                                        "id": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                                        "name": "Profesional"
+                                                    },
+                                                    {
+                                                        "id": "ef2bc1f5-29d7-4008-bec9-67ee53a5afa2",
+                                                        "name": "Pekerja Seni"
+                                                    },
+                                                    {
+                                                        "id": "077c17b2-a295-472c-b5f3-1a2ab882b686",
+                                                        "name": "Lainnya"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/educations": {
+            "get": {
+                "tags": ["Education", "User", "Profile"],
+                "summary": "Get all education profile user",
+                "description": "Retrieve all education profile user",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all education profile user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllEducations"
+                                },
+                                "examples": {
+                                    "All educations": {
+                                        "description": "Successfully get all education profile user",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all education profile user",
+                                            "data": {
+                                                "educations": [
+                                                    {
+                                                        "id": "eb17c5dd-5511-4cc6-8b33-c1c874f7b1c0",
+                                                        "name": "SD"
+                                                    },
+                                                    {
+                                                        "id": "92b092b5-f9b6-4557-a33c-7069ad37763a",
+                                                        "name": "SMP / Sederajat"
+                                                    },
+                                                    {
+                                                        "id": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
+                                                        "name": "SMA / Sederajat"
+                                                    },
+                                                    {
+                                                        "id": "85e359a4-bf51-4db4-ad17-d761feaa2455",
+                                                        "name": "Diploma"
+                                                    },
+                                                    {
+                                                        "id": "b5fbeaee-812f-4ec3-b807-22dd2794e09a",
+                                                        "name": "S1"
+                                                    },
+                                                    {
+                                                        "id": "bd2bb42f-d42e-4b7d-a3f4-221a867d1836",
+                                                        "name": "S2"
+                                                    },
+                                                    {
+                                                        "id": "19d7927f-8ffc-462b-92b0-48febd75acf5",
+                                                        "name": "S3"
+                                                    },
+                                                    {
+                                                        "id": "05e4ccd2-5a14-4c46-be9c-354becd67084",
+                                                        "name": "Lainnya"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
             }
         }
     },
@@ -1735,6 +1947,108 @@
                         "type": "string"
                     }
                 }
+            },
+            "GetRole": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetAllRoles": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "roles": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetRole"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "GetWork": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetAllWorks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "roles": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetWork"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "GetEducation": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetAllEducations": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "educations": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetEducation"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         },
         "responses": {
