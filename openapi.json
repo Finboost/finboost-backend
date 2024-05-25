@@ -2138,6 +2138,251 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
+            },
+            "post": {
+                "tags": ["Education", "User"],
+                "summary": "Create a new user education",
+                "description": "Add a new education to the app",
+                "requestBody": {
+                    "description": "Education object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldEducation"
+                            },
+                            "examples": {
+                                "New education": {
+                                    "description": "Example of a new education",
+                                    "value": {
+                                        "name": "MA / Sederajat"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Education 1": {
+                                        "description": "Successfully created a new education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Education created successfully",
+                                            "data": {
+                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new education because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new education because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/education/{educationId}": {
+            "get": {
+                "tags": ["Education", "User"],
+                "summary": "Get a user education by id",
+                "description": "Get specific education by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/EducationId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetEducation"
+                                },
+                                "examples": {
+                                    "Education": {
+                                        "description": "Successfully retrieved the education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get education data by id",
+                                            "data": {
+                                                "education": {
+                                                    "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230",
+                                                    "name": "MA / Sederajat"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorEducationNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Education", "User"],
+                "summary": "Update a user education by id",
+                "description": "Update specific user education by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/EducationId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Education object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldEducation"
+                            },
+                            "examples": {
+                                "Update education": {
+                                    "description": "Example of a education update",
+                                    "value": {
+                                        "name": "SMK / Sederajat"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Education updated": {
+                                        "description": "Successfully updated the education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Education updated successfully",
+                                            "data": {
+                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update education due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update education because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorEducationNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Education", "User"],
+                "summary": "Delete a user education by id",
+                "description": "Delete a specific user education by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/EducationId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Education deleted": {
+                                        "description": "Successfully deleted the education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Education deleted successfully",
+                                            "data": {
+                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorEducationNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
             }
         }
     },
@@ -2201,6 +2446,21 @@
                     "Work 1": {
                         "description": "Sample work id for work 1",
                         "value": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                    }
+                }
+            },
+            "EducationId": {
+                "name": "educationId",
+                "in": "path",
+                "description": "Id of the education to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Education 1": {
+                        "description": "Sample education id for education 1",
+                        "value": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                     }
                 }
             }
@@ -2755,6 +3015,26 @@
                     }
                 }
             },
+            "SuccessGetEducation": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "education": {
+                                        "$ref": "#/components/schemas/GetEducation"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             "SuccessGetAllEducations": {
                 "allOf": [
                     {
@@ -2777,6 +3057,22 @@
                         }
                     }
                 ]
+            },
+            "InsertAllFieldEducation": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldEducation": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
             }
         },
         "responses": {
@@ -2894,6 +3190,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Work not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorEducationNotFound": {
+                "description": "Education not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Education not found"
                                 }
                             }
                         }
