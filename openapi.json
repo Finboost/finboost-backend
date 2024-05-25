@@ -1825,6 +1825,251 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
+            },
+            "post": {
+                "tags": ["Work", "User"],
+                "summary": "Create a new user work",
+                "description": "Add a new work to the app",
+                "requestBody": {
+                    "description": "Work object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldWork"
+                            },
+                            "examples": {
+                                "New work": {
+                                    "description": "Example of a new work",
+                                    "value": {
+                                        "name": "Trader"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Work 1": {
+                                        "description": "Successfully created a new work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Work created successfully",
+                                            "data": {
+                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new work because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new work because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/works/{workId}": {
+            "get": {
+                "tags": ["Work", "User"],
+                "summary": "Get a user work by id",
+                "description": "Get specific work by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/WorkId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetWork"
+                                },
+                                "examples": {
+                                    "Work": {
+                                        "description": "Successfully retrieved the work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get work data by id",
+                                            "data": {
+                                                "work": {
+                                                    "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138",
+                                                    "name": "Trader"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorWorkNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Work", "User"],
+                "summary": "Update a user work by id",
+                "description": "Update specific user work by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/WorkId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Work object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldWork"
+                            },
+                            "examples": {
+                                "Update work": {
+                                    "description": "Example of a work update",
+                                    "value": {
+                                        "name": "Programmer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Work updated": {
+                                        "description": "Successfully updated the work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Work updated successfully",
+                                            "data": {
+                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update work due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update work because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorWorkNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Work", "User"],
+                "summary": "Delete a user work by id",
+                "description": "Delete a specific user work by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/WorkId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Work deleted": {
+                                        "description": "Successfully deleted the work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Work deleted successfully",
+                                            "data": {
+                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorWorkNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
             }
         },
         "/educations": {
@@ -1941,6 +2186,21 @@
                     "Role 1": {
                         "description": "Sample role id for role 1",
                         "value": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                    }
+                }
+            },
+            "WorkId": {
+                "name": "workId",
+                "in": "path",
+                "description": "Id of the work to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Work 1": {
+                        "description": "Sample work id for work 1",
+                        "value": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                     }
                 }
             }
@@ -2425,6 +2685,26 @@
                     }
                 }
             },
+            "SuccessGetWork": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "work": {
+                                        "$ref": "#/components/schemas/GetWork"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             "SuccessGetAllWorks": {
                 "allOf": [
                     {
@@ -2436,7 +2716,7 @@
                             "data": {
                                 "type": "object",
                                 "properties": {
-                                    "roles": {
+                                    "works": {
                                         "type": "array",
                                         "items": {
                                             "$ref": "#/components/schemas/GetWork"
@@ -2447,6 +2727,22 @@
                         }
                     }
                 ]
+            },
+            "InsertAllFieldWork": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldWork": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
             },
             "GetEducation": {
                 "type": "object",
@@ -2578,6 +2874,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Role not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorWorkNotFound": {
+                "description": "Work not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Work not found"
                                 }
                             }
                         }
