@@ -1827,7 +1827,7 @@
                 }
             },
             "post": {
-                "tags": ["Work", "User"],
+                "tags": ["Work", "User", "Profile"],
                 "summary": "Create a new user work",
                 "description": "Add a new work to the app",
                 "requestBody": {
@@ -1905,7 +1905,7 @@
         },
         "/works/{workId}": {
             "get": {
-                "tags": ["Work", "User"],
+                "tags": ["Work", "User", "Profile"],
                 "summary": "Get a user work by id",
                 "description": "Get specific work by id",
                 "parameters": [
@@ -1948,7 +1948,7 @@
                 }
             },
             "put": {
-                "tags": ["Work", "User"],
+                "tags": ["Work", "User", "Profile"],
                 "summary": "Update a user work by id",
                 "description": "Update specific user work by id",
                 "parameters": [
@@ -2032,7 +2032,7 @@
                 }
             },
             "delete": {
-                "tags": ["Work", "User"],
+                "tags": ["Work", "User", "Profile"],
                 "summary": "Delete a user work by id",
                 "description": "Delete a specific user work by its ID",
                 "parameters": [
@@ -2140,7 +2140,7 @@
                 }
             },
             "post": {
-                "tags": ["Education", "User"],
+                "tags": ["Education", "User", "Profile"],
                 "summary": "Create a new user education",
                 "description": "Add a new education to the app",
                 "requestBody": {
@@ -2218,7 +2218,7 @@
         },
         "/education/{educationId}": {
             "get": {
-                "tags": ["Education", "User"],
+                "tags": ["Education", "User", "Profile"],
                 "summary": "Get a user education by id",
                 "description": "Get specific education by id",
                 "parameters": [
@@ -2261,7 +2261,7 @@
                 }
             },
             "put": {
-                "tags": ["Education", "User"],
+                "tags": ["Education", "User", "Profile"],
                 "summary": "Update a user education by id",
                 "description": "Update specific user education by id",
                 "parameters": [
@@ -2345,7 +2345,7 @@
                 }
             },
             "delete": {
-                "tags": ["Education", "User"],
+                "tags": ["Education", "User", "Profile"],
                 "summary": "Delete a user education by id",
                 "description": "Delete a specific user education by its ID",
                 "parameters": [
