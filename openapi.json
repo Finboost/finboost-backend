@@ -1,0 +1,3221 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Finboost Back-End",
+        "version": "1.0.0",
+        "description": "OpenAPI Swagger Documentation for Finboost Back-End RESTful API",
+        "contact": {
+            "name": "Arman Dwi Pangestu",
+            "email": "armandwi.pangestu7@gmail.com",
+            "url": "https://armandwipangestu.vercel.app"
+        }
+    },
+    "servers": [
+        {
+            "description": "Finboost Back-End URL Deployment",
+            "url": "https://{environment}/api/v1",
+            "variables": {
+                "environment": {
+                    "description": "Server Information",
+                    "default": "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                    "enum": [
+                        "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                        "staging---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                        "dev---finboost-backend-jzrwg5bjqq-et.a.run.app"
+                    ]
+                }
+            }
+        }
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Related to authentication"
+        },
+        {
+            "name": "Token",
+            "description": "Related to jwt token"
+        },
+        {
+            "name": "User",
+            "description": "Related to users data"
+        },
+        {
+            "name": "Profile",
+            "description": "Related to users profile"
+        },
+        {
+            "name": "Role",
+            "description": "Related to role user"
+        },
+        {
+            "name": "Work",
+            "description": "Related to work profile user"
+        },
+        {
+            "name": "Education",
+            "description": "Related to education profile user"
+        }
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": ["Auth", "User"],
+                "summary": "User signup",
+                "description": "Register for the new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignupOrRegisUser"
+                            },
+                            "examples": {
+                                "User": {
+                                    "description": "Example signup as User role",
+                                    "value": {
+                                        "fullName": "John Doe",
+                                        "email": "john.doe@example.com",
+                                        "gender": "Laki-laki",
+                                        "age": 23,
+                                        "phoneNumber": "081234567890",
+                                        "password": "Lts47S~^{yp^)$I",
+                                        "roleId": "319defd8-1836-4b9d-af2d-655a43a60bde"
+                                    }
+                                },
+                                "Expert": {
+                                    "description": "Example signup as Expert role",
+                                    "value": {
+                                        "fullName": "Jane Doe",
+                                        "email": "jane.doe@example.com",
+                                        "gender": "Perempuan",
+                                        "age": 23,
+                                        "phoneNumber": "0987654321",
+                                        "password": "6Z[Ax6k3~yc)5Nb",
+                                        "roleId": "331ab05a-77eb-4c18-88b4-969515f6d2cf"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success signup user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User": {
+                                        "description": "Success signup as User role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User created successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "Expert": {
+                                        "description": "Success signup as Expert role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User created successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed signup user because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "fullName & email empty": {
+                                        "description": "Fail signup because fullName & email field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "fullName",
+                                                    "message": "fullName is required"
+                                                },
+                                                {
+                                                    "field": "email",
+                                                    "message": "email is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "age & phoneNumber empty": {
+                                        "description": "Fail signup because age & phoneNumber field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "age",
+                                                    "message": "age is required"
+                                                },
+                                                {
+                                                    "field": "phoneNumber",
+                                                    "message": "phoneNumber is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Database connection error": {
+                                        "description": "Fail signup due to database connection issue",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "database",
+                                                    "message": "Failed to connect to the database"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "Unexpected server error": {
+                                        "description": "Fail signup due to unexpected server error",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "server",
+                                                    "message": "Unexpected condition encountered"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": ["Auth", "User"],
+                "summary": "User signin",
+                "description": "Login for the user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SigninOrLoginUser"
+                            },
+                            "examples": {
+                                "User": {
+                                    "description": "Example signin as User role",
+                                    "value": {
+                                        "email": "john.doe@example.com",
+                                        "password": "Lts47S~^{yp^)$I"
+                                    }
+                                },
+                                "Expert": {
+                                    "description": "Example signin as Expert role",
+                                    "value": {
+                                        "email": "jane.doe@example.com",
+                                        "password": "6Z[Ax6k3~yc)5Nb"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success sigin user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSiginOrLoginUser"
+                                },
+                                "examples": {
+                                    "User": {
+                                        "description": "Success sigin as User role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Login successfully",
+                                            "data": {
+                                                "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                                            }
+                                        }
+                                    },
+                                    "Expert": {
+                                        "description": "Success sigin as Expert role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Login successfully",
+                                            "data": {
+                                                "accessToken": "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.bQTnz6AuMJvmXXQsVPrxeQNvzDkimo7VNXxHeSBfClLufmCVZRUuyTwJF311JHuh"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed sigin user because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "email empty": {
+                                        "description": "Fail signin because email field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "email",
+                                                    "message": "email is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "password empty": {
+                                        "description": "Fail signin because password field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "password",
+                                                    "message": "password is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "wrong password": {
+                                        "description": "Fail signin because wrong password",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Bad request",
+                                            "errors": [
+                                                {
+                                                    "field": "password",
+                                                    "message": "wrong password"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed sigin user because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "email not found": {
+                                        "description": "Fail signin because email can't find",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "email",
+                                                    "message": "email can't find"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Database connection error": {
+                                        "description": "Fail sigin due to database connection issue",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "database",
+                                                    "message": "Failed to connect to the database"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "Unexpected server error": {
+                                        "description": "Fail sigin due to unexpected server error",
+                                        "value": {
+                                            "status": "error",
+                                            "message": "Internal server error",
+                                            "errors": [
+                                                {
+                                                    "field": "server",
+                                                    "message": "Unexpected condition encountered"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/token/refresh": {
+            "get": {
+                "tags": ["Auth", "User", "Token"],
+                "summary": "Refresh token",
+                "description": "Refresh the JWT token to get a new access token. The refresh token is expected to be in the cookies.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully refreshed token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Refresh token successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "accessToken": {
+                                                    "type": "string",
+                                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "not provided refresh token": {
+                                        "description": "Fail to refresh token because the request not provided refresh token on cookies",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Unauthorized. Please provide `refreshToken` on cookies before request"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Fobidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "invalid refresh token": {
+                                        "description": "Fail to refresh token because invalid refresh token",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't find who the owner `refreshToken`"
+                                        }
+                                    },
+                                    "decode error": {
+                                        "description": "Fail to refresh token because decode error",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't decode or compare token with secret"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get all users data",
+                "description": "Retrieve all user data. Requires valid access token",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Get all user data by role",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User": {
+                                "description": "Get all user data with User role",
+                                "value": "User"
+                            },
+                            "Expert": {
+                                "description": "Get all user data with Expert role",
+                                "value": "Expert"
+                            }
+                        }
+                    },
+                    {
+                        "name": "fullName",
+                        "in": "query",
+                        "description": "Get specific user data by fullName",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User 1": {
+                                "description": "Get specific user data by fullName",
+                                "value": "John Doe"
+                            },
+                            "User 2": {
+                                "description": "Get specific user data by fullName",
+                                "value": "Jane Doe"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllUsers"
+                                },
+                                "examples": {
+                                    "All users": {
+                                        "description": "Successfully get all user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all user data",
+                                            "data": {
+                                                "users": [
+                                                    {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "fullName": "John Doe",
+                                                        "email": "john.doe@example.com",
+                                                        "gender": "Laki-laki",
+                                                        "age": 23,
+                                                        "phoneNumber": "081234567890",
+                                                        "role": {
+                                                            "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                            "name": "User"
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                        "fullName": "Jane Doe",
+                                                        "email": "jane.doe@example.com",
+                                                        "gender": "Perempuan",
+                                                        "age": 23,
+                                                        "phoneNumber": "0987654321",
+                                                        "role": {
+                                                            "id": "331ab05a-77eb-4c18-88b4-969515f6d2cf",
+                                                            "name": "Expert"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get user data by id",
+                "description": "Get specific user by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Sample user 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user data by id",
+                                            "data": {
+                                                "user": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "fullName": "John Doe",
+                                                    "email": "john.doe@example.com",
+                                                    "gender": "Laki-laki",
+                                                    "age": 23,
+                                                    "phoneNumber": "081234567890",
+                                                    "role": {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "User"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Sample user 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user data by id",
+                                            "data": {
+                                                "user": {
+                                                    "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                    "fullName": "Jane Doe",
+                                                    "email": "jane.doe@example.com",
+                                                    "gender": "Perempuan",
+                                                    "age": 23,
+                                                    "phoneNumber": "0987654321",
+                                                    "role": {
+                                                        "id": "331ab05a-77eb-4c18-88b4-969515f6d2cf",
+                                                        "name": "Expert"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": ["User"],
+                "summary": "Update all field user data by id",
+                "description": "Update all field specific user data by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldUser"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Update all field of the user 1",
+                                    "value": {
+                                        "fullName": "John Doe Updated",
+                                        "email": "john.doe.updated@example.com",
+                                        "age": 24,
+                                        "phoneNumber": "0987654321"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Update all field of the user 2",
+                                    "value": {
+                                        "fullName": "Jane Doe Updated",
+                                        "email": "jane.doe.updated@example.com",
+                                        "age": 24,
+                                        "phoneNumber": "081234567890"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update user data because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "fullName & email empty": {
+                                        "description": "Fail to update user data because fullName & email field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "fullName",
+                                                    "message": "fullName is required"
+                                                },
+                                                {
+                                                    "field": "email",
+                                                    "message": "email is required"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "age & phoneNumber empty": {
+                                        "description": "Fail to update user data because age & phoneNumber field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "age",
+                                                    "message": "age is required"
+                                                },
+                                                {
+                                                    "field": "phoneNumber",
+                                                    "message": "phoneNumber is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": ["User"],
+                "summary": "Partially update user data by id",
+                "description": "Partially update specific user data by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpadtePartialFieldUser"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Update some fields of the user 1",
+                                    "value": {
+                                        "fullName": "John Doe Partially Updated",
+                                        "email": "john.doe.partially.updated@example.com"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Update some fields of the user 2",
+                                    "value": {
+                                        "fullName": "Jane Doe Partially Updated",
+                                        "email": "jane.doe.partially.updated@example.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully partially updated user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully partially updated data user 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data partially updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully partially updated data user 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User data partially updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Fail partially updated user data because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Fail partially updated data user 1",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "email",
+                                                    "message": "email already exist on database"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Fail partially updated data user 2",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "phoneNumber",
+                                                    "message": "phoneNumber already exist on database"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["User"],
+                "summary": "Delete user data by id",
+                "description": "Delete specific user data by id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully deleted data user 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user data",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully deleted data user 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user data",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/{userId}/profile": {
+            "get": {
+                "tags": ["User", "Profile"],
+                "summary": "Get user profile data by user id",
+                "description": "Get specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetProfile"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Sample user profile 1 as User role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user profile data by user id",
+                                            "data": {
+                                                "profile": {
+                                                    "id": "de5b1599-b1b7-4633-8a5d-331690ee9413",
+                                                    "avatar": "https://storage.googleapis.com/finboost/example.png",
+                                                    "maritalStatus": "Lajang",
+                                                    "certifiedStatus": null,
+                                                    "work": {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "Pelajar / Mahasiswa"
+                                                    },
+                                                    "education": {
+                                                        "id": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
+                                                        "name": "SMA / Sederajat"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Sample user profile 2 as Expert role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get user profile data by user id",
+                                            "data": {
+                                                "profile": {
+                                                    "id": "36429cef-96d1-41a7-b579-c2dc8d4f2beb",
+                                                    "avatar": "https://storage.googleapis.com/finboost/example2.png",
+                                                    "maritalStatus": "Menikah",
+                                                    "certifiedStatus": "Certified Financial Planner",
+                                                    "work": {
+                                                        "id": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                                        "name": "Profesional"
+                                                    },
+                                                    "education": {
+                                                        "id": "b5fbeaee-812f-4ec3-b807-22dd2794e09a",
+                                                        "name": "S1"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": ["User", "Profile"],
+                "summary": "Insert user profile data by user id",
+                "description": "Insert specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldProfile"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Example request to insert user profile",
+                                    "value": {
+                                        "avatar": "file",
+                                        "maritalStatus": "Menikah",
+                                        "certifiedStatus": null,
+                                        "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Example request to insert user profile",
+                                    "value": {
+                                        "avatar": "file",
+                                        "maritalStatus": "Cerai",
+                                        "certifiedStatus": "Certified Financial Planner",
+                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully updated user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": ["User", "Profile"],
+                "summary": "Update user profile data by user id",
+                "description": "Update specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldProfile"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Example request to update user profile",
+                                    "value": {
+                                        "avatar": "file",
+                                        "maritalStatus": "Menikah",
+                                        "certifiedStatus": null,
+                                        "workId": "72608273-18c1-4924-b67f-d67225e73faa",
+                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Example request to update user profile",
+                                    "value": {
+                                        "avatar": "file",
+                                        "maritalStatus": "Cerai",
+                                        "certifiedStatus": "Certified Financial Planner",
+                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                        "educationId": "bd2bb42f-d42e-4b7d-a3f4-221a867d1836"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": ["User", "Profile"],
+                "summary": "Partial update user profile data by user id",
+                "description": "Partially update specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePartialFieldProfile"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Example request to partially update user profile",
+                                    "value": {
+                                        "maritalStatus": "Lajang",
+                                        "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
+                                    }
+                                },
+                                "User 2": {
+                                    "description": "Example request to update user profile",
+                                    "value": {
+                                        "maritalStatus": "Menikah",
+                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "User profile data updated successfully",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["User", "Profile"],
+                "summary": "Delete user profile data by user id",
+                "description": "Delete specific user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully deleted data user profile 1",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user profile data",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully deleted data user profile 2",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Successfully delete user profile data",
+                                            "data": {
+                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/roles": {
+            "get": {
+                "tags": ["Role", "User"],
+                "summary": "Get all user role",
+                "description": "Retrieve all user role",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all user role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllRoles"
+                                },
+                                "examples": {
+                                    "All roles": {
+                                        "description": "Successfully get all user role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all user role",
+                                            "data": {
+                                                "roles": [
+                                                    {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "User"
+                                                    },
+                                                    {
+                                                        "id": "331ab05a-77eb-4c18-88b4-969515f6d2cf",
+                                                        "name": "Expert"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Role", "User"],
+                "summary": "Create a new user role",
+                "description": "Add a new role to the app",
+                "requestBody": {
+                    "description": "Role object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldRole"
+                            },
+                            "examples": {
+                                "New role": {
+                                    "description": "Example of a new role",
+                                    "value": {
+                                        "name": "Admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Role 1": {
+                                        "description": "Successfully created a new role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Role created successfully",
+                                            "data": {
+                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new role because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new role because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/roles/{roleId}": {
+            "get": {
+                "tags": ["Role", "User"],
+                "summary": "Get a user role by id",
+                "description": "Get specific role by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/RoleId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetRole"
+                                },
+                                "examples": {
+                                    "Role": {
+                                        "description": "Successfully retrieved the role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get role data by id",
+                                            "data": {
+                                                "role": {
+                                                    "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                    "name": "User"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorRoleNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Role", "User"],
+                "summary": "Update a user role by id",
+                "description": "Update specific user role by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/RoleId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Role object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldRole"
+                            },
+                            "examples": {
+                                "Update role": {
+                                    "description": "Example of a role update",
+                                    "value": {
+                                        "name": "SuperAdmin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Role updated": {
+                                        "description": "Successfully updated the role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Role updated successfully",
+                                            "data": {
+                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update role due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update role because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorRoleNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Role", "User"],
+                "summary": "Delete a user role by id",
+                "description": "Delete a specific user role by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/RoleId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Role deleted": {
+                                        "description": "Successfully deleted the role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Role deleted successfully",
+                                            "data": {
+                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorRoleNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/works": {
+            "get": {
+                "tags": ["Work", "User", "Profile"],
+                "summary": "Get all work profile user",
+                "description": "Retrieve all work profile user",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all work profile user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllWorks"
+                                },
+                                "examples": {
+                                    "All works": {
+                                        "description": "Successfully get all work profile user",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all work profile user",
+                                            "data": {
+                                                "works": [
+                                                    {
+                                                        "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                        "name": "Pelajar / Mahasiswa"
+                                                    },
+                                                    {
+                                                        "id": "8adb9efe-1170-45e0-9dfb-ec7820000a40",
+                                                        "name": "Ibu Rumah Tangga"
+                                                    },
+                                                    {
+                                                        "id": "72608273-18c1-4924-b67f-d67225e73faa",
+                                                        "name": "Wirausaha / Wiraswasta"
+                                                    },
+                                                    {
+                                                        "id": "8e7d0af4-9ac4-4a3d-a1c8-6ef369c8b813",
+                                                        "name": "Pegawai Negeri Sipil"
+                                                    },
+                                                    {
+                                                        "id": "9f11cd80-8993-4436-88f1-22f14ea8cb8f",
+                                                        "name": "TNI / Polri"
+                                                    },
+                                                    {
+                                                        "id": "23619247-f0eb-407a-a526-156d43eb4edf",
+                                                        "name": "Pensiunan"
+                                                    },
+                                                    {
+                                                        "id": "9cf6dc84-9212-4aa4-bc7a-c3dea3f7bd82",
+                                                        "name": "Guru"
+                                                    },
+                                                    {
+                                                        "id": "46759438-5120-4e9a-a3de-c4116bd7db49",
+                                                        "name": "Pegawai Swasta"
+                                                    },
+                                                    {
+                                                        "id": "4bcd82af-d53b-4e75-b6fa-be009cd21f5b",
+                                                        "name": "Pegawai Otoritas / Lembaga / BUMN / BUMD"
+                                                    },
+                                                    {
+                                                        "id": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
+                                                        "name": "Profesional"
+                                                    },
+                                                    {
+                                                        "id": "ef2bc1f5-29d7-4008-bec9-67ee53a5afa2",
+                                                        "name": "Pekerja Seni"
+                                                    },
+                                                    {
+                                                        "id": "077c17b2-a295-472c-b5f3-1a2ab882b686",
+                                                        "name": "Lainnya"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Work", "User", "Profile"],
+                "summary": "Create a new user work",
+                "description": "Add a new work to the app",
+                "requestBody": {
+                    "description": "Work object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldWork"
+                            },
+                            "examples": {
+                                "New work": {
+                                    "description": "Example of a new work",
+                                    "value": {
+                                        "name": "Trader"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Work 1": {
+                                        "description": "Successfully created a new work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Work created successfully",
+                                            "data": {
+                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new work because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new work because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/works/{workId}": {
+            "get": {
+                "tags": ["Work", "User", "Profile"],
+                "summary": "Get a user work by id",
+                "description": "Get specific work by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/WorkId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetWork"
+                                },
+                                "examples": {
+                                    "Work": {
+                                        "description": "Successfully retrieved the work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get work data by id",
+                                            "data": {
+                                                "work": {
+                                                    "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138",
+                                                    "name": "Trader"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorWorkNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Work", "User", "Profile"],
+                "summary": "Update a user work by id",
+                "description": "Update specific user work by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/WorkId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Work object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldWork"
+                            },
+                            "examples": {
+                                "Update work": {
+                                    "description": "Example of a work update",
+                                    "value": {
+                                        "name": "Programmer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Work updated": {
+                                        "description": "Successfully updated the work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Work updated successfully",
+                                            "data": {
+                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update work due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update work because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorWorkNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Work", "User", "Profile"],
+                "summary": "Delete a user work by id",
+                "description": "Delete a specific user work by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/WorkId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the work",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Work deleted": {
+                                        "description": "Successfully deleted the work",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Work deleted successfully",
+                                            "data": {
+                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorWorkNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/educations": {
+            "get": {
+                "tags": ["Education", "User", "Profile"],
+                "summary": "Get all education profile user",
+                "description": "Retrieve all education profile user",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all education profile user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllEducations"
+                                },
+                                "examples": {
+                                    "All educations": {
+                                        "description": "Successfully get all education profile user",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all education profile user",
+                                            "data": {
+                                                "educations": [
+                                                    {
+                                                        "id": "eb17c5dd-5511-4cc6-8b33-c1c874f7b1c0",
+                                                        "name": "SD"
+                                                    },
+                                                    {
+                                                        "id": "92b092b5-f9b6-4557-a33c-7069ad37763a",
+                                                        "name": "SMP / Sederajat"
+                                                    },
+                                                    {
+                                                        "id": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
+                                                        "name": "SMA / Sederajat"
+                                                    },
+                                                    {
+                                                        "id": "85e359a4-bf51-4db4-ad17-d761feaa2455",
+                                                        "name": "Diploma"
+                                                    },
+                                                    {
+                                                        "id": "b5fbeaee-812f-4ec3-b807-22dd2794e09a",
+                                                        "name": "S1"
+                                                    },
+                                                    {
+                                                        "id": "bd2bb42f-d42e-4b7d-a3f4-221a867d1836",
+                                                        "name": "S2"
+                                                    },
+                                                    {
+                                                        "id": "19d7927f-8ffc-462b-92b0-48febd75acf5",
+                                                        "name": "S3"
+                                                    },
+                                                    {
+                                                        "id": "05e4ccd2-5a14-4c46-be9c-354becd67084",
+                                                        "name": "Lainnya"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Education", "User", "Profile"],
+                "summary": "Create a new user education",
+                "description": "Add a new education to the app",
+                "requestBody": {
+                    "description": "Education object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldEducation"
+                            },
+                            "examples": {
+                                "New education": {
+                                    "description": "Example of a new education",
+                                    "value": {
+                                        "name": "MA / Sederajat"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Education 1": {
+                                        "description": "Successfully created a new education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Education created successfully",
+                                            "data": {
+                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new education because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new education because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/education/{educationId}": {
+            "get": {
+                "tags": ["Education", "User", "Profile"],
+                "summary": "Get a user education by id",
+                "description": "Get specific education by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/EducationId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetEducation"
+                                },
+                                "examples": {
+                                    "Education": {
+                                        "description": "Successfully retrieved the education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get education data by id",
+                                            "data": {
+                                                "education": {
+                                                    "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230",
+                                                    "name": "MA / Sederajat"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorEducationNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Education", "User", "Profile"],
+                "summary": "Update a user education by id",
+                "description": "Update specific user education by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/EducationId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Education object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldEducation"
+                            },
+                            "examples": {
+                                "Update education": {
+                                    "description": "Example of a education update",
+                                    "value": {
+                                        "name": "SMK / Sederajat"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Education updated": {
+                                        "description": "Successfully updated the education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Education updated successfully",
+                                            "data": {
+                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update education due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update education because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorEducationNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Education", "User", "Profile"],
+                "summary": "Delete a user education by id",
+                "description": "Delete a specific user education by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/EducationId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the education",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Education deleted": {
+                                        "description": "Successfully deleted the education",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Education deleted successfully",
+                                            "data": {
+                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorEducationNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            },
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "refreshToken"
+            }
+        },
+        "parameters": {
+            "UserId": {
+                "name": "userId",
+                "in": "path",
+                "description": "Id of the user to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "User 1": {
+                        "description": "Sample user id for user 1",
+                        "value": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                    },
+                    "User 2": {
+                        "description": "Sample user id for user 2",
+                        "value": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                    }
+                }
+            },
+            "RoleId": {
+                "name": "roleId",
+                "in": "path",
+                "description": "Id of the role to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Role 1": {
+                        "description": "Sample role id for role 1",
+                        "value": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                    }
+                }
+            },
+            "WorkId": {
+                "name": "workId",
+                "in": "path",
+                "description": "Id of the work to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Work 1": {
+                        "description": "Sample work id for work 1",
+                        "value": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                    }
+                }
+            },
+            "EducationId": {
+                "name": "educationId",
+                "in": "path",
+                "description": "Id of the education to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Education 1": {
+                        "description": "Sample education id for education 1",
+                        "value": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "Success": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Fail": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SignupOrRegisUser": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string",
+                        "minimum": 4,
+                        "required": ["true"]
+                    },
+                    "email": {
+                        "type": "string",
+                        "required": ["true"]
+                    },
+                    "gender": {
+                        "type": "string",
+                        "required": ["true"]
+                    },
+                    "age": {
+                        "type": "integer",
+                        "required": ["true"]
+                    },
+                    "phoneNumber": {
+                        "type": "string",
+                        "minimum": 10,
+                        "required": ["true"]
+                    },
+                    "password": {
+                        "type": "string",
+                        "minimum": 8,
+                        "required": ["true"]
+                    },
+                    "roleId": {
+                        "type": "string",
+                        "required": ["true"]
+                    }
+                }
+            },
+            "SigninOrLoginUser": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "required": ["true"]
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": ["true"]
+                    }
+                }
+            },
+            "SuccessSignupOrRegisUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessSiginOrLoginUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "accessToken": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ZodError": {
+                "type": "object",
+                "properties": {
+                    "field": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FailValidationSignupOrRegister": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Fail"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "errors": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ZodError"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "GetUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "SuccessGetUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "user": {
+                                        "$ref": "#/components/schemas/GetUser"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllUsers": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "users": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetUser"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "UpdateAllFieldUser": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpadtePartialFieldUser": {
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetProfile": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "workId": {
+                        "type": "string"
+                    },
+                    "educationId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetProfile": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "profile": {
+                                        "$ref": "#/components/schemas/GetProfile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "InsertAllFieldProfile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "workId": {
+                        "type": "string"
+                    },
+                    "educationId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldProfile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "workId": {
+                        "type": "string"
+                    },
+                    "educationId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "avatar",
+                    "maritalStatus",
+                    "certifiedStatus",
+                    "work",
+                    "education"
+                ]
+            },
+            "UpdatePartialFieldProfile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "maritalStatus": {
+                        "type": "string"
+                    },
+                    "certifiedStatus": {
+                        "type": "string"
+                    },
+                    "workId": {
+                        "type": "string"
+                    },
+                    "educationId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetRole": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetRole": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "$ref": "#/components/schemas/GetRole"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllRoles": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "roles": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetRole"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "InsertAllFieldRole": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldRole": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetWork": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetWork": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "work": {
+                                        "$ref": "#/components/schemas/GetWork"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllWorks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "works": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetWork"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "InsertAllFieldWork": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldWork": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetEducation": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetEducation": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "education": {
+                                        "$ref": "#/components/schemas/GetEducation"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllEducations": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "educations": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetEducation"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "InsertAllFieldEducation": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldEducation": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "MiddlewareUnauthorizedError": {
+                "description": "Fail to pass through middleware because the request header not provide Authorization Bearer",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unauthorized. Please provide Bearer `accessToken` on Authorization Header"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "MiddlewareForbiddenError": {
+                "description": "Fail to pass through middleware because can't decode or comapre token with secret",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Forbidden. Can't decode or compare token with secret"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "InternalServerError": {
+                "description": "Internal server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorUserNotFound": {
+                "description": "User not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorRoleNotFound": {
+                "description": "Role not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Role not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorWorkNotFound": {
+                "description": "Work not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Work not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorEducationNotFound": {
+                "description": "Education not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Education not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
