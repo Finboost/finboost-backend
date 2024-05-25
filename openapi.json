@@ -1496,6 +1496,251 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
+            },
+            "post": {
+                "tags": ["Role", "User"],
+                "summary": "Create a new user role",
+                "description": "Add a new role to the app",
+                "requestBody": {
+                    "description": "Role object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldRole"
+                            },
+                            "examples": {
+                                "New role": {
+                                    "description": "Example of a new role",
+                                    "value": {
+                                        "name": "Admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Role 1": {
+                                        "description": "Successfully created a new role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Role created successfully",
+                                            "data": {
+                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new role because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new role because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/roles/{roleId}": {
+            "get": {
+                "tags": ["Role", "User"],
+                "summary": "Get a user role by id",
+                "description": "Get specific role by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/RoleId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetRole"
+                                },
+                                "examples": {
+                                    "Role": {
+                                        "description": "Successfully retrieved the role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get role data by id",
+                                            "data": {
+                                                "role": {
+                                                    "id": "319defd8-1836-4b9d-af2d-655a43a60bde",
+                                                    "name": "User"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorRoleNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Role", "User"],
+                "summary": "Update a user role by id",
+                "description": "Update specific user role by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/RoleId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Role object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldRole"
+                            },
+                            "examples": {
+                                "Update role": {
+                                    "description": "Example of a role update",
+                                    "value": {
+                                        "name": "SuperAdmin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Role updated": {
+                                        "description": "Successfully updated the role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Role updated successfully",
+                                            "data": {
+                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update role due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update role because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorRoleNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Role", "User"],
+                "summary": "Delete a user role by id",
+                "description": "Delete a specific user role by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/RoleId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Role deleted": {
+                                        "description": "Successfully deleted the role",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Role deleted successfully",
+                                            "data": {
+                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorRoleNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
             }
         },
         "/works": {
@@ -1681,6 +1926,21 @@
                     "User 2": {
                         "description": "Sample user id for user 2",
                         "value": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                    }
+                }
+            },
+            "RoleId": {
+                "name": "roleId",
+                "in": "path",
+                "description": "Id of the role to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Role 1": {
+                        "description": "Sample role id for role 1",
+                        "value": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                     }
                 }
             }
@@ -2095,6 +2355,26 @@
                     }
                 }
             },
+            "SuccessGetRole": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "$ref": "#/components/schemas/GetRole"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             "SuccessGetAllRoles": {
                 "allOf": [
                     {
@@ -2117,6 +2397,22 @@
                         }
                     }
                 ]
+            },
+            "InsertAllFieldRole": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAllFieldRole": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
             },
             "GetWork": {
                 "type": "object",
@@ -2262,6 +2558,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "User not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorRoleNotFound": {
+                "description": "Role not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Role not found"
                                 }
                             }
                         }
