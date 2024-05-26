@@ -400,6 +400,50 @@
                 }
             }
         },
+        "/auth/signout": {
+            "delete": {
+                "tags": ["Auth", "User"],
+                "summary": "User signout",
+                "description": "Logout for the user",
+                "responses": {
+                    "200": {
+                        "description": "Success signout user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Example Logout": {
+                                        "description": "Success logout",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Logout successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        },
         "/token/refresh": {
             "get": {
                 "tags": ["Auth", "User", "Token"],
