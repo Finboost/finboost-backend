@@ -79,21 +79,41 @@ jobs:
                     echo "ENV_FILE=.env.production" >> $GITHUB_ENV
                     echo "DOCKER_TAG=production-${{ github.sha }}" >> $GITHUB_ENV
                     echo "SERVICE=production" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "SHADOW_DATABASE_URL=${{ secrets.PROD_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "API_VERSION=${{ secrets.PROD_API_VERSION }}" >> $GITHUB_ENV
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.PROD_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.PROD_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
                   elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
                     echo "ENV=staging" >> $GITHUB_ENV
                     echo "ENV_FILE=.env.staging" >> $GITHUB_ENV
                     echo "DOCKER_TAG=staging-${{ github.sha }}" >> $GITHUB_ENV
                     echo "SERVICE=staging" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "SHADOW_DATABASE_URL=${{ secrets.STAGING_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "API_VERSION=${{ secrets.STAGING_API_VERSION }}" >> $GITHUB_ENV
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.STAGING_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.STAGING_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
                   elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
                     echo "ENV=dev" >> $GITHUB_ENV
                     echo "ENV_FILE=.env.dev" >> $GITHUB_ENV
                     echo "DOCKER_TAG=setup-${{ github.sha }}" >> $GITHUB_END
                     echo "SERVICE=setup" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> $GITHUB_ENV
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
                   else
                     echo "ENV=dev" >> $GITHUB_ENV
                     echo "ENV_FILE=.env.dev" >> $GITHUB_ENV
                     echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
                     echo "SERVICE=dev" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
+                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> $GITHUB_ENV
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
                   fi
 
             - name: Configure Docker to use gcloud
@@ -113,6 +133,7 @@ jobs:
                   region: ${{ env.REGION }}
                   image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}
                   flags: "--allow-unauthenticated"
+                  env_vars: PORT=8080,DATABASE_URL=${{ env.DATABASE_URL }},SHADOW_DATABASE_URL=${{ env.SHADOW_DATABASE_URL }},API_VERSION=${{ env.API_VERSION }},JWT_ACCESS_TOKEN_SECRET=${{ env.JWT_ACCESS_TOKEN_SECRET }},JWT_REFRESH_TOKEN_SECRET=${{ env.JWT_REFRESH_TOKEN_SECRET }}
 
             #- name: Show Output
             #  run: echo ${{ steps.deploy.outputs.url }}
