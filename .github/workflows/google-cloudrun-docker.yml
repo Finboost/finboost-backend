@@ -126,7 +126,7 @@ jobs:
 
             - name: Build and Push Container
               run: |-
-                  docker build -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}" ./
+                  docker build --build-arg NODE_ENV=${{ env.ENV }} -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}" ./
                   docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}"
 
             - name: Deploy to Cloud Run
