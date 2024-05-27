@@ -1,0 +1,118 @@
+# This workflow build and push a Docker container to Google Artifact Registry and deploy it on Cloud Run when a commit is pushed to the "main" branch
+#
+# Overview:
+#
+# 1. Authenticate to Google Cloud
+# 2. Authenticate Docker to Artifact Registry
+# 3. Build a docker container
+# 4. Publish it to Google Artifact Registry
+# 5. Deploy it to Cloud Run
+#
+# To configure this workflow:
+#
+# 1. Ensure the required Google Cloud APIs are enabled:
+#
+#    Cloud Run            run.googleapis.com
+#    Artifact Registry    artifactregistry.googleapis.com
+#
+# 2. Create and configure Workload Identity Federation for GitHub (https://github.com/google-github-actions/auth#setting-up-workload-identity-federation)
+#
+# 3. Ensure the required IAM permissions are granted
+#
+#    Cloud Run
+#      roles/run.admin
+#      roles/iam.serviceAccountUser     (to act as the Cloud Run runtime service account)
+#
+#    Artifact Registry
+#      roles/artifactregistry.admin     (project or repository level)
+#
+#    NOTE: You should always follow the principle of least privilege when assigning IAM roles
+#
+# 4. Create GitHub secrets for WIF_PROVIDER and WIF_SERVICE_ACCOUNT
+#
+# 5. Change the values for the GAR_LOCATION, SERVICE and REGION environment variables (below).
+#
+# NOTE: To use Google Container Registry instead, replace ${{ env.GAR_LOCATION }}-docker.pkg.dev with gcr.io
+#
+# For more support on how to run this workflow, please visit https://github.com/marketplace/actions/deploy-to-cloud-run
+#
+# Further reading:
+#   Cloud Run IAM permissions                 - https://cloud.google.com/run/docs/deploying
+#   Artifact Registry IAM permissions         - https://cloud.google.com/artifact-registry/docs/access-control#roles
+#   Container Registry vs Artifact Registry   - https://cloud.google.com/blog/products/application-development/understanding-artifact-registry-vs-container-registry
+#   Principle of least privilege              - https://cloud.google.com/blog/products/identity-security/dont-get-pwned-practicing-the-principle-of-least-privilege
+
+name: Build and Deploy to Cloud Run
+
+on:
+    push:
+        branches: ["feat/setup-node"]
+
+env:
+    PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }} # TODO: update Google Cloud project id
+    GAR_REPOSITORY_NAME: ${{ secrets.GAR_REPOSITORY_NAME }} # TODO: update Artifact Registry Repository name
+    SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+    REGION: ${{ secrets.REGION }} # TODO: update Cloud Run service region
+
+jobs:
+    deploy:
+        permissions:
+            contents: "read"
+            id-token: "write"
+
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Google Auth
+              id: auth
+              uses: "google-github-actions/auth@v2"
+              with:
+                  credentials_json: "${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}"
+
+            - name: Set Environment Variables
+              id: env-vars
+              run: |
+                  if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+                    echo "ENV=production" >> $GITHUB_ENV
+                    echo "ENV_FILE=.env.production" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=production-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "SERVICE=production" >> $GITHUB_ENV
+                  elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+                    echo "ENV=staging" >> $GITHUB_ENV
+                    echo "ENV_FILE=.env.staging" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=staging-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "SERVICE=staging" >> $GITHUB_ENV
+                  elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
+                    echo "ENV=dev" >> $GITHUB_ENV
+                    echo "ENV_FILE=.env.dev" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=setup-${{ github.sha }}" >> $GITHUB_END
+                    echo "SERVICE=setup" >> $GITHUB_ENV
+                  else
+                    echo "ENV=dev" >> $GITHUB_ENV
+                    echo "ENV_FILE=.env.dev" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "SERVICE=dev" >> $GITHUB_ENV
+                  fi
+
+            - name: Configure Docker to use gcloud
+              run: |-
+                  gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+            - name: Build and Push Container
+              run: |-
+                  docker build -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}" ./
+                  docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}"
+
+            - name: Deploy to Cloud Run
+              id: deploy
+              uses: google-github-actions/deploy-cloudrun@v2
+              with:
+                  service: ${{ env.SERVICE_NAME }}
+                  region: ${{ env.REGION }}
+                  image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}
+                  flags: "--allow-unauthenticated"
+
+            #- name: Show Output
+            #  run: echo ${{ steps.deploy.outputs.url }}
