@@ -1,0 +1,60 @@
+{
+    "name": "finboost-backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start:dev": "dotenv -e .env.dev -- nodemon ./src/app.js",
+        "start:staging": "dotenv -e .env.staging -- node ./src/app.js",
+        "start:production": "dotenv -e .env.production -- node ./src/app.js",
+        "migrate:dev": "dotenv -e .env.dev -- npx prisma migrate dev",
+        "migrate:staging": "dotenv -e .env.staging -- npx prisma migrate deploy",
+        "migrate:production": "dotenv -e .env.production -- npx prisma migrate deploy",
+        "seed:dev": "dotenv -e .env.dev -- npx prisma db seed",
+        "seed:staging": "dotenv -e .env.staging -- npx prisma db seed",
+        "seed:production": "dotenv -e .env.production -- npx prisma db seed",
+        "studio:dev": "dotenv -e .env.dev -- npx prisma studio",
+        "studio:staging": "dotenv -e .env.staging -- npx prisma studio",
+        "studio:production": "dotenv -e .env.production -- npx prisma studio",
+        "start:dev:windows": "dotenv.cmd -e .env.dev -- nodemon ./src/app.js",
+        "start:staging:windows": "dotenv.cmd -e .env.staging -- node ./src/app.js",
+        "start:production:windows": "dotenv.cmd -e .env.production -- node ./src/app.js",
+        "migrate:dev:windows": "dotenv.cmd -e .env.dev -- npx prisma migrate dev",
+        "migrate:staging:windows": "dotenv.cmd -e .env.staging -- npx prisma migrate deploy",
+        "migrate:production:windows": "dotenv.cmd -e .env.production -- npx prisma migrate deploy",
+        "seed:dev:windows": "dotenv.cmd -e .env.dev -- npx prisma db seed",
+        "seed:staging:windows": "dotenv.cmd -e .env.staging -- npx prisma db seed",
+        "seed:production:windows": "dotenv.cmd -e .env.production -- npx prisma db seed",
+        "studio:dev:windows": "dotenv.cmd -e .env.dev -- npx prisma studio",
+        "studio:staging:windows": "dotenv.cmd -e .env.staging -- npx prisma studio",
+        "studio:production:windows": "dotenv.cmd -e .env.production -- npx prisma studio",
+        "clean": "node ./prisma/clean.js",
+        "lint": "eslint ./src",
+        "test": "jest",
+        "generate:secret:jwt": "node -e console.log(require('crypto').randomBytes(32).toString('hex'))"
+    },
+    "prisma": {
+        "seed": "node ./prisma/seed.js"
+    },
+    "repository": "git@github.com:Finboost/finboost-backend.git",
+    "author": "Arman <armandwi.pangestu7@gmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "@faker-js/faker": "^8.4.1",
+        "nodemon": "^3.1.1",
+        "prisma": "^5.14.0"
+    },
+    "dependencies": {
+        "@google-cloud/storage": "^7.11.1",
+        "@prisma/client": "^5.14.0",
+        "bcrypt": "^5.1.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jsonwebtoken": "^9.0.2",
+        "multer": "^1.4.5-lts.1",
+        "swagger-ui-express": "^5.0.0",
+        "zod": "^3.23.8"
+    }
+}
