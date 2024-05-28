@@ -17,11 +17,11 @@
             "variables": {
                 "environment": {
                     "description": "Server Information",
-                    "default": "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                    "default": "production---finboost-backend-rtalegstna-et.a.run.app",
                     "enum": [
-                        "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
-                        "staging---finboost-backend-jzrwg5bjqq-et.a.run.app",
-                        "dev---finboost-backend-jzrwg5bjqq-et.a.run.app"
+                        "production---finboost-backend-rtalegstna-et.a.run.app",
+                        "staging---finboost-backend-rtalegstna-et.a.run.app",
+                        "dev---finboost-backend-rtalegstna-et.a.run.app"
                     ]
                 }
             }
