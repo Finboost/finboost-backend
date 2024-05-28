@@ -118,6 +118,9 @@ jobs:
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   fi
 
+            - name: Clear Docker cache
+              run: docker builder prune -f
+
             - name: Configure Docker to use gcloud
               run: |-
                   gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
