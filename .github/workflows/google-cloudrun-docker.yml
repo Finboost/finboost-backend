@@ -98,26 +98,24 @@ jobs:
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.STAGING_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
                   elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
                     echo "ENV=dev" >> $GITHUB_ENV
-                    echo "ENV_FILE=.env.dev" >> $GITHUB_ENV
                     echo "DOCKER_TAG=setup-${{ github.sha }}" >> $GITHUB_END
                     echo "SERVICE=setup" >> $GITHUB_ENV
-                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> $GITHUB_ENV
-                    echo "EXPRESS_PORT=${{ secrets.DEV_EXPRESS_PORT }}" >> $GITHUB_ENV
-                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
-                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" > .env.dev
+                    echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> .env.dev
+                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> .env.dev
+                    echo "EXPRESS_PORT=${{ secrets.DEV_EXPRESS_PORT }}" >> .env.dev
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   else
                     echo "ENV=dev" >> $GITHUB_ENV
-                    echo "ENV_FILE=.env.dev" >> $GITHUB_ENV
                     echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
                     echo "SERVICE=dev" >> $GITHUB_ENV
-                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> $GITHUB_ENV
-                    echo "EXPRESS_PORT=${{ secrets.DEV_EXPRESS_PORT }}" >> $GITHUB_ENV
-                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
-                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" > .env.dev
+                    echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> .env.dev
+                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> .env.dev
+                    echo "EXPRESS_PORT=${{ secrets.DEV_EXPRESS_PORT }}" >> .env.dev
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   fi
 
             - name: Configure Docker to use gcloud
@@ -137,7 +135,7 @@ jobs:
                   region: ${{ env.REGION }}
                   image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}
                   flags: "--allow-unauthenticated"
-                  env_vars: DATABASE_URL=${{ env.DATABASE_URL }},SHADOW_DATABASE_URL=${{ env.SHADOW_DATABASE_URL }},API_VERSION=${{ env.API_VERSION }},EXPRESS_PORT=${{ env.EXPRESS_PORT }},JWT_ACCESS_TOKEN_SECRET=${{ env.JWT_ACCESS_TOKEN_SECRET }},JWT_REFRESH_TOKEN_SECRET=${{ env.JWT_REFRESH_TOKEN_SECRET }}
+                  tag: ${{ env.ENV }}
 
             #- name: Show Output
             #  run: echo ${{ steps.deploy.outputs.url }}
