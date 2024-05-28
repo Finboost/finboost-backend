@@ -50,7 +50,6 @@ on:
             - "production"
             - "staging"
             - "dev"
-            - "feat/setup-node"
 
 env:
     PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }} # TODO: update Google Cloud project id
