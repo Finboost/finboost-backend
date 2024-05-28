@@ -46,12 +46,16 @@ name: Build and Deploy to Cloud Run
 
 on:
     push:
-        branches: ["feat/setup-node"]
+        branches:
+            - "production"
+            - "staging"
+            - "dev"
+            - "feat/setup-node"
 
 env:
     PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }} # TODO: update Google Cloud project id
     GAR_REPOSITORY_NAME: ${{ secrets.GAR_REPOSITORY_NAME }} # TODO: update Artifact Registry Repository name
-    SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+    SERVICE_NAME: ${{ secrets.SERVICE_NAME }} # TODO: update Cloud Run service name
     REGION: ${{ secrets.REGION }} # TODO: update Cloud Run service region
 
 jobs:
@@ -74,48 +78,42 @@ jobs:
             - name: Set Environment Variables
               id: env-vars
               run: |
-                  if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-                    echo "ENV=production" >> $GITHUB_ENV
-                    echo "ENV_FILE=.env.production" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=production-${{ github.sha }}" >> $GITHUB_ENV
-                    echo "SERVICE=production" >> $GITHUB_ENV
-                    echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "SHADOW_DATABASE_URL=${{ secrets.PROD_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "API_VERSION=${{ secrets.PROD_API_VERSION }}" >> $GITHUB_ENV
-                    echo "EXPRESS_PORT=${{ secrets.PROD_EXPRESS_PORT }}" >> $GITHUB_ENV
-                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.PROD_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
-                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.PROD_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
+                  if [[ "${GITHUB_REF##*/}" == "production" ]]; then
+                    echo "NODE_ENV=production" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" > .env.production
+                    echo "SHADOW_DATABASE_URL=${{ secrets.PRODUCTION_SHADOW_DATABASE_URL }}" >> .env.production
+                    echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.production
+                    echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.production
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.production
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.production
                   elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
-                    echo "ENV=staging" >> $GITHUB_ENV
-                    echo "ENV_FILE=.env.staging" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=staging-${{ github.sha }}" >> $GITHUB_ENV
-                    echo "SERVICE=staging" >> $GITHUB_ENV
-                    echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "SHADOW_DATABASE_URL=${{ secrets.STAGING_SHADOW_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "API_VERSION=${{ secrets.STAGING_API_VERSION }}" >> $GITHUB_ENV
-                    echo "EXPRESS_PORT=${{ secrets.STAGING_EXPRESS_PORT }}" >> $GITHUB_ENV
-                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.STAGING_JWT_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
-                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.STAGING_JWT_REFRESH_TOKEN_SECRET }}" >> $GITHUB_ENV
+                    echo "NODE_ENV=staging" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}" > .env.staging
+                    echo "SHADOW_DATABASE_URL=${{ secrets.STAGING_SHADOW_DATABASE_URL }}" >> .env.staging
+                    echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.staging
+                    echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.staging
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.staging
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.staging
                   elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
-                    echo "ENV=dev" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=setup-${{ github.sha }}" >> $GITHUB_END
-                    echo "SERVICE=setup" >> $GITHUB_ENV
+                    echo "NODE_ENV=dev" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" > .env.dev
                     echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> .env.dev
-                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> .env.dev
-                    echo "EXPRESS_PORT=${{ secrets.DEV_EXPRESS_PORT }}" >> .env.dev
-                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
-                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
+                    echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.dev
+                    echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.dev
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   else
-                    echo "ENV=dev" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
-                    echo "SERVICE=dev" >> $GITHUB_ENV
+                    echo "NODE_ENV=dev" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" > .env.dev
                     echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> .env.dev
-                    echo "API_VERSION=${{ secrets.DEV_API_VERSION }}" >> .env.dev
-                    echo "EXPRESS_PORT=${{ secrets.DEV_EXPRESS_PORT }}" >> .env.dev
-                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.DEV_JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
-                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.DEV_JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
+                    echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.dev
+                    echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.dev
+                    echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
+                    echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   fi
 
             - name: Clear Docker cache
@@ -127,8 +125,8 @@ jobs:
 
             - name: Build and Push Container
               run: |-
-                  docker build --build-arg NODE_ENV=${{ env.ENV }} -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}" ./
-                  docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}"
+                  docker build --build-arg NODE_ENV=${{ env.NODE_ENV }} -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.NODE_ENV }}:${{ env.DOCKER_TAG }}" ./
+                  docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.NODE_ENV }}:${{ env.DOCKER_TAG }}"
 
             - name: Deploy to Cloud Run
               id: deploy
@@ -136,9 +134,9 @@ jobs:
               with:
                   service: ${{ env.SERVICE_NAME }}
                   region: ${{ env.REGION }}
-                  image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ env.DOCKER_TAG }}
+                  image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.NODE_ENV }}:${{ env.DOCKER_TAG }}
                   flags: "--allow-unauthenticated"
-                  tag: ${{ env.ENV }}
+                  tag: ${{ env.NODE_ENV }}
 
             #- name: Show Output
             #  run: echo ${{ steps.deploy.outputs.url }}
