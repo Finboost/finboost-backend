@@ -1,6 +1,14 @@
 import { handleServerError } from "../exceptions/server.exception.js";
 import { handleZodError } from "../exceptions/zod.exception.js";
-import { getAllRoles, insertRole } from "../service/roles.service.js";
+import {
+    NotFoundError,
+    handleNotFoundError,
+} from "../exceptions/client.exception.js";
+import {
+    getAllRoles,
+    getRoleById,
+    insertRole,
+} from "../service/roles.service.js";
 import { z, string, object } from "zod";
 
 const roleSchema = object({
@@ -42,5 +50,26 @@ export const insertRoleHandler = async (req, res) => {
         } catch (err) {
             handleServerError(err, res);
         }
+    }
+};
+
+export const getRoleByIdHandler = async (req, res) => {
+    try {
+        const roleId = req.params.roleId;
+        const role = await getRoleById(res, roleId);
+
+        res.status(200).send({
+            status: "success",
+            message: "Get role data by id",
+            data: {
+                role,
+            },
+        });
+    } catch (error) {
+        // if (error instanceof NotFoundError) {
+        //     return;
+        // }
+        console.log(error);
+        handleServerError(error, res);
     }
 };

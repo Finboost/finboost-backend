@@ -4,3 +4,10 @@ export const handleNotFoundError = (res, message = "Resource not found") => {
         message: message,
     });
 };
+
+export class NotFoundError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "NotFoundError";
+    }
+}

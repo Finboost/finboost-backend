@@ -22,3 +22,19 @@ export const createRole = async (newRoledata) => {
 
     return newRole;
 };
+
+export const findRoleById = async (roleId) => {
+    const role = await prisma.role.findUnique({
+        where: {
+            id: roleId,
+        },
+        select: {
+            id: true,
+            name: true,
+            createdAt: true,
+            updatedAt: true,
+        },
+    });
+
+    return role;
+};
