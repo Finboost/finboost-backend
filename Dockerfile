@@ -5,6 +5,7 @@ ARG NODE_ENV
 
 # Set environment variable
 ENV NODE_ENV=${NODE_ENV}
+ENV PORT=8080
 
 RUN mkdir -p /opt/app
 
@@ -20,6 +21,6 @@ RUN npm install -g dotenv-cli
 
 RUN npx prisma generate
 
-EXPOSE 5000
+EXPOSE 8080
 
 CMD ["sh", "-c", "npm run start:${NODE_ENV}"]

@@ -6,7 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import { readFile } from "fs/promises";
 
 const app = express();
-const port = process.env.EXPRESS_PORT || 5000;
+const port = process.env.EXPRESS_PORT || 8080;
 
 const swaggerDocument = JSON.parse(
     await readFile(new URL("../openapi.json", import.meta.url))
