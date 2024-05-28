@@ -18,6 +18,8 @@ COPY . .
 
 RUN npm install -g dotenv-cli
 
+RUN npx prisma generate
+
 EXPOSE 5000
 
 CMD ["sh", "-c", "npm run start:${NODE_ENV}"]
