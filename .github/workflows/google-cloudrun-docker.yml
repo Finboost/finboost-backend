@@ -80,7 +80,7 @@ jobs:
               run: |
                   if [[ "${GITHUB_REF##*/}" == "production" ]]; then
                     echo "NODE_ENV=production" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=production-${{ github.sha }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" > .env.production
                     echo "SHADOW_DATABASE_URL=${{ secrets.PRODUCTION_SHADOW_DATABASE_URL }}" >> .env.production
                     echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.production
@@ -89,7 +89,7 @@ jobs:
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.production
                   elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
                     echo "NODE_ENV=staging" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=staging-${{ github.sha }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}" > .env.staging
                     echo "SHADOW_DATABASE_URL=${{ secrets.STAGING_SHADOW_DATABASE_URL }}" >> .env.staging
                     echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.staging
@@ -98,7 +98,7 @@ jobs:
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.staging
                   elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
                     echo "NODE_ENV=dev" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" > .env.dev
                     echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> .env.dev
                     echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.dev
@@ -107,7 +107,7 @@ jobs:
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   else
                     echo "NODE_ENV=dev" >> $GITHUB_ENV
-                    echo "DOCKER_TAG=${{ env.NODE_ENV }}-${{ github.sha }}" >> $GITHUB_ENV
+                    echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" > .env.dev
                     echo "SHADOW_DATABASE_URL=${{ secrets.DEV_SHADOW_DATABASE_URL }}" >> .env.dev
                     echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env.dev
