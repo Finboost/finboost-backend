@@ -1,5 +1,11 @@
 FROM node:20
 
+# Define build argument
+ARG NODE_ENV
+
+# Set environment variable
+ENV NODE_ENV=${NODE_ENV}
+
 RUN mkdir -p /opt/app
 
 WORKDIR /opt/app
