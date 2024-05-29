@@ -4,6 +4,7 @@ import { NotFoundError } from "../exceptions/client.exception.js";
 import {
     editRoleById,
     getAllRoles,
+    getAllRolesByName,
     getRoleById,
     insertRole,
     removeRoleById,
@@ -12,7 +13,14 @@ import { EditRoleSchema, InsertRoleSchema } from "../schema/roles.schema.js";
 
 export const getAllRolesHandler = async (req, res) => {
     try {
-        const roles = await getAllRoles();
+        const name = req.query.name;
+
+        let roles;
+        if (name) {
+            roles = await getAllRolesByName(name);
+        } else {
+            roles = await getAllRoles();
+        }
 
         res.status(200).send({
             status: "success",

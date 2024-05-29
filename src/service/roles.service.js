@@ -7,11 +7,18 @@ import {
     deleteRole,
     findRoleById,
     findRoles,
+    findRolesByName,
     updateRole,
 } from "../repository/roles.repository.js";
 
 export const getAllRoles = async () => {
     const roles = await findRoles();
+
+    return roles;
+};
+
+export const getAllRolesByName = async (name) => {
+    const roles = await findRolesByName(name);
 
     return roles;
 };

@@ -13,6 +13,16 @@ export const findRoles = async () => {
     return roles;
 };
 
+export const findRolesByName = async (name) => {
+    const roles = await prisma.role.findMany({
+        where: {
+            name,
+        },
+    });
+
+    return roles;
+};
+
 export const createRole = async (newRoledata) => {
     const newRole = await prisma.role.create({
         data: newRoledata,
