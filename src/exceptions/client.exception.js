@@ -3,6 +3,8 @@ export const handleNotFoundError = (res, message = "Resource not found") => {
         status: "fail",
         message: message,
     });
+
+    throw new NotFoundError(message);
 };
 
 export class NotFoundError extends Error {

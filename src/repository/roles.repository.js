@@ -15,9 +15,7 @@ export const findRoles = async () => {
 
 export const createRole = async (newRoledata) => {
     const newRole = await prisma.role.create({
-        data: {
-            nama: newRoledata,
-        },
+        data: newRoledata,
     });
 
     return newRole;
@@ -33,6 +31,27 @@ export const findRoleById = async (roleId) => {
             name: true,
             createdAt: true,
             updatedAt: true,
+        },
+    });
+
+    return role;
+};
+
+export const updateRole = async (roleId, newRoleData) => {
+    const role = await prisma.role.update({
+        where: {
+            id: roleId,
+        },
+        data: newRoleData,
+    });
+
+    return role;
+};
+
+export const deleteRole = async (roleId) => {
+    const role = await prisma.role.delete({
+        where: {
+            id: roleId,
         },
     });
 

@@ -4,8 +4,10 @@ import {
 } from "../exceptions/client.exception.js";
 import {
     createRole,
+    deleteRole,
     findRoleById,
     findRoles,
+    updateRole,
 } from "../repository/roles.repository.js";
 
 export const getAllRoles = async () => {
@@ -20,14 +22,24 @@ export const insertRole = async (newRoleData) => {
     return newRole;
 };
 
-export const getRoleById = async (roleId) => {
+export const getRoleById = async (roleId, res) => {
     const role = await findRoleById(roleId);
 
     if (!role) {
-        // handleNotFoundError(res, "Role not found");
-        // throw new NotFoundError("Role not found");
-        throw Error("Role not found");
+        handleNotFoundError(res, "Role not found");
     }
 
     return role;
+};
+
+export const editRoleById = async (roleId, newRoleData, res) => {
+    await getRoleById(roleId, res);
+    const role = await updateRole(roleId, newRoleData);
+
+    return role;
+};
+
+export const removeRoleById = async (roleId, res) => {
+    await getRoleById(roleId, res);
+    await deleteRole(roleId);
 };
