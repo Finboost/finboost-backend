@@ -33,7 +33,7 @@ export const getRoleById = async (roleId, res) => {
     const role = await findRoleById(roleId);
 
     if (!role) {
-        handleNotFoundError(res, "Role not found");
+        handleNotFoundError("Role not found", res);
     }
 
     return role;
