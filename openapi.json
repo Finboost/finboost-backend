@@ -1503,6 +1503,28 @@
                 "tags": ["Role", "User"],
                 "summary": "Get all user role",
                 "description": "Retrieve all user role",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get role by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User": {
+                                "description": "Get role by name User",
+                                "value": "User"
+                            },
+                            "Expert": {
+                                "description": "Get role by name Expert",
+                                "value": "Expert"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all user role",
