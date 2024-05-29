@@ -1,8 +1,17 @@
 import bcrypt from "bcrypt";
-import { SignUpUserSchema } from "../schema/auths.schema.js";
-import { signUpUser } from "../service/auths.service.js";
+import jwt from "jsonwebtoken";
+import { SignInUserSchema, SignUpUserSchema } from "../schema/auths.schema.js";
+import { editRefreshTokenUser, signUpUser } from "../service/auths.service.js";
 import { handleZodError } from "../exceptions/zod.exception.js";
-import { ConflictError } from "../exceptions/client.exception.js";
+import {
+    BadRequestError,
+    ConflictError,
+    NotFoundError,
+    handleBadRequestError,
+} from "../exceptions/client.exception.js";
+import { getUserByEmail } from "../service/users.service.js";
+import { handleServerError } from "../exceptions/server.exception.js";
+import { generateJwtToken } from "../utils/jwt.util.js";
 
 export const signUpUserHandler = async (req, res) => {
     try {
@@ -27,6 +36,70 @@ export const signUpUserHandler = async (req, res) => {
             handleZodError(error, res);
         } catch (err) {
             if (err instanceof ConflictError) {
+                return;
+            }
+            handleServerError(err, res);
+        }
+    }
+};
+
+export const signInUserHandler = async (req, res) => {
+    try {
+        const validateData = SignInUserSchema.parse(req.body);
+
+        const user = await getUserByEmail(validateData.email, res);
+
+        const match = await bcrypt.compare(
+            validateData.password,
+            user.password
+        );
+
+        if (!match) {
+            handleBadRequestError("Wrong password", res);
+        }
+
+        const payloadJwt = {
+            id: user.id,
+            fullName: user.fullName,
+            email: user.email,
+            role: user.role.name,
+        };
+
+        const accessToken = generateJwtToken(
+            payloadJwt,
+            process.env.JWT_ACCESS_TOKEN_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        const refreshToken = generateJwtToken(
+            payloadJwt,
+            process.env.JWT_REFRESH_TOKEN_SECRET,
+            { expiresIn: "30d" }
+        );
+
+        await editRefreshTokenUser(user.id, refreshToken, res);
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 day in miliseconds
+            secure: process.env.NODE_ENV === "production", // this is for HTTPS
+        });
+
+        res.status(200).send({
+            status: "success",
+            message: "Login successfully",
+            data: {
+                accessToken,
+            },
+        });
+    } catch (error) {
+        try {
+            handleZodError(error, res);
+        } catch (err) {
+            if (
+                err instanceof BadRequestError ||
+                err instanceof NotFoundError
+            ) {
                 return;
             }
             handleServerError(err, res);

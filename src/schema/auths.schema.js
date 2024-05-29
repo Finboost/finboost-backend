@@ -9,3 +9,8 @@ export const SignUpUserSchema = z.object({
     password: z.string(),
     roleId: z.string(),
 });
+
+export const SignInUserSchema = z.object({
+    email: z.string().email(),
+    password: z.string(),
+});
