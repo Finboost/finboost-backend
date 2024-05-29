@@ -9,9 +9,18 @@ import {
     NotFoundError,
     handleBadRequestError,
 } from "../exceptions/client.exception.js";
-import { getUserByEmail } from "../service/users.service.js";
+import {
+    getUserByEmail,
+    getUserByRefreshToken,
+} from "../service/users.service.js";
 import { handleServerError } from "../exceptions/server.exception.js";
 import { generateJwtToken } from "../utils/jwt.util.js";
+import { updateNullRefreshTokenUser } from "../repository/auths.repository.js";
+import {
+    MissingRefreshTokenError,
+    VerifyOwnerTokenError,
+    handleMissingRefreshTokenError,
+} from "../exceptions/auth.exception.js";
 
 export const signUpUserHandler = async (req, res) => {
     try {
@@ -104,5 +113,33 @@ export const signInUserHandler = async (req, res) => {
             }
             handleServerError(err, res);
         }
+    }
+};
+
+export const signOutUserHandler = async (req, res) => {
+    try {
+        const refreshToken = req.cookies.refreshToken;
+
+        if (!refreshToken) {
+            handleMissingRefreshTokenError(undefined, res);
+        }
+
+        const user = await getUserByRefreshToken(refreshToken, res);
+
+        await updateNullRefreshTokenUser(user.id);
+        res.clearCookie("refreshToken");
+
+        res.status(200).send({
+            status: "success",
+            message: "Logout successfully",
+        });
+    } catch (error) {
+        if (
+            error instanceof MissingRefreshTokenError ||
+            error instanceof VerifyOwnerTokenError
+        ) {
+            return;
+        }
+        handleServerError(error, res);
     }
 };

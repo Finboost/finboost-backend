@@ -20,3 +20,16 @@ export const updateRefreshTokenUser = async (userId, newRefreshToken) => {
 
     return user;
 };
+
+export const updateNullRefreshTokenUser = async (userId) => {
+    const user = await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            refreshToken: null,
+        },
+    });
+
+    return user;
+};
