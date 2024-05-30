@@ -658,18 +658,16 @@
                                                 "roomChat": {
                                                     "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
                                                     "name": "AI",
-                                                    "type": "AI",
-                                                    "users": [
-                                                        {
-                                                            "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
-                                                            "fullName": "John Doe",
-                                                            "email": "john@mail.com",
-                                                            "gender": "Laki-laki",
-                                                            "age": 23,
-                                                            "phoneNumber": "081234567890",
-                                                            "role": "User"
-                                                        }
-                                                    ],
+                                                    "type": "ai",
+                                                    "user": {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "fullName": "John Doe",
+                                                        "email": "john@mail.com",
+                                                        "gender": "Laki-laki",
+                                                        "age": 23,
+                                                        "phoneNumber": "081234567890",
+                                                        "role": "User"
+                                                    },
                                                     "createdAt": "2021-08-01T00:00:00.000Z",
                                                     "updatedAt": "2021-08-01T00:00:00.000Z"
                                                 }
@@ -732,28 +730,26 @@
                                             "data": {
                                                 "roomChat": {
                                                     "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
-                                                    "name": "AI",
-                                                    "type": "AI",
-                                                    "users": [
-                                                        {
-                                                            "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
-                                                            "fullName": "John Doe",
-                                                            "email": "john@mail.com",
-                                                            "gender": "Laki-laki",
-                                                            "age": 23,
-                                                            "phoneNumber": "081234567890",
-                                                            "role": "User"
-                                                        },
-                                                        {
-                                                            "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
-                                                            "fullName": "Jane Doe",
-                                                            "email": "jane@mail.com",
-                                                            "gender": "Perempuan",
-                                                            "age": 23,
-                                                            "phoneNumber": "0987654321",
-                                                            "role": "Expert"
-                                                        }
-                                                    ],
+                                                    "name": "Expert 1",
+                                                    "type": "expert",
+                                                    "user": {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "fullName": "John Doe",
+                                                        "email": "john@mail.com",
+                                                        "gender": "Laki-laki",
+                                                        "age": 23,
+                                                        "phoneNumber": "081234567890",
+                                                        "role": "User"
+                                                    },
+                                                    "expert": {
+                                                        "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5",
+                                                        "fullName": "Jane Doe",
+                                                        "email": "jane@mail.com",
+                                                        "gender": "Perempuan",
+                                                        "age": 23,
+                                                        "phoneNumber": "0987654321",
+                                                        "role": "Expert"
+                                                    },
                                                     "createdAt": "2021-08-01T00:00:00.000Z",
                                                     "updatedAt": "2021-08-01T00:00:00.000Z"
                                                 }
@@ -811,22 +807,92 @@
                                                 "roomChat": {
                                                     "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
                                                     "name": "AI 1",
-                                                    "type": "AI",
-                                                    "users": [
-                                                        {
-                                                            "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
-                                                            "fullName": "John Doe",
-                                                            "email": "john@mail.com",
-                                                            "gender": "Laki-laki",
-                                                            "age": 23,
-                                                            "phoneNumber": "081234567890",
-                                                            "role": "User"
-                                                        }
-                                                    ],
+                                                    "type": "ai",
+                                                    "user": {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "fullName": "John Doe",
+                                                        "email": "john@mail.com",
+                                                        "gender": "Laki-laki",
+                                                        "age": 23,
+                                                        "phoneNumber": "081234567890",
+                                                        "role": "User"
+                                                    },
                                                     "createdAt": "2021-08-01T00:00:00.000Z",
                                                     "updatedAt": "2021-08-01T00:00:00.000Z"
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/chats/ai/{id}/send":{
+            "post": {
+                "tags": ["Chat"],
+                "summary": "Send message to AI chat by ID",
+                "description": "Send message to AI chat by ID. Requires valid access token",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Room chat ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Example": {
+                                    "description": "Example send message to AI chat",
+                                    "value": {
+                                        "message": "Hello AI"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully send message to AI chat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "description": "Successfully send message to AI chat",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Send message to AI chat successfully"
                                         }
                                     }
                                 }
@@ -1113,13 +1179,14 @@
                         "type": "string"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": ["expert", "ai"]
                     },
-                    "users": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/User"
-                        }
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "expert": {
+                        "$ref": "#/components/schemas/User"
                     },
                     "createdAt": {
                         "type": "string"
