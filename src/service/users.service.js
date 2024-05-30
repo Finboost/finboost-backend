@@ -4,7 +4,14 @@ import {
     findUserByEmail,
     findUserById,
     findUserByRefreshToken,
+    findUsers,
 } from "../repository/users.repository.js";
+
+export const getAllUsers = async (filters) => {
+    const users = await findUsers(filters);
+
+    return users;
+};
 
 export const getUserById = async (userId, res) => {
     const user = await findUserById(userId);
