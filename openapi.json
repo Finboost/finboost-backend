@@ -428,6 +428,51 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "not provided refresh token": {
+                                        "description": "Fail to refresh token because the request not provided refresh token on cookies",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Unauthorized. Please provide `refreshToken` on cookies before request"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Fobidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "invalid refresh token": {
+                                        "description": "Fail to refresh token because invalid refresh token",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't find who the owner `refreshToken`"
+                                        }
+                                    },
+                                    "decode error": {
+                                        "description": "Fail to refresh token because decode error",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't decode or compare token with secret"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
                     }
