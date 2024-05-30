@@ -25,13 +25,13 @@ RUN npm install -g dotenv-cli
 RUN npx prisma generate
 
 # Stage 2: Run stage
-FROM gcr.io/distroless/nodejs:20
+# FROM gcr.io/distroless/nodejs:20
 
-# Copy built files from the build stage
-COPY --from=build /opt/app /opt/app
+# # Copy built files from the build stage
+# COPY --from=build /opt/app /opt/app
 
-# Set the working directory
-WORKDIR /opt/app
+# # Set the working directory
+# WORKDIR /opt/app
 
 # Expose the port
 EXPOSE 8080
