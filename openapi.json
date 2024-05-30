@@ -2948,6 +2948,78 @@
                     }
                 ]
             }
+        },
+        "/chats/ai/{id}/send":{
+            "post": {
+                "tags": ["Chat"],
+                "summary": "Send message to AI chat by ID",
+                "description": "Send message to AI chat by ID. Requires valid access token",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Room chat ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Example": {
+                                    "description": "Example send message to AI chat",
+                                    "value": {
+                                        "message": "Hello AI"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully send message to AI chat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Success"
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "description": "Successfully send message to AI chat",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Send message to AI chat successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
         }
     },
     "components": {
