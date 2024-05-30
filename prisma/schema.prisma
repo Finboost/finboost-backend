@@ -20,6 +20,7 @@ model User {
   email        String     @unique
   gender       UserGender
   age          Int
+  phoneNumber  String
   password     String
   refreshToken String?    @db.VarChar(512)
   createdAt    DateTime   @default(now())

@@ -1,4 +1,5 @@
-FROM node:20
+# Stage 1: Build stage
+FROM node:20 AS build
 
 # Define build argument
 ARG NODE_ENV
@@ -7,20 +8,32 @@ ARG NODE_ENV
 ENV NODE_ENV=${NODE_ENV}
 ENV PORT=8080
 
-RUN mkdir -p /opt/app
-
+# Create app directory
 WORKDIR /opt/app
 
-COPY package*.json .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the application code
 COPY . .
 
+# Generate Prisma client
 RUN npm install -g dotenv-cli
-
 RUN npx prisma generate
 
+# Stage 2: Run stage
+FROM gcr.io/distroless/nodejs:20
+
+# Copy built files from the build stage
+COPY --from=build /opt/app /opt/app
+
+# Set the working directory
+WORKDIR /opt/app
+
+# Expose the port
 EXPOSE 8080
 
 CMD ["sh", "-c", "npm run start:${NODE_ENV}"]

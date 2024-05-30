@@ -17,11 +17,11 @@
             "variables": {
                 "environment": {
                     "description": "Server Information",
-                    "default": "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                    "default": "production---finboost-backend-rtalegstna-et.a.run.app",
                     "enum": [
-                        "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
-                        "staging---finboost-backend-jzrwg5bjqq-et.a.run.app",
-                        "dev---finboost-backend-jzrwg5bjqq-et.a.run.app"
+                        "production---finboost-backend-rtalegstna-et.a.run.app",
+                        "staging---finboost-backend-rtalegstna-et.a.run.app",
+                        "dev---finboost-backend-rtalegstna-et.a.run.app"
                     ]
                 }
             }
@@ -76,7 +76,7 @@
                                     "value": {
                                         "fullName": "John Doe",
                                         "email": "john.doe@example.com",
-                                        "gender": "Laki-laki",
+                                        "gender": "Laki_laki",
                                         "age": 23,
                                         "phoneNumber": "081234567890",
                                         "password": "Lts47S~^{yp^)$I",
@@ -178,6 +178,25 @@
                             }
                         }
                     },
+                    "409": {
+                        "description": "Failed signup user because email already exist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Email already exist": {
+                                        "description": "Fail signup because email already exist",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "email already exist"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "content": {
@@ -190,26 +209,14 @@
                                         "description": "Fail signup due to database connection issue",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "database",
-                                                    "message": "Failed to connect to the database"
-                                                }
-                                            ]
+                                            "message": "Database connection error"
                                         }
                                     },
                                     "Unexpected server error": {
                                         "description": "Fail signup due to unexpected server error",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "server",
-                                                    "message": "Unexpected condition encountered"
-                                                }
-                                            ]
+                                            "message": "Unexpected server error"
                                         }
                                     }
                                 }
@@ -371,26 +378,14 @@
                                         "description": "Fail sigin due to database connection issue",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "database",
-                                                    "message": "Failed to connect to the database"
-                                                }
-                                            ]
+                                            "message": "Database connection error"
                                         }
                                     },
                                     "Unexpected server error": {
                                         "description": "Fail sigin due to unexpected server error",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "server",
-                                                    "message": "Unexpected condition encountered"
-                                                }
-                                            ]
+                                            "message": "Unexpected server error"
                                         }
                                     }
                                 }
@@ -427,6 +422,51 @@
                                         "value": {
                                             "status": "success",
                                             "message": "Logout successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "not provided refresh token": {
+                                        "description": "Fail to refresh token because the request not provided refresh token on cookies",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Unauthorized. Please provide `refreshToken` on cookies before request"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Fobidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "invalid refresh token": {
+                                        "description": "Fail to refresh token because invalid refresh token",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't find who the owner `refreshToken`"
+                                        }
+                                    },
+                                    "decode error": {
+                                        "description": "Fail to refresh token because decode error",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't decode or compare token with secret"
                                         }
                                     }
                                 }
@@ -1503,6 +1543,28 @@
                 "tags": ["Role", "User"],
                 "summary": "Get all user role",
                 "description": "Retrieve all user role",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get role by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User": {
+                                "description": "Get role by name User",
+                                "value": "User"
+                            },
+                            "Expert": {
+                                "description": "Get role by name Expert",
+                                "value": "Expert"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all user role",
