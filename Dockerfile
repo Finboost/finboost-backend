@@ -23,9 +23,10 @@ COPY . .
 # Generate Prisma client
 RUN npm install -g dotenv-cli
 RUN npx prisma generate
+RUN dotenv -e .env.${NODE_ENV} -- npx prisma migrate deploy
 
 # Stage 2: Run stage
-# FROM gcr.io/distroless/nodejs:20
+# FROM gcr.io/distroless/nodejs20-debian12
 
 # # Copy built files from the build stage
 # COPY --from=build /opt/app /opt/app
