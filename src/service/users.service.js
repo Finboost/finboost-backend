@@ -5,6 +5,7 @@ import {
     findUserById,
     findUserByRefreshToken,
     findUsers,
+    updateUser,
 } from "../repository/users.repository.js";
 
 export const getAllUsers = async (filters) => {
@@ -39,6 +40,14 @@ export const getUserByRefreshToken = async (refreshToken, res) => {
     if (!user) {
         handleVerifyOwnerTokenError(undefined, res);
     }
+
+    return user;
+};
+
+export const editUserById = async (userId, userData, res) => {
+    await getUserById(userId, res);
+
+    const user = await updateUser(userId, userData);
 
     return user;
 };

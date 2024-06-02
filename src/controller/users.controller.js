@@ -1,6 +1,12 @@
 import { NotFoundError } from "../exceptions/client.exception.js";
 import { handleServerError } from "../exceptions/server.exception.js";
-import { getAllUsers, getUserById } from "../service/users.service.js";
+import { handleZodError } from "../exceptions/zod.exception.js";
+import { UpdateAllFieldUserSchema } from "../schema/users.schema.js";
+import {
+    editUserById,
+    getAllUsers,
+    getUserById,
+} from "../service/users.service.js";
 
 export const getAllUsersHandler = async (req, res) => {
     try {
@@ -43,5 +49,32 @@ export const getUserByIdHandler = async (req, res) => {
             return;
         }
         handleServerError(error, res);
+    }
+};
+
+export const editUserAllFieldByIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const validateData = UpdateAllFieldUserSchema.parse(req.body);
+
+        const user = await editUserById(userId, validateData, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "User data updated successfully",
+            data: {
+                id: user.id,
+            },
+        });
+    } catch (error) {
+        try {
+            handleZodError(error, res);
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return;
+            }
+            handleServerError(err, res);
+        }
     }
 };
