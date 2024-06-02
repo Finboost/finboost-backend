@@ -7,10 +7,12 @@ export const UpdateAllFieldUserSchema = z.object({
     phoneNumber: z.string(),
 });
 
-export const UpdatePartialFieldUserSchema = z.object({
-    fullName: z.string().optional(),
-    email: z.string().email().optional(),
-    age: z.number().optional(),
-    phoneNumber: z.string().optional(),
-    password: z.string().optional(),
-});
+export const UpdatePartialFieldUserSchema = z
+    .object({
+        fullName: z.string().optional(),
+        email: z.string().email().optional(),
+        age: z.number().optional(),
+        phoneNumber: z.string().optional(),
+        password: z.string().optional(),
+    })
+    .strict();

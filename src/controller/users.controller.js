@@ -1,7 +1,11 @@
+import bcrypt from "bcrypt";
 import { NotFoundError } from "../exceptions/client.exception.js";
 import { handleServerError } from "../exceptions/server.exception.js";
 import { handleZodError } from "../exceptions/zod.exception.js";
-import { UpdateAllFieldUserSchema } from "../schema/users.schema.js";
+import {
+    UpdateAllFieldUserSchema,
+    UpdatePartialFieldUserSchema,
+} from "../schema/users.schema.js";
 import {
     editUserById,
     getAllUsers,
@@ -63,6 +67,41 @@ export const editUserAllFieldByIdHandler = async (req, res) => {
         res.status(200).send({
             status: "success",
             message: "User data updated successfully",
+            data: {
+                id: user.id,
+            },
+        });
+    } catch (error) {
+        try {
+            handleZodError(error, res);
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return;
+            }
+            handleServerError(err, res);
+        }
+    }
+};
+
+export const editUserPartialFieldByIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        let validateData = UpdatePartialFieldUserSchema.parse(req.body);
+
+        if (validateData.password) {
+            const salt = await bcrypt.genSalt();
+            validateData.password = await bcrypt.hash(
+                validateData.password,
+                salt
+            );
+        }
+
+        const user = await editUserById(userId, validateData, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "User data partially updated successfully",
             data: {
                 id: user.id,
             },
