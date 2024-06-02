@@ -4,6 +4,7 @@ import authsRouter from "./router/auths.router.js";
 import tokensRouter from "./router/tokens.router.js";
 import usersRouter from "./router/users.router.js";
 import worksRouter from "./router/works.router.js";
+import educationsRouter from "./router/educations.router.js";
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.use(authsRouter);
 app.use(tokensRouter);
 app.use(usersRouter);
 app.use(worksRouter);
+app.use(educationsRouter);
 
 export default app;
