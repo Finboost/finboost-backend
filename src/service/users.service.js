@@ -1,11 +1,12 @@
 import { handleVerifyOwnerTokenError } from "../exceptions/auth.exception.js";
 import { handleNotFoundError } from "../exceptions/client.exception.js";
 import {
+    deleteUserById,
     findUserByEmail,
     findUserById,
     findUserByRefreshToken,
     findUsers,
-    updateUser,
+    updateUserById,
 } from "../repository/users.repository.js";
 
 export const getAllUsers = async (filters) => {
@@ -47,7 +48,12 @@ export const getUserByRefreshToken = async (refreshToken, res) => {
 export const editUserById = async (userId, userData, res) => {
     await getUserById(userId, res);
 
-    const user = await updateUser(userId, userData);
+    const user = await updateUserById(userId, userData);
 
     return user;
+};
+
+export const removeUserById = async (userId, res) => {
+    await getUserById(userId, res);
+    await deleteUserById(userId);
 };

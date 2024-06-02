@@ -5,6 +5,7 @@ import {
     editUserPartialFieldByIdHandler,
     getAllUsersHandler,
     getUserByIdHandler,
+    removeUserByIdHandler,
 } from "../../controller/users.controller.js";
 
 const router = express.Router();
@@ -20,6 +21,11 @@ router.patch(
     "/users/:userId",
     verifyAccessTokenHandler,
     editUserPartialFieldByIdHandler
+);
+router.delete(
+    "/users/:userId",
+    verifyAccessTokenHandler,
+    removeUserByIdHandler
 );
 
 export default router;

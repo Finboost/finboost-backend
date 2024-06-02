@@ -98,12 +98,22 @@ export const findUserByRefreshToken = async (refreshToken) => {
     return user;
 };
 
-export const updateUser = async (userId, userData) => {
+export const updateUserById = async (userId, userData) => {
     const user = await prisma.user.update({
         where: {
             id: userId,
         },
         data: userData,
+    });
+
+    return user;
+};
+
+export const deleteUserById = async (userId) => {
+    const user = await prisma.user.delete({
+        where: {
+            id: userId,
+        },
     });
 
     return user;

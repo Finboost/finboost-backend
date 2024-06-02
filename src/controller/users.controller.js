@@ -10,6 +10,7 @@ import {
     editUserById,
     getAllUsers,
     getUserById,
+    removeUserById,
 } from "../service/users.service.js";
 
 export const getAllUsersHandler = async (req, res) => {
@@ -115,5 +116,25 @@ export const editUserPartialFieldByIdHandler = async (req, res) => {
             }
             handleServerError(err, res);
         }
+    }
+};
+
+export const removeUserByIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        await removeUserById(userId, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "Successfully delete user data",
+            data: {
+                id: userId,
+            },
+        });
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return;
+        }
+        handleServerError(error, res);
     }
 };
