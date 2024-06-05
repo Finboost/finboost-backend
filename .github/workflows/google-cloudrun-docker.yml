@@ -114,6 +114,7 @@ jobs:
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
                   fi
+                  echo ${{ secrets.GCLOUD_UPLOAD_AVATAR_SERVICE_ACCOUNT }} > serviceaccount.json
 
             - name: Clear Docker cache
               run: docker builder prune -f
