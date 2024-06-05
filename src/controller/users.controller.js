@@ -7,11 +7,18 @@ import {
     UpdatePartialFieldUserSchema,
 } from "../schema/users.schema.js";
 import {
+    editAvatarUser,
     editUserById,
     getAllUsers,
     getUserById,
     removeUserById,
 } from "../service/users.service.js";
+import { findUserProfileByUserId } from "../repository/users.repository.js";
+import {
+    deleteFileFromBucket,
+    getFileNameFromUrl,
+    getPublicUrl,
+} from "../utils/bucket.util.js";
 
 export const getAllUsersHandler = async (req, res) => {
     try {
@@ -122,6 +129,22 @@ export const editUserPartialFieldByIdHandler = async (req, res) => {
 export const removeUserByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
+
+        const userProfile = await findUserProfileByUserId(userId);
+        const userAvatar = userProfile?.avatar;
+
+        const fileName = getFileNameFromUrl(userAvatar);
+        const maleAvatarUrl = getPublicUrl("male.png");
+        const femaleAvatarUrl = getPublicUrl("female.png");
+
+        if (
+            userAvatar &&
+            userAvatar !== maleAvatarUrl &&
+            userAvatar !== femaleAvatarUrl
+        ) {
+            await deleteFileFromBucket(fileName);
+        }
+
         await removeUserById(userId, res);
 
         res.status(200).send({
@@ -129,6 +152,47 @@ export const removeUserByIdHandler = async (req, res) => {
             message: "Successfully delete user data",
             data: {
                 id: userId,
+            },
+        });
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return;
+        }
+        handleServerError(error, res);
+    }
+};
+
+export const editAvatarUserHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        let imageUrl = "";
+
+        if (req.file && req.file.cloudStoragePublicUrl) {
+            imageUrl = req.file.cloudStoragePublicUrl;
+        }
+
+        const userProfile = await findUserProfileByUserId(userId);
+        const oldAvatar = userProfile?.avatar;
+
+        const fileName = getFileNameFromUrl(oldAvatar);
+        const maleAvatarUrl = getPublicUrl("male.png");
+        const femaleAvatarUrl = getPublicUrl("female.png");
+
+        if (
+            oldAvatar &&
+            oldAvatar !== maleAvatarUrl &&
+            oldAvatar !== femaleAvatarUrl
+        ) {
+            await deleteFileFromBucket(fileName);
+        }
+
+        const newAvatarUserData = await editAvatarUser(userId, imageUrl, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "Avatar user updated successfully",
+            data: {
+                id: newAvatarUserData.userId,
             },
         });
     } catch (error) {

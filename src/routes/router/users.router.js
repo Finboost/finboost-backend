@@ -1,12 +1,17 @@
 import express from "express";
 import { verifyAccessTokenHandler } from "../../middlewares/tokens.middleware.js";
 import {
+    editAvatarUserHandler,
     editUserAllFieldByIdHandler,
     editUserPartialFieldByIdHandler,
     getAllUsersHandler,
     getUserByIdHandler,
     removeUserByIdHandler,
 } from "../../controller/users.controller.js";
+import {
+    uploadAvatar,
+    uploadToGcs,
+} from "../../middlewares/images.middleware.js";
 
 const router = express.Router();
 
@@ -26,6 +31,13 @@ router.delete(
     "/users/:userId",
     verifyAccessTokenHandler,
     removeUserByIdHandler
+);
+router.put(
+    "/users/:userId/profile/avatar",
+    verifyAccessTokenHandler,
+    uploadAvatar.single("avatar"),
+    uploadToGcs,
+    editAvatarUserHandler
 );
 
 export default router;
