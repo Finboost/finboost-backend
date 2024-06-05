@@ -86,6 +86,7 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.production
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.production
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.production
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.production
                     echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.production
                   elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
                     echo "NODE_ENV=staging" >> $GITHUB_ENV
@@ -96,6 +97,7 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.staging
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.staging
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.staging
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.staging
                     echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.staging
                   elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
                     echo "NODE_ENV=dev" >> $GITHUB_ENV
@@ -106,6 +108,7 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.dev
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.dev
                     echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.dev
                   else
                     echo "NODE_ENV=dev" >> $GITHUB_ENV
@@ -116,6 +119,7 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.dev
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.dev
                     echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.dev
                   fi
                   echo ${{ secrets.GCLOUD_UPLOAD_AVATAR_SERVICE_ACCOUNT }} > serviceaccount.json
