@@ -1854,6 +1854,28 @@
                 "tags": ["Work", "User", "Profile"],
                 "summary": "Get all work profile user",
                 "description": "Retrieve all work profile user",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get specific work data by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "Work 1": {
+                                "description": "Get specific work data by name",
+                                "value": "Pegawai Swasta"
+                            },
+                            "Work 2": {
+                                "description": "Get specific work data by name",
+                                "value": "Profesional"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all work profile user",
@@ -2183,6 +2205,28 @@
                 "tags": ["Education", "User", "Profile"],
                 "summary": "Get all education profile user",
                 "description": "Retrieve all education profile user",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get specific education data by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "Education 1": {
+                                "description": "Get specific education data by name",
+                                "value": "SD"
+                            },
+                            "Education 2": {
+                                "description": "Get specific education data by name",
+                                "value": "Diploma"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all education profile user",
