@@ -46,20 +46,20 @@ model Role {
 }
 
 model Profile {
-  id              String         @id @default(uuid())
-  avatar          String
-  maritalStatus   ProfileMarital
-  certifiedStatus String
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id              String          @id @default(uuid())
+  avatar          String?
+  maritalStatus   ProfileMarital?
+  certifiedStatus String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
-  work   Work   @relation(fields: [workId], references: [id])
-  workId String
+  work   Work?   @relation(fields: [workId], references: [id])
+  workId String?
 
-  education   Education @relation(fields: [educationId], references: [id])
-  educationId String
+  education   Education? @relation(fields: [educationId], references: [id])
+  educationId String?
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
   @@map("profiles")
