@@ -13,7 +13,19 @@ export const signUpUser = async (newUserData, res) => {
         handleConflictError("Email already exist", res);
     }
 
-    const newUser = await createUser(newUserData);
+    const avatarDefault =
+        newUserData.gender === "Laki_laki"
+            ? `https://storage.googleapis.com/${process.env.GCLOUD_BUCKET_NAME}/male.png`
+            : `https://storage.googleapis.com/${process.env.GCLOUD_BUCKET_NAME}/female.png`;
+
+    const newUser = await createUser({
+        ...newUserData,
+        profile: {
+            create: {
+                avatar: avatarDefault,
+            },
+        },
+    });
 
     return newUser;
 };
