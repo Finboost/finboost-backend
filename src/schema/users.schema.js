@@ -16,3 +16,12 @@ export const UpdatePartialFieldUserSchema = z
         password: z.string().optional(),
     })
     .strict();
+
+export const UpdatePartialFieldUserProfileSchema = z
+    .object({
+        maritalStatus: z.enum(["Lajang", "Menikah", "Cerai"]).optional(),
+        certifiedStatus: z.string().optional(),
+        workId: z.string().optional(),
+        educationId: z.string().optional(),
+    })
+    .strict();

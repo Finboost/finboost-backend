@@ -4,11 +4,13 @@ import { handleServerError } from "../exceptions/server.exception.js";
 import { handleZodError } from "../exceptions/zod.exception.js";
 import {
     UpdateAllFieldUserSchema,
+    UpdatePartialFieldUserProfileSchema,
     UpdatePartialFieldUserSchema,
 } from "../schema/users.schema.js";
 import {
     editAvatarUser,
     editUserById,
+    editUserProfileByUserId,
     getAllUsers,
     getUserById,
     getUserProfileByUserId,
@@ -111,6 +113,35 @@ export const editUserPartialFieldByIdHandler = async (req, res) => {
         res.status(200).send({
             status: "success",
             message: "User data partially updated successfully",
+            data: {
+                id: user.id,
+            },
+        });
+    } catch (error) {
+        try {
+            handleZodError(error, res);
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return;
+            }
+            handleServerError(err, res);
+        }
+    }
+};
+
+export const editUserProfilePartialFieldByUserIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const validateData = UpdatePartialFieldUserProfileSchema.parse(
+            req.body
+        );
+
+        const user = await editUserProfileByUserId(userId, validateData, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "User profile data updated successfully",
             data: {
                 id: user.id,
             },

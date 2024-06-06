@@ -10,6 +10,7 @@ import {
     findUsers,
     updateAvatarUserByUserId,
     updateUserById,
+    updateUserProfileByUserId,
 } from "../repository/users.repository.js";
 
 export const getAllUsers = async (filters) => {
@@ -66,6 +67,13 @@ export const getUserProfileByUserId = async (userId, res) => {
     const profile = await findUserProfileByUserId(userId);
 
     return profile;
+};
+
+export const editUserProfileByUserId = async (userId, userData, res) => {
+    await getUserById(userId, res);
+    const newUserProfile = await updateUserProfileByUserId(userId, userData);
+
+    return newUserProfile;
 };
 
 export const editAvatarUser = async (userId, imageUrl, res) => {

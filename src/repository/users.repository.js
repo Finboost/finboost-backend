@@ -139,6 +139,30 @@ export const findUserProfileByUserId = async (userId) => {
     return profile;
 };
 
+export const updateUserProfileByUserId = async (userId, userData) => {
+    const newUserProfile = await prisma.profile.update({
+        where: {
+            userId,
+        },
+        data: {
+            ...(userData.maritalStatus && {
+                maritalStatus: userData.maritalStatus,
+            }),
+            ...(userData.certifiedStatus && {
+                certifiedStatus: userData.certifiedStatus,
+            }),
+            ...(userData.workId && {
+                work: { connect: { id: userData.workId } },
+            }),
+            ...(userData.educationId && {
+                education: { connect: { id: userData.educationId } },
+            }),
+        },
+    });
+
+    return newUserProfile;
+};
+
 export const createBlankProfileWithUserId = async (userId) => {
     const user = await prisma.profile.create({
         data: {

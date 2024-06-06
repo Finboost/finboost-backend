@@ -4,6 +4,7 @@ import {
     editAvatarUserHandler,
     editUserAllFieldByIdHandler,
     editUserPartialFieldByIdHandler,
+    editUserProfilePartialFieldByUserIdHandler,
     getAllUsersHandler,
     getUserByIdHandler,
     getUserProfileByUserIdHandler,
@@ -37,6 +38,11 @@ router.get(
     "/users/:userId/profile",
     verifyAccessTokenHandler,
     getUserProfileByUserIdHandler
+);
+router.patch(
+    "/users/:userId/profile",
+    verifyAccessTokenHandler,
+    editUserProfilePartialFieldByUserIdHandler
 );
 router.put(
     "/users/:userId/profile/avatar",
