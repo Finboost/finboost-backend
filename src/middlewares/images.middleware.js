@@ -1,7 +1,6 @@
 import multer from "multer";
 import dateFormat from "dateformat";
 import { Storage } from "@google-cloud/storage";
-import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { getPublicUrl } from "../utils/bucket.util.js";
 import { getUserById } from "../service/users.service.js";
@@ -48,7 +47,6 @@ export const uploadToGcs = async (req, res, next) => {
 
         await getUserById(req.params.userId, res);
 
-        const uniqueId = uuidv4();
         const extension = req.file.mimetype.split("/")[1];
         const fileName = `${req.params.userId}-${dateFormat(
             new Date(),
