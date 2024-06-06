@@ -122,9 +122,6 @@ jobs:
                     echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.dev
                     echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.dev
                   fi
-                  echo "${{ secrets.GCLOUD_UPLOAD_AVATAR_SERVICE_ACCOUNT }}" > tmp.json
-                  sed -E 's/([a-zA-Z0-9_]+): ([^,}]+)/"\1": "\2"/g; s/""https":/https:\/\//g' tmp.json > serviceaccount.json
-                  rm tmp.json
 
             - name: Clear Docker cache
               run: docker builder prune -f

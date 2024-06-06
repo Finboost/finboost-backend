@@ -5,7 +5,6 @@ const serviceAccountPathKey = path.resolve("./serviceaccount.json");
 
 const gcs = new Storage({
     projectId: process.env.GCLOUD_PROJECT_ID,
-    keyFilename: serviceAccountPathKey,
 });
 
 const bucketName = process.env.GCLOUD_BUCKET_NAME;
