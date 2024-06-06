@@ -122,7 +122,7 @@ jobs:
                     echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.dev
                     echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.dev
                   fi
-                  echo ${{ secrets.GCLOUD_UPLOAD_AVATAR_SERVICE_ACCOUNT }} > serviceaccount.json
+                  echo "${{ secrets.GCLOUD_UPLOAD_AVATAR_SERVICE_ACCOUNT }}" > serviceaccount.json
 
             - name: Clear Docker cache
               run: docker builder prune -f
