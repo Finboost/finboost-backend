@@ -1,10 +1,15 @@
 import { handleVerifyOwnerTokenError } from "../exceptions/auth.exception.js";
 import { handleNotFoundError } from "../exceptions/client.exception.js";
 import {
+    createBlankProfileWithUserId,
+    deleteUserById,
     findUserByEmail,
     findUserById,
     findUserByRefreshToken,
+    findUserProfileByUserId,
     findUsers,
+    updateAvatarUserByUserId,
+    updateUserById,
 } from "../repository/users.repository.js";
 
 export const getAllUsers = async (filters) => {
@@ -41,4 +46,30 @@ export const getUserByRefreshToken = async (refreshToken, res) => {
     }
 
     return user;
+};
+
+export const editUserById = async (userId, userData, res) => {
+    await getUserById(userId, res);
+
+    const user = await updateUserById(userId, userData);
+
+    return user;
+};
+
+export const removeUserById = async (userId, res) => {
+    await getUserById(userId, res);
+    await deleteUserById(userId);
+};
+
+export const editAvatarUser = async (userId, imageUrl, res) => {
+    await getUserById(userId, res);
+    const userProfile = await findUserProfileByUserId(userId);
+
+    if (!userProfile) {
+        await createBlankProfileWithUserId(userId);
+    }
+
+    const updateAvatarUser = await updateAvatarUserByUserId(userId, imageUrl);
+
+    return updateAvatarUser;
 };

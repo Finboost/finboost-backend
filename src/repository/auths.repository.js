@@ -2,7 +2,14 @@ import prisma from "../../db/prisma.js";
 
 export const createUser = async (newUserData) => {
     const newUser = await prisma.user.create({
-        data: newUserData,
+        data: {
+            ...newUserData,
+            profile: {
+                create: {
+                    avatar: newUserData.profile.create.avatar,
+                },
+            },
+        },
     });
 
     return newUser;

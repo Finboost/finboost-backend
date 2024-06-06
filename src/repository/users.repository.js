@@ -97,3 +97,61 @@ export const findUserByRefreshToken = async (refreshToken) => {
 
     return user;
 };
+
+export const updateUserById = async (userId, userData) => {
+    const user = await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: userData,
+    });
+
+    return user;
+};
+
+export const deleteUserById = async (userId) => {
+    const user = await prisma.user.delete({
+        where: {
+            id: userId,
+        },
+    });
+
+    return user;
+};
+
+export const findUserProfileByUserId = async (userId) => {
+    const user = await prisma.profile.findUnique({
+        where: {
+            userId,
+        },
+    });
+
+    return user;
+};
+
+export const createBlankProfileWithUserId = async (userId) => {
+    const user = await prisma.profile.create({
+        data: {
+            user: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+
+    return user;
+};
+
+export const updateAvatarUserByUserId = async (userId, imageUrl) => {
+    const user = await prisma.profile.update({
+        where: {
+            userId,
+        },
+        data: {
+            avatar: imageUrl,
+        },
+    });
+
+    return user;
+};
