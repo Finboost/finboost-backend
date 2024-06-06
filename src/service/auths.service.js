@@ -4,6 +4,7 @@ import {
     updateRefreshTokenUser,
 } from "../repository/auths.repository.js";
 import { findUserByEmail } from "../repository/users.repository.js";
+import { getPublicUrl } from "../utils/bucket.util.js";
 import { getUserById } from "./users.service.js";
 
 export const signUpUser = async (newUserData, res) => {
@@ -15,8 +16,8 @@ export const signUpUser = async (newUserData, res) => {
 
     const avatarDefault =
         newUserData.gender === "Laki_laki"
-            ? `https://storage.googleapis.com/${process.env.GCLOUD_BUCKET_NAME}/male.png`
-            : `https://storage.googleapis.com/${process.env.GCLOUD_BUCKET_NAME}/female.png`;
+            ? getPublicUrl("male.png")
+            : getPublicUrl("female.png");
 
     const newUser = await createUser({
         ...newUserData,
