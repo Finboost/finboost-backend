@@ -42,11 +42,11 @@
     "devDependencies": {
         "@faker-js/faker": "^8.4.1",
         "nodemon": "^3.1.1",
-        "prisma": "^5.14.0"
+        "prisma": "^5.15.0"
     },
     "dependencies": {
         "@google-cloud/storage": "^7.11.1",
-        "@prisma/client": "^5.14.0",
+        "@prisma/client": "^5.15.0",
         "bcrypt": "^5.1.1",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
@@ -56,7 +56,6 @@
         "jsonwebtoken": "^9.0.2",
         "multer": "^1.4.5-lts.1",
         "swagger-ui-express": "^5.0.0",
-        "uuid": "^9.0.1",
         "zod": "^3.23.8"
     }
 }
