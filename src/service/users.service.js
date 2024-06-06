@@ -3,6 +3,7 @@ import { handleNotFoundError } from "../exceptions/client.exception.js";
 import {
     createBlankProfileWithUserId,
     deleteUserById,
+    deleteUserProfileByUserId,
     findUserByEmail,
     findUserById,
     findUserByRefreshToken,
@@ -10,6 +11,7 @@ import {
     findUsers,
     updateAvatarUserByUserId,
     updateUserById,
+    updateUserProfileByUserId,
 } from "../repository/users.repository.js";
 
 export const getAllUsers = async (filters) => {
@@ -59,6 +61,27 @@ export const editUserById = async (userId, userData, res) => {
 export const removeUserById = async (userId, res) => {
     await getUserById(userId, res);
     await deleteUserById(userId);
+};
+
+export const getUserProfileByUserId = async (userId, res) => {
+    await getUserById(userId, res);
+    const profile = await findUserProfileByUserId(userId);
+
+    return profile;
+};
+
+export const editUserProfileByUserId = async (userId, userData, res) => {
+    await getUserById(userId, res);
+    const newUserProfile = await updateUserProfileByUserId(userId, userData);
+
+    return newUserProfile;
+};
+
+export const removeUserProfileByUserId = async (userId, res) => {
+    await getUserById(userId, res);
+    const profile = await deleteUserProfileByUserId(userId);
+
+    return profile;
 };
 
 export const editAvatarUser = async (userId, imageUrl, res) => {

@@ -4,9 +4,12 @@ import {
     editAvatarUserHandler,
     editUserAllFieldByIdHandler,
     editUserPartialFieldByIdHandler,
+    editUserProfilePartialFieldByUserIdHandler,
     getAllUsersHandler,
     getUserByIdHandler,
+    getUserProfileByUserIdHandler,
     removeUserByIdHandler,
+    removeUserProfileByUserIdHandler,
 } from "../../controller/users.controller.js";
 import {
     uploadAvatar,
@@ -31,6 +34,21 @@ router.delete(
     "/users/:userId",
     verifyAccessTokenHandler,
     removeUserByIdHandler
+);
+router.get(
+    "/users/:userId/profile",
+    verifyAccessTokenHandler,
+    getUserProfileByUserIdHandler
+);
+router.patch(
+    "/users/:userId/profile",
+    verifyAccessTokenHandler,
+    editUserProfilePartialFieldByUserIdHandler
+);
+router.delete(
+    "/users/:userId/profile",
+    verifyAccessTokenHandler,
+    removeUserProfileByUserIdHandler
 );
 router.put(
     "/users/:userId/profile/avatar",

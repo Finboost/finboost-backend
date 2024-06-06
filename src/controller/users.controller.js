@@ -4,14 +4,18 @@ import { handleServerError } from "../exceptions/server.exception.js";
 import { handleZodError } from "../exceptions/zod.exception.js";
 import {
     UpdateAllFieldUserSchema,
+    UpdatePartialFieldUserProfileSchema,
     UpdatePartialFieldUserSchema,
 } from "../schema/users.schema.js";
 import {
     editAvatarUser,
     editUserById,
+    editUserProfileByUserId,
     getAllUsers,
     getUserById,
+    getUserProfileByUserId,
     removeUserById,
+    removeUserProfileByUserId,
 } from "../service/users.service.js";
 import { findUserProfileByUserId } from "../repository/users.repository.js";
 import {
@@ -126,11 +130,80 @@ export const editUserPartialFieldByIdHandler = async (req, res) => {
     }
 };
 
+export const editUserProfilePartialFieldByUserIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const validateData = UpdatePartialFieldUserProfileSchema.parse(
+            req.body
+        );
+
+        const user = await editUserProfileByUserId(userId, validateData, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "User profile data updated successfully",
+            data: {
+                id: user.id,
+            },
+        });
+    } catch (error) {
+        try {
+            handleZodError(error, res);
+        } catch (err) {
+            if (err instanceof NotFoundError) {
+                return;
+            }
+            handleServerError(err, res);
+        }
+    }
+};
+
+export const removeUserProfileByUserIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const userProfile = await getUserProfileByUserId(userId);
+        const userAvatar = userProfile?.avatar;
+        const user = await getUserById(userId, res);
+        const userGender = user.gender === "Laki_laki" ? "male" : "female";
+        const userGenderAvatarUrl = getPublicUrl(`${userGender}.png`);
+
+        const fileName = getFileNameFromUrl(userAvatar);
+        const maleAvatarUrl = getPublicUrl("male.png");
+        const femaleAvatarUrl = getPublicUrl("female.png");
+
+        if (
+            userAvatar &&
+            userAvatar !== maleAvatarUrl &&
+            userAvatar !== femaleAvatarUrl
+        ) {
+            await deleteFileFromBucket(fileName);
+        }
+
+        await removeUserProfileByUserId(userId, res);
+        await editAvatarUser(userId, userGenderAvatarUrl);
+
+        res.status(200).send({
+            status: "success",
+            message: "Successfully delete user profile data",
+            data: {
+                id: userId,
+            },
+        });
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return;
+        }
+        handleServerError(error, res);
+    }
+};
+
 export const removeUserByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const userProfile = await findUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId);
         const userAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(userAvatar);
@@ -162,6 +235,27 @@ export const removeUserByIdHandler = async (req, res) => {
     }
 };
 
+export const getUserProfileByUserIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const profile = await getUserProfileByUserId(userId, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "Get user data by id",
+            data: {
+                profile,
+            },
+        });
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return;
+        }
+        handleServerError(error, res);
+    }
+};
+
 export const editAvatarUserHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -171,7 +265,7 @@ export const editAvatarUserHandler = async (req, res) => {
             imageUrl = req.file.cloudStoragePublicUrl;
         }
 
-        const userProfile = await findUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId);
         const oldAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(oldAvatar);

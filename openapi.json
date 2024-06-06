@@ -1201,188 +1201,6 @@
                     }
                 ]
             },
-            "post": {
-                "tags": ["User", "Profile"],
-                "summary": "Insert user profile data by user id",
-                "description": "Insert specific user profile by user id. Requires valid access token",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/UserId"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InsertAllFieldProfile"
-                            },
-                            "examples": {
-                                "User 1": {
-                                    "description": "Example request to insert user profile",
-                                    "value": {
-                                        "maritalStatus": "Menikah",
-                                        "certifiedStatus": null,
-                                        "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
-                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
-                                    }
-                                },
-                                "User 2": {
-                                    "description": "Example request to insert user profile",
-                                    "value": {
-                                        "maritalStatus": "Cerai",
-                                        "certifiedStatus": "Certified Financial Planner",
-                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
-                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successfully updated user profile data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
-                                },
-                                "examples": {
-                                    "User 1": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
-                                            }
-                                        }
-                                    },
-                                    "User 2": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/MiddlewareForbiddenError"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/ErrorUserNotFound"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": ["User", "Profile"],
-                "summary": "Update user profile data by user id",
-                "description": "Update specific user profile by user id. Requires valid access token",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/UserId"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateAllFieldProfile"
-                            },
-                            "examples": {
-                                "User 1": {
-                                    "description": "Example request to update user profile",
-                                    "value": {
-                                        "maritalStatus": "Menikah",
-                                        "certifiedStatus": null,
-                                        "workId": "72608273-18c1-4924-b67f-d67225e73faa",
-                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
-                                    }
-                                },
-                                "User 2": {
-                                    "description": "Example request to update user profile",
-                                    "value": {
-                                        "maritalStatus": "Cerai",
-                                        "certifiedStatus": "Certified Financial Planner",
-                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
-                                        "educationId": "bd2bb42f-d42e-4b7d-a3f4-221a867d1836"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successfully updated user profile data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
-                                },
-                                "examples": {
-                                    "User 1": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
-                                            }
-                                        }
-                                    },
-                                    "User 2": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/MiddlewareForbiddenError"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/ErrorUserNotFound"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
             "patch": {
                 "tags": ["User", "Profile"],
                 "summary": "Partial update user profile data by user id",
@@ -1404,6 +1222,7 @@
                                     "description": "Example request to partially update user profile",
                                     "value": {
                                         "maritalStatus": "Lajang",
+                                        "certifiedStatus": null,
                                         "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
                                         "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
                                     }
@@ -1412,6 +1231,7 @@
                                     "description": "Example request to update user profile",
                                     "value": {
                                         "maritalStatus": "Menikah",
+                                        "certifiedStatus": "Certified Financial Planner (CFP)",
                                         "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
                                         "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
                                     }

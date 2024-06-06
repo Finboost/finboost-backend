@@ -120,13 +120,63 @@ export const deleteUserById = async (userId) => {
 };
 
 export const findUserProfileByUserId = async (userId) => {
-    const user = await prisma.profile.findUnique({
+    const profile = await prisma.profile.findUnique({
         where: {
             userId,
         },
+        select: {
+            id: true,
+            avatar: true,
+            maritalStatus: true,
+            certifiedStatus: true,
+            work: true,
+            education: true,
+            createdAt: true,
+            updatedAt: true,
+        },
     });
 
-    return user;
+    return profile;
+};
+
+export const updateUserProfileByUserId = async (userId, userData) => {
+    const newUserProfile = await prisma.profile.update({
+        where: {
+            userId,
+        },
+        data: {
+            ...(userData.maritalStatus && {
+                maritalStatus: userData.maritalStatus,
+            }),
+            ...(userData.certifiedStatus && {
+                certifiedStatus: userData.certifiedStatus,
+            }),
+            ...(userData.workId && {
+                work: { connect: { id: userData.workId } },
+            }),
+            ...(userData.educationId && {
+                education: { connect: { id: userData.educationId } },
+            }),
+        },
+    });
+
+    return newUserProfile;
+};
+
+export const deleteUserProfileByUserId = async (userId) => {
+    const userProfile = await prisma.profile.update({
+        where: {
+            userId,
+        },
+        data: {
+            maritalStatus: null,
+            certifiedStatus: null,
+            workId: null,
+            educationId: null,
+        },
+    });
+
+    return userProfile;
 };
 
 export const createBlankProfileWithUserId = async (userId) => {
