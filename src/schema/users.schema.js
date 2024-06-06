@@ -20,7 +20,7 @@ export const UpdatePartialFieldUserSchema = z
 export const UpdatePartialFieldUserProfileSchema = z
     .object({
         maritalStatus: z.enum(["Lajang", "Menikah", "Cerai"]).optional(),
-        certifiedStatus: z.string().optional(),
+        certifiedStatus: z.string().nullable().optional(),
         workId: z.string().optional(),
         educationId: z.string().optional(),
     })
