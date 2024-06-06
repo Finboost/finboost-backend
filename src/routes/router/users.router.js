@@ -6,6 +6,7 @@ import {
     editUserPartialFieldByIdHandler,
     getAllUsersHandler,
     getUserByIdHandler,
+    getUserProfileByUserIdHandler,
     removeUserByIdHandler,
 } from "../../controller/users.controller.js";
 import {
@@ -31,6 +32,11 @@ router.delete(
     "/users/:userId",
     verifyAccessTokenHandler,
     removeUserByIdHandler
+);
+router.get(
+    "/users/:userId/profile",
+    verifyAccessTokenHandler,
+    getUserProfileByUserIdHandler
 );
 router.put(
     "/users/:userId/profile/avatar",

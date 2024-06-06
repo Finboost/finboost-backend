@@ -61,6 +61,13 @@ export const removeUserById = async (userId, res) => {
     await deleteUserById(userId);
 };
 
+export const getUserProfileByUserId = async (userId, res) => {
+    await getUserById(userId, res);
+    const profile = await findUserProfileByUserId(userId);
+
+    return profile;
+};
+
 export const editAvatarUser = async (userId, imageUrl, res) => {
     await getUserById(userId, res);
     const userProfile = await findUserProfileByUserId(userId);

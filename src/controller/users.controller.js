@@ -11,6 +11,7 @@ import {
     editUserById,
     getAllUsers,
     getUserById,
+    getUserProfileByUserId,
     removeUserById,
 } from "../service/users.service.js";
 import { findUserProfileByUserId } from "../repository/users.repository.js";
@@ -152,6 +153,27 @@ export const removeUserByIdHandler = async (req, res) => {
             message: "Successfully delete user data",
             data: {
                 id: userId,
+            },
+        });
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return;
+        }
+        handleServerError(error, res);
+    }
+};
+
+export const getUserProfileByUserIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const profile = await getUserProfileByUserId(userId, res);
+
+        res.status(200).send({
+            status: "success",
+            message: "Get user data by id",
+            data: {
+                profile,
             },
         });
     } catch (error) {

@@ -120,13 +120,23 @@ export const deleteUserById = async (userId) => {
 };
 
 export const findUserProfileByUserId = async (userId) => {
-    const user = await prisma.profile.findUnique({
+    const profile = await prisma.profile.findUnique({
         where: {
             userId,
         },
+        select: {
+            id: true,
+            avatar: true,
+            maritalStatus: true,
+            certifiedStatus: true,
+            work: true,
+            education: true,
+            createdAt: true,
+            updatedAt: true,
+        },
     });
 
-    return user;
+    return profile;
 };
 
 export const createBlankProfileWithUserId = async (userId) => {
