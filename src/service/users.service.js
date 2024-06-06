@@ -3,6 +3,7 @@ import { handleNotFoundError } from "../exceptions/client.exception.js";
 import {
     createBlankProfileWithUserId,
     deleteUserById,
+    deleteUserProfileByUserId,
     findUserByEmail,
     findUserById,
     findUserByRefreshToken,
@@ -74,6 +75,13 @@ export const editUserProfileByUserId = async (userId, userData, res) => {
     const newUserProfile = await updateUserProfileByUserId(userId, userData);
 
     return newUserProfile;
+};
+
+export const removeUserProfileByUserId = async (userId, res) => {
+    await getUserById(userId, res);
+    const profile = await deleteUserProfileByUserId(userId);
+
+    return profile;
 };
 
 export const editAvatarUser = async (userId, imageUrl, res) => {

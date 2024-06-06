@@ -163,6 +163,22 @@ export const updateUserProfileByUserId = async (userId, userData) => {
     return newUserProfile;
 };
 
+export const deleteUserProfileByUserId = async (userId) => {
+    const userProfile = await prisma.profile.update({
+        where: {
+            userId,
+        },
+        data: {
+            maritalStatus: null,
+            certifiedStatus: null,
+            workId: null,
+            educationId: null,
+        },
+    });
+
+    return userProfile;
+};
+
 export const createBlankProfileWithUserId = async (userId) => {
     const user = await prisma.profile.create({
         data: {

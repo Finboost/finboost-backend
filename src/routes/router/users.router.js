@@ -9,6 +9,7 @@ import {
     getUserByIdHandler,
     getUserProfileByUserIdHandler,
     removeUserByIdHandler,
+    removeUserProfileByUserIdHandler,
 } from "../../controller/users.controller.js";
 import {
     uploadAvatar,
@@ -43,6 +44,11 @@ router.patch(
     "/users/:userId/profile",
     verifyAccessTokenHandler,
     editUserProfilePartialFieldByUserIdHandler
+);
+router.delete(
+    "/users/:userId/profile",
+    verifyAccessTokenHandler,
+    removeUserProfileByUserIdHandler
 );
 router.put(
     "/users/:userId/profile/avatar",

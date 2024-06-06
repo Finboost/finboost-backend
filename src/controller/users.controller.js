@@ -15,6 +15,7 @@ import {
     getUserById,
     getUserProfileByUserId,
     removeUserById,
+    removeUserProfileByUserId,
 } from "../service/users.service.js";
 import { findUserProfileByUserId } from "../repository/users.repository.js";
 import {
@@ -158,11 +159,51 @@ export const editUserProfilePartialFieldByUserIdHandler = async (req, res) => {
     }
 };
 
+export const removeUserProfileByUserIdHandler = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const userProfile = await getUserProfileByUserId(userId);
+        const userAvatar = userProfile?.avatar;
+        const user = await getUserById(userId, res);
+        const userGender = user.gender === "Laki_laki" ? "male" : "female";
+        const userGenderAvatarUrl = getPublicUrl(`${userGender}.png`);
+
+        const fileName = getFileNameFromUrl(userAvatar);
+        const maleAvatarUrl = getPublicUrl("male.png");
+        const femaleAvatarUrl = getPublicUrl("female.png");
+
+        if (
+            userAvatar &&
+            userAvatar !== maleAvatarUrl &&
+            userAvatar !== femaleAvatarUrl
+        ) {
+            await deleteFileFromBucket(fileName);
+        }
+
+        await removeUserProfileByUserId(userId, res);
+        await editAvatarUser(userId, userGenderAvatarUrl);
+
+        res.status(200).send({
+            status: "success",
+            message: "Successfully delete user profile data",
+            data: {
+                id: userId,
+            },
+        });
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return;
+        }
+        handleServerError(error, res);
+    }
+};
+
 export const removeUserByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const userProfile = await findUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId);
         const userAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(userAvatar);
@@ -224,7 +265,7 @@ export const editAvatarUserHandler = async (req, res) => {
             imageUrl = req.file.cloudStoragePublicUrl;
         }
 
-        const userProfile = await findUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId);
         const oldAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(oldAvatar);
