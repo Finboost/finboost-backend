@@ -74,6 +74,7 @@ export const getUserByIdHandler = async (req, res) => {
 export const editUserAllFieldByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
+        req.body.age = parseInt(req.body.age, 10);
 
         const validateData = UpdateAllFieldUserSchema.parse(req.body);
 
@@ -104,6 +105,7 @@ export const editUserAllFieldByIdHandler = async (req, res) => {
 export const editUserPartialFieldByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
+        req.body.age = parseInt(req.body.age, 10);
 
         let validateData = UpdatePartialFieldUserSchema.parse(req.body);
 
