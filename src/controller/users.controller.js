@@ -43,6 +43,7 @@ export const getAllUsersHandler = async (req, res) => {
             },
         });
     } catch (error) {
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -62,8 +63,10 @@ export const getUserByIdHandler = async (req, res) => {
         });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -85,11 +88,14 @@ export const editUserAllFieldByIdHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
             if (err instanceof NotFoundError) {
+                console.log(err);
                 return;
             }
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -120,11 +126,14 @@ export const editUserPartialFieldByIdHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
             if (err instanceof NotFoundError) {
+                console.log(err);
                 return;
             }
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -149,11 +158,14 @@ export const editUserProfilePartialFieldByUserIdHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
             if (err instanceof NotFoundError) {
+                console.log(err);
                 return;
             }
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -193,8 +205,10 @@ export const removeUserProfileByUserIdHandler = async (req, res) => {
         });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -229,8 +243,10 @@ export const removeUserByIdHandler = async (req, res) => {
         });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -250,8 +266,10 @@ export const getUserProfileByUserIdHandler = async (req, res) => {
         });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -291,8 +309,10 @@ export const editAvatarUserHandler = async (req, res) => {
         });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };

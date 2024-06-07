@@ -25,6 +25,7 @@ export const refreshTokenHandler = async (req, res) => {
             process.env.JWT_REFRESH_TOKEN_SECRET,
             (err, decoded) => {
                 if (err) {
+                    console.log(err);
                     handleVerifyTokenError(undefined, res);
                 }
 
@@ -56,8 +57,10 @@ export const refreshTokenHandler = async (req, res) => {
             error instanceof VerifyOwnerTokenError ||
             error instanceof VerifyTokenError
         ) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
