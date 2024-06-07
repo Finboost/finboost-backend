@@ -33,8 +33,10 @@ export const verifyAccessTokenHandler = (req, res, next) => {
             error instanceof MissingAccessTokenError ||
             error instanceof VerifyTokenError
         ) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };

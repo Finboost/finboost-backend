@@ -73,6 +73,7 @@ export const uploadToGcs = async (req, res, next) => {
         stream.end(req.file.buffer);
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
     }

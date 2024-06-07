@@ -33,6 +33,7 @@ export const getAllEducationsHandler = async (req, res) => {
             },
         });
     } catch (error) {
+        console.log(error);
         handleServerError(error, res);
     }
 };

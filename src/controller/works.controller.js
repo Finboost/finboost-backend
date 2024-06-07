@@ -30,6 +30,7 @@ export const getAllWorksHandler = async (req, res) => {
             },
         });
     } catch (error) {
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -49,8 +50,10 @@ export const insertWorkHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -70,8 +73,10 @@ export const getWorkByIdHandler = async (req, res) => {
         });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
@@ -92,11 +97,14 @@ export const editWorkByIdHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
             if (err instanceof NotFoundError) {
+                console.log(err);
                 return;
             }
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -115,9 +123,12 @@ export const removeWorkByIdHandler = async (req, res) => {
             },
         });
     } catch (error) {
+        console.log(error);
         if (error instanceof NotFoundError) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };

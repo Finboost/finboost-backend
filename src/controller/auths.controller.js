@@ -42,11 +42,14 @@ export const signUpUserHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
             if (err instanceof ConflictError) {
+                console.log(err);
                 return;
             }
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -103,14 +106,17 @@ export const signInUserHandler = async (req, res) => {
         });
     } catch (error) {
         try {
+            console.log(error);
             handleZodError(error, res);
         } catch (err) {
             if (
                 err instanceof BadRequestError ||
                 err instanceof NotFoundError
             ) {
+                console.log(err);
                 return;
             }
+            console.log(err);
             handleServerError(err, res);
         }
     }
@@ -138,8 +144,10 @@ export const signOutUserHandler = async (req, res) => {
             error instanceof MissingRefreshTokenError ||
             error instanceof VerifyOwnerTokenError
         ) {
+            console.log(error);
             return;
         }
+        console.log(error);
         handleServerError(error, res);
     }
 };
