@@ -24,6 +24,7 @@ import {
 
 export const signUpUserHandler = async (req, res) => {
     try {
+        req.body.age = parseInt(req.body.age, 10);
         const validateData = SignUpUserSchema.parse(req.body);
 
         const salt = await bcrypt.genSalt();
