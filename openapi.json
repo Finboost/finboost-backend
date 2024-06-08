@@ -25,6 +25,10 @@
                     ]
                 }
             }
+        },
+        {
+            "description": "Local Finboost Back-End URL",
+            "url": "http://localhost:3000/api/v1"
         }
     ],
     "tags": [
@@ -2956,32 +2960,24 @@
                 "description": "Send message to AI chat by ID. Requires valid access token",
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Room chat ID",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/ChatRoomId"
                     }
                 ],
                 "requestBody": {
+                    "description": "Chat room object that needs to be updated",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "message": {
-                                        "type": "string"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/UpdateAllFieldChatRoom"
                             },
                             "examples": {
-                                "Example": {
-                                    "description": "Example send message to AI chat",
+                                "Update chat room": {
+                                    "description": "Example of a chat room update",
                                     "value": {
-                                        "message": "Hello AI"
+                                        "type": "Expert",
+                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                        "expertId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                     }
                                 }
                             }
@@ -2990,35 +2986,109 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successfully send message to AI chat",
+                        "description": "Successfully update the chat room",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Success"
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
                                 },
                                 "examples": {
-                                    "Success": {
-                                        "description": "Successfully send message to AI chat",
+                                    "Chat Room updated": {
+                                        "description": "Successfully updated the chat room",
                                         "value": {
                                             "status": "success",
-                                            "message": "Send message to AI chat successfully"
+                                            "message": "Chat room updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    "401": {
-                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    "400": {
+                        "description": "Failed to update chat room due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update chat room because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
-                    "403": {
-                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["Chat Room"],
+                "summary": "Delete a chat room by id",
+                "description": "Delete a specific chat room by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room deleted": {
+                                        "description": "Successfully deleted the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room deleted successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -3892,7 +3962,6 @@
                     }
                 ]
             }
-
         },
         "responses": {
             "MiddlewareUnauthorizedError": {
@@ -4029,6 +4098,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Education not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorChatRoomNotFound": {
+                "description": "Chat room not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Chat room not found"
                                 }
                             }
                         }
