@@ -25,6 +25,10 @@
                     ]
                 }
             }
+        },
+        {
+            "description": "Local Finboost Back-End URL",
+            "url": "http://localhost:3000/api/v1"
         }
     ],
     "tags": [
@@ -2457,6 +2461,497 @@
                     }
                 }
             }
+        },
+        "/chat-rooms": {
+            "get": {
+                "tags": ["Chat Room"],
+                "summary": "Get all chat rooms",
+                "description": "Retrieve all chat rooms",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "Get chat rooms by user id",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User 1": {
+                                "description": "Get chat rooms by user id 1",
+                                "value": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all chat rooms",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllChatRooms"
+                                },
+                                "examples": {
+                                    "All chat rooms": {
+                                        "description": "Successfully get all chat rooms",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all chat rooms",
+                                            "data": {
+                                                "chatRooms": [
+                                                    {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "type": "AI",
+                                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                    },
+                                                    {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "type": "Expert",
+                                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": ["Chat Room"],
+                "summary": "Create a new chat room",
+                "description": "Add a new chat room to the app",
+                "requestBody": {
+                    "description": "Chat room object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldChatRoom"
+                            },
+                            "examples": {
+                                "New chat room": {
+                                    "description": "Example of a new chat room",
+                                    "value": {
+                                        "type": "AI",
+                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room 1": {
+                                        "description": "Successfully created a new chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room created successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new chat room because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new chat room because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chat-rooms/{chatRoomId}": {
+            "get": {
+                "tags": ["Chat Room"],
+                "summary": "Get a chat room by id",
+                "description": "Get specific chat room by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetChatRoom"
+                                },
+                                "examples": {
+                                    "Chat Room": {
+                                        "description": "Successfully retrieved the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get chat room data by id",
+                                            "data": {
+                                                "chatRoom": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "type": "AI",
+                                                    "user": {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "name": "User 1"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": ["Chat Room"],
+                "summary": "Update a chat room by id",
+                "description": "Update specific chat room by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Chat room object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldChatRoom"
+                            },
+                            "examples": {
+                                "Update chat room": {
+                                    "description": "Example of a chat room update",
+                                    "value": {
+                                        "type": "Expert",
+                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                        "expertId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room updated": {
+                                        "description": "Successfully updated the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update chat room due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update chat room because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["Chat Room"],
+                "summary": "Delete a chat room by id",
+                "description": "Delete a specific chat room by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room deleted": {
+                                        "description": "Successfully deleted the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room deleted successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/ai/predict":{
+            "post": {
+                "tags": ["Chat Room"],
+                "summary": "Predict chat message",
+                "description": "Predict chat message",
+                "requestBody": {
+                    "description": "Chat message object that needs to be predicted",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldChatMessage"
+                            },
+                            "examples": {
+                                "New chat message": {
+                                    "description": "Example of a new chat message",
+                                    "value": {
+                                        "question": "Halo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully predicted the chat message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessPredictChatMessage"
+                                },
+                                "examples": {
+                                    "Chat Message": {
+                                        "description": "Successfully predicted the chat message",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Predict chat message",
+                                            "data": {
+                                                "answer": "Halo"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed predict chat message because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationPredictChatMessage"
+                                },
+                                "examples": {
+                                    "message empty": {
+                                        "description": "Fail predict chat message because message field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "message",
+                                                    "message": "message is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/ai/suggestions" : {
+            "post": {
+                "tags": ["Chat Room"],
+                "summary": "Get all chat suggestions",
+                "description": "Retrieve all chat suggestions",
+                "requestBody": {
+                    "description": "Chat suggestion object that needs to be retrieved",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldChatSuggestion"
+                            },
+                            "examples": {
+                                "New chat suggestion": {
+                                    "description": "Example of a new chat suggestion",
+                                    "value": {
+                                        "user_input": "Halo",
+                                        "total_questions": 4
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all chat suggestions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllChatSuggestions"
+                                },
+                                "examples": {
+                                    "All chat suggestions": {
+                                        "description": "Successfully get all chat suggestions",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all chat suggestions",
+                                            "data": {
+                                                "suggested_questions": [
+                                                    "Apa saja jenis reksadana yang tersedia di Indonesia?",
+                                                    "Apa itu reksadana offshore dan bagaimana cara berinvestasi di dalamnya?",
+                                                    "Apa itu reksadana terproteksi dan bagaimana cara kerjanya?",
+                                                    "Bagaimana cara menghindari penipuan dalam investasi reksadana?"
+                                                ],
+                                                "probability" : 0.9,
+                                                "top_category": "Reksadana"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -2534,6 +3029,21 @@
                     "Education 1": {
                         "description": "Sample education id for education 1",
                         "value": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                    }
+                }
+            },
+            "ChatRoomId": {
+                "name": "chatRoomId",
+                "in": "path",
+                "description": "Room chat ID",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Room Chat 1": {
+                        "description": "Sample room chat id for room chat 1",
+                        "value": "d969ee14-3362-46cd-ace9-af4d7b131733"
                     }
                 }
             }
@@ -3146,6 +3656,173 @@
                         "type": "string"
                     }
                 }
+            },
+            "GetChatRoom": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["Expert", "AI"]
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "expert": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetChatRoom": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "chatRoom": {
+                                        "$ref": "#/components/schemas/GetChatRoom"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllChatRooms": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "chatRooms": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetChatRoom"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "InsertAllFieldChatRoom": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["Expert", "AI"]
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "expertId": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "UpdateAllFieldChatRoom": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["Expert", "AI"]
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "expertId": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "InsertAllFieldChatMessage": {
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "type": "string"
+                    }
+                }
+            },
+            "InsertAllFieldChatSuggestion": {
+                "type": "object",
+                "properties": {
+                    "user_input": {
+                        "type": "string"
+                    },
+                    "total_questions": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "SuccessPredictChatAi": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "answer": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessSuggestChatAi": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "suggested_questions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "probability": {
+                                        "type": "number"
+                                    },
+                                    "top_category": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         },
         "responses": {
@@ -3283,6 +3960,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Education not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorChatRoomNotFound": {
+                "description": "Chat room not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Chat room not found"
                                 }
                             }
                         }
