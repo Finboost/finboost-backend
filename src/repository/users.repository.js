@@ -26,6 +26,7 @@ export const findUsers = async (filters) => {
             createdAt: true,
             updatedAt: true,
             role: true,
+            profile: true,
         },
     });
 
@@ -48,6 +49,7 @@ export const findUserById = async (userId) => {
             createdAt: true,
             updatedAt: true,
             role: true,
+            profile: true,
         },
     });
 
@@ -70,6 +72,7 @@ export const findUserByEmail = async (email) => {
             createdAt: true,
             updatedAt: true,
             role: true,
+            profile: true,
         },
     });
 
@@ -92,6 +95,7 @@ export const findUserByRefreshToken = async (refreshToken) => {
             createdAt: true,
             updatedAt: true,
             role: true,
+            profile: true,
         },
     });
 
