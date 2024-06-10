@@ -81,7 +81,7 @@ export const signInUserHandler = async (req, res) => {
         const accessToken = generateJwtToken(
             payloadJwt,
             process.env.JWT_ACCESS_TOKEN_SECRET,
-            { expiresIn: "30s" }
+            { expiresIn: "1h" }
         );
 
         const refreshToken = generateJwtToken(
