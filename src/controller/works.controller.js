@@ -45,7 +45,7 @@ export const insertWorkHandler = async (req, res) => {
             status: "success",
             message: "Work created successfully",
             data: {
-                id: newWorkData.id,
+                workId: newWorkData.id,
             },
         });
     } catch (error) {
@@ -92,7 +92,7 @@ export const editWorkByIdHandler = async (req, res) => {
             status: "success",
             message: "Work updated successfully",
             data: {
-                id: newWorkData.id,
+                workId: newWorkData.id,
             },
         });
     } catch (error) {
@@ -119,7 +119,7 @@ export const removeWorkByIdHandler = async (req, res) => {
             status: "success",
             message: "Work deleted successfully",
             data: {
-                id: workId,
+                workId: workId,
             },
         });
     } catch (error) {

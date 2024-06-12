@@ -48,7 +48,7 @@ export const insertEducationHandler = async (req, res) => {
             status: "success",
             message: "Education created successfully",
             data: {
-                id: newEducationData.id,
+                educationId: newEducationData.id,
             },
         });
     } catch (error) {
@@ -95,7 +95,7 @@ export const editEducationByIdHandler = async (req, res) => {
             status: "success",
             message: "Education updated successfully",
             data: {
-                id: newEducationData.id,
+                educationId: newEducationData.id,
             },
         });
     } catch (error) {
@@ -119,7 +119,7 @@ export const removeEducationByIdHandler = async (req, res) => {
             status: "success",
             message: "Education deleted successfully",
             data: {
-                id: educationId,
+                educationId: educationId,
             },
         });
     } catch (error) {

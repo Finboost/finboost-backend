@@ -38,7 +38,7 @@ export const signUpUserHandler = async (req, res) => {
             status: "success",
             message: "User signup successfully",
             data: {
-                id: newUserData.id,
+                userId: newUserData.id,
             },
         });
     } catch (error) {

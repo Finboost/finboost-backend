@@ -92,7 +92,7 @@ export const editRoleByIdHandler = async (req, res) => {
             status: "success",
             message: "Role updated successfully",
             data: {
-                id: newRoleData.id,
+                roleId: newRoleData.id,
             },
         });
     } catch (error) {
@@ -118,7 +118,7 @@ export const removeRoleByIdHandler = async (req, res) => {
             status: "success",
             message: "Role deleted successfully",
             data: {
-                id: roleId,
+                roleId: roleId,
             },
         });
     } catch (error) {
