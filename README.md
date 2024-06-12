@@ -1,5 +1,7 @@
 <h1 align="center">Finboost Back-End</h1>
 
+<div align="center">
+
 ![Node.js](https://img.shields.io/badge/-Node.js-05122A?style=flat&logo=node.js)&nbsp;
 ![Express.js](https://img.shields.io/badge/-Express.js-05122A?style=flat&logo=express)&nbsp;
 ![Prisma](https://img.shields.io/badge/-Prisma-05122A?style=flat&logo=prisma)&nbsp;
@@ -13,6 +15,8 @@
 ![Google Cloud Platform](https://img.shields.io/badge/-Google%20Cloud%20Platform-05122A?style=flat&logo=googlecloud)&nbsp;
 ![Linux](https://img.shields.io/badge/-Linux-05122A?style=flat&logo=linux)&nbsp;
 ![GitHub Actions](https://img.shields.io/badge/-GitHub%20Actions-05122A?style=flat&logo=githubactions)&nbsp;
+
+</div>
 
 <p align="center">This repository is the backend for a mobile application that aims to provide various features such as authentication, chat, and more. This backend is built using Express.js, Prisma, MySQL, Firebase, Zod, JWT, Docker, OpenAPI (Swagger), GitHub Acitons, Cloud Run, and Cloud Storage</p>
 
