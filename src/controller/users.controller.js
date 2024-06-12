@@ -84,7 +84,7 @@ export const editUserAllFieldByIdHandler = async (req, res) => {
             status: "success",
             message: "User data updated successfully",
             data: {
-                id: user.id,
+                userId: user.id,
             },
         });
     } catch (error) {
@@ -123,7 +123,7 @@ export const editUserPartialFieldByIdHandler = async (req, res) => {
             status: "success",
             message: "User data partially updated successfully",
             data: {
-                id: user.id,
+                userId: user.id,
             },
         });
     } catch (error) {
@@ -155,7 +155,7 @@ export const editUserProfilePartialFieldByUserIdHandler = async (req, res) => {
             status: "success",
             message: "User profile data updated successfully",
             data: {
-                id: user.id,
+                userId: user.id,
             },
         });
     } catch (error) {
@@ -202,7 +202,7 @@ export const removeUserProfileByUserIdHandler = async (req, res) => {
             status: "success",
             message: "Successfully delete user profile data",
             data: {
-                id: userId,
+                userId: userId,
             },
         });
     } catch (error) {
@@ -240,7 +240,7 @@ export const removeUserByIdHandler = async (req, res) => {
             status: "success",
             message: "Successfully delete user data",
             data: {
-                id: userId,
+                userId: userId,
             },
         });
     } catch (error) {
@@ -306,7 +306,7 @@ export const editAvatarUserHandler = async (req, res) => {
             status: "success",
             message: "Avatar user updated successfully",
             data: {
-                id: newAvatarUserData.userId,
+                userId: newAvatarUserData.userId,
             },
         });
     } catch (error) {
