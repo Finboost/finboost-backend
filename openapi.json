@@ -847,7 +847,7 @@
                                             "status": "success",
                                             "message": "User data updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -857,7 +857,7 @@
                                             "status": "success",
                                             "message": "User data updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -980,7 +980,7 @@
                                             "status": "success",
                                             "message": "User data partially updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -990,7 +990,7 @@
                                             "status": "success",
                                             "message": "User data partially updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1079,7 +1079,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user data",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1089,7 +1089,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user data",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1259,7 +1259,7 @@
                                             "status": "success",
                                             "message": "User profile data updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1269,7 +1269,7 @@
                                             "status": "success",
                                             "message": "User profile data updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1320,7 +1320,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user profile data",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1330,7 +1330,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user profile data",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1401,7 +1401,7 @@
                                             "status": "success",
                                             "message": "Avatar user updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1411,7 +1411,7 @@
                                             "status": "success",
                                             "message": "Avatar user updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1568,7 +1568,7 @@
                                             "status": "success",
                                             "message": "Role created successfully",
                                             "data": {
-                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                                "roleId": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                                             }
                                         }
                                     }
@@ -1694,7 +1694,7 @@
                                             "status": "success",
                                             "message": "Role updated successfully",
                                             "data": {
-                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                                "roleId": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                                             }
                                         }
                                     }
@@ -1759,7 +1759,7 @@
                                             "status": "success",
                                             "message": "Role deleted successfully",
                                             "data": {
-                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                                "roleId": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                                             }
                                         }
                                     }
@@ -1919,7 +1919,7 @@
                                             "status": "success",
                                             "message": "Work created successfully",
                                             "data": {
-                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                                "workId": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                                             }
                                         }
                                     }
@@ -2045,7 +2045,7 @@
                                             "status": "success",
                                             "message": "Work updated successfully",
                                             "data": {
-                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                                "workId": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                                             }
                                         }
                                     }
@@ -2110,7 +2110,7 @@
                                             "status": "success",
                                             "message": "Work deleted successfully",
                                             "data": {
-                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                                "workId": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                                             }
                                         }
                                     }
@@ -2254,7 +2254,7 @@
                                             "status": "success",
                                             "message": "Education created successfully",
                                             "data": {
-                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                                "educationId": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                                             }
                                         }
                                     }
@@ -2380,7 +2380,7 @@
                                             "status": "success",
                                             "message": "Education updated successfully",
                                             "data": {
-                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                                "educationId": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                                             }
                                         }
                                     }
@@ -2445,7 +2445,7 @@
                                             "status": "success",
                                             "message": "Education deleted successfully",
                                             "data": {
-                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                                "educationId": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                                             }
                                         }
                                     }
@@ -2803,7 +2803,7 @@
                 ]
             }
         },
-        "/chats/ai/predict":{
+        "/chats/ai/predict": {
             "post": {
                 "tags": ["Chat Room"],
                 "summary": "Predict chat message",
@@ -2886,7 +2886,7 @@
                 ]
             }
         },
-        "/chats/ai/suggestions" : {
+        "/chats/ai/suggestions": {
             "post": {
                 "tags": ["Chat Room"],
                 "summary": "Get all chat suggestions",
@@ -2933,7 +2933,7 @@
                                                     "Apa itu reksadana terproteksi dan bagaimana cara kerjanya?",
                                                     "Bagaimana cara menghindari penipuan dalam investasi reksadana?"
                                                 ],
-                                                "probability" : 0.9,
+                                                "probability": 0.9,
                                                 "top_category": "Reksadana"
                                             }
                                         }
