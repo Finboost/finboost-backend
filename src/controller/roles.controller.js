@@ -45,7 +45,7 @@ export const insertRoleHandler = async (req, res) => {
             status: "success",
             message: "Role created successfully",
             data: {
-                id: newRoleData.id,
+                roleId: newRoleData.id,
             },
         });
     } catch (error) {
