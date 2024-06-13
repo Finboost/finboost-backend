@@ -8,9 +8,9 @@ import { seedWorks } from "./seed/works.seed.js";
 async function main() {
     await cleanDatabase();
     await seedRoles();
-    await seedUsers(10);
     await seedWorks();
     await seedEducations();
+    await seedUsers(10);
 }
 
 main()
