@@ -1,6 +1,7 @@
 import prisma from "../../db/prisma.js";
 import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
+import { getPublicUrl } from "../../src/utils/bucket.util.js";
 
 const seedUsers = async (count) => {
     try {
@@ -26,6 +27,10 @@ const seedUsers = async (count) => {
             const age = faker.datatype.number({ min: 18, max: 80 });
             const phoneNumber = faker.phone.number();
             const password = hashPassword;
+            const avatarDefault =
+                gender === "Laki_laki"
+                    ? getPublicUrl("male.png")
+                    : getPublicUrl("female.png");
 
             await prisma.user.create({
                 data: {
@@ -36,6 +41,11 @@ const seedUsers = async (count) => {
                     phoneNumber,
                     password,
                     roleId,
+                    profile: {
+                        create: {
+                            avatar: avatarDefault,
+                        },
+                    },
                 },
             });
 

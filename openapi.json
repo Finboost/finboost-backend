@@ -118,7 +118,7 @@
                                             "status": "success",
                                             "message": "User created successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -128,7 +128,7 @@
                                             "status": "success",
                                             "message": "User created successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -2855,7 +2855,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/FailValidationPredictChatMessage"
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
                                 },
                                 "examples": {
                                     "message empty": {
@@ -3775,6 +3775,26 @@
                     }
                 }
             },
+            "SuccessPredictChatMessage": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "answer": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             "SuccessPredictChatAi": {
                 "allOf": [
                     {
@@ -3811,6 +3831,32 @@
                                         "items": {
                                             "type": "string"
                                         }
+                                    },
+                                    "probability": {
+                                        "type": "number"
+                                    },
+                                    "top_category": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllChatSuggestions": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "suggestion_questions": {
+                                        "type": "array"
                                     },
                                     "probability": {
                                         "type": "number"
