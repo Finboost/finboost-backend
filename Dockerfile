@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM node:20-slim AS build
+FROM node:20 AS build
 
 # Define build argument
 ARG NODE_ENV
