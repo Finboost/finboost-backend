@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM node:20 AS build
+FROM node:20-slim AS build
 
 # Define build argument
 ARG NODE_ENV
@@ -31,21 +31,21 @@ RUN dotenv -e .env.${NODE_ENV} -- npx prisma migrate deploy
 
 # Stage 2: Run stage
 # FROM gcr.io/distroless/nodejs20-debian12
-FROM node:20-slim
+# FROM node:20-slim
 
 # Install tzdata and set timezone
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
-RUN ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+# RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+# RUN ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 # Copy built files from the build stage
-COPY --from=build /opt/app /opt/app
+# COPY --from=build /opt/app /opt/app
 
 # Set the working directory
-WORKDIR /opt/app
+# WORKDIR /opt/app
 
 # Set environment variable for runtime
-ENV NODE_ENV=${NODE_ENV}
-ENV PORT=8080
+# ENV NODE_ENV=${NODE_ENV}
+# ENV PORT=8080
 ENV TZ=Asia/Jakarta
 
 # Expose the port
