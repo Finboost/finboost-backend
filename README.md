@@ -120,7 +120,7 @@ After make a copy environment file from example, fill the `.env.dev` with your o
 > **NOTE**: For JWT access or refresh token secret, you can generate with this command
 >
 > ```bash
-> npx run generate:secret:jwt
+> npm run generate:secret:jwt
 > ```
 
 -   Install dependency application
