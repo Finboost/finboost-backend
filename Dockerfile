@@ -43,7 +43,13 @@ COPY --from=build /opt/app /opt/app
 # Set the working directory
 WORKDIR /opt/app
 
+# Set environment variable for runtime
+ENV NODE_ENV=${NODE_ENV}
+ENV PORT=8080
+ENV TZ=Asia/Jakarta
+
 # Expose the port
 EXPOSE 8080
 
+# Run the application using shell to ensure the environment variable is picked up
 CMD ["sh", "-c", "npm run start:${NODE_ENV}"]
