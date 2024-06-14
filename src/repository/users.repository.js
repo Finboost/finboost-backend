@@ -26,7 +26,32 @@ export const findUsers = async (filters) => {
             createdAt: true,
             updatedAt: true,
             role: true,
-            profile: true,
+            profile: {
+                select: {
+                    id: true,
+                    avatar: true,
+                    maritalStatus: true,
+                    certifiedStatus: true,
+                    work: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    education: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            },
         },
     });
 
@@ -45,11 +70,35 @@ export const findUserById = async (userId) => {
             gender: true,
             age: true,
             phoneNumber: true,
-            password: true,
             createdAt: true,
             updatedAt: true,
             role: true,
-            profile: true,
+            profile: {
+                select: {
+                    id: true,
+                    avatar: true,
+                    maritalStatus: true,
+                    certifiedStatus: true,
+                    work: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    education: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            },
         },
     });
 
@@ -68,11 +117,35 @@ export const findUserByEmail = async (email) => {
             gender: true,
             age: true,
             phoneNumber: true,
-            password: true,
             createdAt: true,
             updatedAt: true,
             role: true,
-            profile: true,
+            profile: {
+                select: {
+                    id: true,
+                    avatar: true,
+                    maritalStatus: true,
+                    certifiedStatus: true,
+                    work: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    education: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            },
         },
     });
 
@@ -91,11 +164,35 @@ export const findUserByRefreshToken = async (refreshToken) => {
             gender: true,
             age: true,
             phoneNumber: true,
-            password: true,
             createdAt: true,
             updatedAt: true,
             role: true,
-            profile: true,
+            profile: {
+                select: {
+                    id: true,
+                    avatar: true,
+                    maritalStatus: true,
+                    certifiedStatus: true,
+                    work: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    education: {
+                        select: {
+                            id: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
+                    },
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            },
         },
     });
 

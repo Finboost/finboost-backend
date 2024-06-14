@@ -6,6 +6,8 @@ import { getPublicUrl } from "../../src/utils/bucket.util.js";
 const seedUsers = async (count) => {
     try {
         const roles = await prisma.role.findMany();
+        const educations = await prisma.education.findMany();
+        const works = await prisma.work.findMany();
 
         if (roles.length === 0) {
             throw new Error("No roles found in database");
@@ -32,6 +34,19 @@ const seedUsers = async (count) => {
                     ? getPublicUrl("male.png")
                     : getPublicUrl("female.png");
 
+            const maritalStatus = faker.helpers.arrayElement([
+                "Lajang",
+                "Menikah",
+                "Cerai",
+            ]);
+
+            const randomEducation =
+                educations[Math.floor(Math.random() * educations.length)];
+            const educationId = randomEducation.id;
+
+            const randomWork = works[Math.floor(Math.random() * works.length)];
+            const workId = randomWork.id;
+
             await prisma.user.create({
                 data: {
                     fullName,
@@ -44,6 +59,21 @@ const seedUsers = async (count) => {
                     profile: {
                         create: {
                             avatar: avatarDefault,
+                            maritalStatus,
+                            certifiedStatus:
+                                randomRole.name === "Expert"
+                                    ? "Certified Financial Planner (CFP)"
+                                    : null,
+                            work: {
+                                connect: {
+                                    id: workId,
+                                },
+                            },
+                            education: {
+                                connect: {
+                                    id: educationId,
+                                },
+                            },
                         },
                     },
                 },
