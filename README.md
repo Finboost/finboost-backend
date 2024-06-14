@@ -61,6 +61,7 @@
 | `prisma`            | Folder that contain prisma configuration, e.g. Schema, Seeding, Migration                                                                                                                        |
 | `db/prisma.js`      | File prisma client connection to connect to the database                                                                                                                                         |
 | `.github`           | Folder that contain configuration of GitHub repository, e.g. GitHub Actions for CI/CD Pipeline                                                                                                   |
+| `postman`           | Folder that contain collection and environment for testing RESTful API on Postman                                                                                                                |
 
 ## Entity Relationship Diagram
 

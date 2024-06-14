@@ -74,7 +74,9 @@ export const getUserByIdHandler = async (req, res) => {
 export const editUserAllFieldByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
-        req.body.age = parseInt(req.body.age, 10);
+        if (req.body.age) {
+            req.body.age = parseInt(req.body.age, 10);
+        }
 
         const validateData = UpdateAllFieldUserSchema.parse(req.body);
 
@@ -105,7 +107,9 @@ export const editUserAllFieldByIdHandler = async (req, res) => {
 export const editUserPartialFieldByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
-        req.body.age = parseInt(req.body.age, 10);
+        if (req.body.age) {
+            req.body.age = parseInt(req.body.age, 10);
+        }
 
         let validateData = UpdatePartialFieldUserSchema.parse(req.body);
 
@@ -177,7 +181,7 @@ export const removeUserProfileByUserIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const userProfile = await getUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId, res);
         const userAvatar = userProfile?.avatar;
         const user = await getUserById(userId, res);
         const userGender = user.gender === "Laki_laki" ? "male" : "female";
@@ -219,7 +223,7 @@ export const removeUserByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const userProfile = await getUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId, res);
         const userAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(userAvatar);
@@ -285,7 +289,7 @@ export const editAvatarUserHandler = async (req, res) => {
             imageUrl = req.file.cloudStoragePublicUrl;
         }
 
-        const userProfile = await getUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId, res);
         const oldAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(oldAvatar);
