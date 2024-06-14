@@ -181,7 +181,7 @@ export const removeUserProfileByUserIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const userProfile = await getUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId, res);
         const userAvatar = userProfile?.avatar;
         const user = await getUserById(userId, res);
         const userGender = user.gender === "Laki_laki" ? "male" : "female";
@@ -223,7 +223,7 @@ export const removeUserByIdHandler = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const userProfile = await getUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId, res);
         const userAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(userAvatar);
@@ -289,7 +289,7 @@ export const editAvatarUserHandler = async (req, res) => {
             imageUrl = req.file.cloudStoragePublicUrl;
         }
 
-        const userProfile = await getUserProfileByUserId(userId);
+        const userProfile = await getUserProfileByUserId(userId, res);
         const oldAvatar = userProfile?.avatar;
 
         const fileName = getFileNameFromUrl(oldAvatar);
