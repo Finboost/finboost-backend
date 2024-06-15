@@ -29,6 +29,7 @@ export const findUsers = async (filters) => {
             profile: {
                 select: {
                     id: true,
+                    about: true,
                     avatar: true,
                     maritalStatus: true,
                     certifiedStatus: true,
@@ -48,6 +49,11 @@ export const findUsers = async (filters) => {
                             updatedAt: true,
                         },
                     },
+                    investment: true,
+                    insurance: true,
+                    incomePerMonth: true,
+                    totalSaving: true,
+                    totalDebt: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -77,6 +83,7 @@ export const findUserById = async (userId) => {
                 select: {
                     id: true,
                     avatar: true,
+                    about: true,
                     maritalStatus: true,
                     certifiedStatus: true,
                     work: {
@@ -95,6 +102,11 @@ export const findUserById = async (userId) => {
                             updatedAt: true,
                         },
                     },
+                    investment: true,
+                    insurance: true,
+                    incomePerMonth: true,
+                    totalSaving: true,
+                    totalDebt: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -125,6 +137,7 @@ export const findUserByEmail = async (email) => {
                 select: {
                     id: true,
                     avatar: true,
+                    about: true,
                     maritalStatus: true,
                     certifiedStatus: true,
                     work: {
@@ -143,6 +156,11 @@ export const findUserByEmail = async (email) => {
                             updatedAt: true,
                         },
                     },
+                    investment: true,
+                    insurance: true,
+                    incomePerMonth: true,
+                    totalSaving: true,
+                    totalDebt: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -173,6 +191,7 @@ export const findUserByRefreshToken = async (refreshToken) => {
                 select: {
                     id: true,
                     avatar: true,
+                    about: true,
                     maritalStatus: true,
                     certifiedStatus: true,
                     work: {
@@ -191,6 +210,11 @@ export const findUserByRefreshToken = async (refreshToken) => {
                             updatedAt: true,
                         },
                     },
+                    investment: true,
+                    insurance: true,
+                    incomePerMonth: true,
+                    totalSaving: true,
+                    totalDebt: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -229,11 +253,17 @@ export const findUserProfileByUserId = async (userId) => {
         },
         select: {
             id: true,
+            about: true,
             avatar: true,
             maritalStatus: true,
             certifiedStatus: true,
             work: true,
             education: true,
+            investment: true,
+            insurance: true,
+            incomePerMonth: true,
+            totalSaving: true,
+            totalDebt: true,
             createdAt: true,
             updatedAt: true,
         },
@@ -248,6 +278,9 @@ export const updateUserProfileByUserId = async (userId, userData) => {
             userId,
         },
         data: {
+            ...(userData.about && {
+                about: userData.about,
+            }),
             ...(userData.maritalStatus && {
                 maritalStatus: userData.maritalStatus,
             }),
@@ -259,6 +292,21 @@ export const updateUserProfileByUserId = async (userId, userData) => {
             }),
             ...(userData.educationId && {
                 education: { connect: { id: userData.educationId } },
+            }),
+            ...(userData.investment && {
+                investment: userData.investment,
+            }),
+            ...(userData.insurance && {
+                insurance: userData.insurance,
+            }),
+            ...(userData.incomePerMonth && {
+                incomePerMonth: userData.incomePerMonth,
+            }),
+            ...(userData.totalSaving && {
+                totalSaving: userData.totalSaving,
+            }),
+            ...(userData.totalDebt && {
+                totalDebt: userData.totalDebt,
             }),
         },
     });
@@ -272,10 +320,16 @@ export const deleteUserProfileByUserId = async (userId) => {
             userId,
         },
         data: {
+            about: null,
             maritalStatus: null,
             certifiedStatus: null,
             workId: null,
             educationId: null,
+            investment: null,
+            insurance: null,
+            incomePerMonth: null,
+            totalSaving: null,
+            totalDebt: null,
         },
     });
 

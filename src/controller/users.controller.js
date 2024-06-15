@@ -23,6 +23,7 @@ import {
     getFileNameFromUrl,
     getPublicUrl,
 } from "../utils/bucket.util.js";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export const getAllUsersHandler = async (req, res) => {
     try {
@@ -152,6 +153,18 @@ export const editUserProfilePartialFieldByUserIdHandler = async (req, res) => {
         const validateData = UpdatePartialFieldUserProfileSchema.parse(
             req.body
         );
+
+        if (req.body.incomePerMonth) {
+            req.body.incomePerMonth = new Decimal(req.body.incomePerMonth);
+        }
+
+        if (req.body.totalSaving) {
+            req.body.totalSaving = new Decimal(req.body.totalSaving);
+        }
+
+        if (req.body.totalDebt) {
+            req.body.totalDebt = new Decimal(req.body.totalDebt);
+        }
 
         const user = await editUserProfileByUserId(userId, validateData, res);
 
