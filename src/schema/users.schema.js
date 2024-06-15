@@ -19,9 +19,19 @@ export const UpdatePartialFieldUserSchema = z
 
 export const UpdatePartialFieldUserProfileSchema = z
     .object({
+        about: z.string().optional(),
         maritalStatus: z.enum(["Lajang", "Menikah", "Cerai"]).optional(),
         certifiedStatus: z.string().nullable().optional(),
         workId: z.string().optional(),
         educationId: z.string().optional(),
+        investment: z
+            .enum(["Saham", "Reksadana", "Obligasi", "Emas", "Cryptocurrency"])
+            .optional(),
+        insurance: z
+            .enum(["Saham", "Reksadana", "Obligasi", "Emas", "Cryptocurrency"])
+            .optional(),
+        incomePerMonth: z.union([z.string(), z.number()]).optional(),
+        totalSaving: z.union([z.string(), z.number()]).optional(),
+        totalDebt: z.union([z.string(), z.number()]).optional(),
     })
     .strict();
