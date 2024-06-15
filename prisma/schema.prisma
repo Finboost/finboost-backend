@@ -31,7 +31,7 @@ model User {
 
   profile Profile?
 
-  UserChatRoom ChatRoom[] @relation("UserChatRoom")
+  UserChatRoom   ChatRoom[] @relation("UserChatRoom")
   ExpertChatRoom ChatRoom[] @relation("ExpertChatRoom")
 
   @@map("users")
@@ -51,6 +51,7 @@ model Role {
 model Profile {
   id              String          @id @default(uuid())
   avatar          String?
+  about           String?
   maritalStatus   ProfileMarital?
   certifiedStatus String?
   createdAt       DateTime        @default(now())
@@ -61,6 +62,12 @@ model Profile {
 
   education   Education? @relation(fields: [educationId], references: [id])
   educationId String?
+
+  investment     ProfileInvestmentAndInsurance?
+  insurance      ProfileInvestmentAndInsurance?
+  incomePerMonth Int?
+  totalSaving    Int?
+  totalDebt      Int?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
@@ -115,6 +122,14 @@ enum ProfileMarital {
   Lajang
   Menikah
   Cerai
+}
+
+enum ProfileInvestmentAndInsurance {
+  Saham
+  Reksadana
+  Obligasi
+  Emas
+  Cryptocurrency
 }
 
 enum ChatRoomType {
