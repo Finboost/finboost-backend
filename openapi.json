@@ -1144,6 +1144,7 @@
                                             "data": {
                                                 "profile": {
                                                     "id": "de5b1599-b1b7-4633-8a5d-331690ee9413",
+                                                    "about": "Sophismata tum crur tabgo angulus. Certe statua adfero statua talis aveho aspicio. Pel voluptatum strenuus.",
                                                     "avatar": "https://storage.googleapis.com/finboost/example.png",
                                                     "maritalStatus": "Lajang",
                                                     "certifiedStatus": null,
@@ -1154,7 +1155,12 @@
                                                     "education": {
                                                         "id": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
                                                         "name": "SMA / Sederajat"
-                                                    }
+                                                    },
+                                                    "investment": "Saham",
+                                                    "insurance": "Obligasi",
+                                                    "incomePerMonth": "9211156",
+                                                    "totalSaving": "111138960",
+                                                    "totalDebt": "10000000"
                                                 }
                                             }
                                         }
@@ -1167,6 +1173,7 @@
                                             "data": {
                                                 "profile": {
                                                     "id": "36429cef-96d1-41a7-b579-c2dc8d4f2beb",
+                                                    "about": null,
                                                     "avatar": "https://storage.googleapis.com/finboost/example2.png",
                                                     "maritalStatus": "Menikah",
                                                     "certifiedStatus": "Certified Financial Planner",
@@ -1177,7 +1184,12 @@
                                                     "education": {
                                                         "id": "b5fbeaee-812f-4ec3-b807-22dd2794e09a",
                                                         "name": "S1"
-                                                    }
+                                                    },
+                                                    "investment": null,
+                                                    "insurance": null,
+                                                    "incomePerMonth": null,
+                                                    "totalSaving": null,
+                                                    "totalDebt": null
                                                 }
                                             }
                                         }
@@ -1225,10 +1237,16 @@
                                 "User 1": {
                                     "description": "Example request to partially update user profile",
                                     "value": {
+                                        "about": "Testing About",
                                         "maritalStatus": "Lajang",
                                         "certifiedStatus": null,
                                         "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
-                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
+                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
+                                        "investment": "Saham",
+                                        "insurance": "Obligasi",
+                                        "incomePerMonth": "2400000",
+                                        "totalSaving": "5000000",
+                                        "totalDebt": "10000000"
                                     }
                                 },
                                 "User 2": {
@@ -3343,6 +3361,9 @@
                     "id": {
                         "type": "string"
                     },
+                    "about": {
+                        "type": "string"
+                    },
                     "avatar": {
                         "type": "string"
                     },
@@ -3356,6 +3377,21 @@
                         "type": "string"
                     },
                     "educationId": {
+                        "type": "string"
+                    },
+                    "investment": {
+                        "type": "string"
+                    },
+                    "insurance": {
+                        "type": "string"
+                    },
+                    "incomePerMonth": {
+                        "type": "string"
+                    },
+                    "totalSaving": {
+                        "type": "string"
+                    },
+                    "totalDebt": {
                         "type": "string"
                     }
                 }
@@ -3424,6 +3460,9 @@
             "UpdatePartialFieldProfile": {
                 "type": "object",
                 "properties": {
+                    "about": {
+                        "type": "string"
+                    },
                     "maritalStatus": {
                         "type": "string"
                     },
@@ -3434,6 +3473,21 @@
                         "type": "string"
                     },
                     "educationId": {
+                        "type": "string"
+                    },
+                    "investment": {
+                        "type": "string"
+                    },
+                    "insurance": {
+                        "type": "string"
+                    },
+                    "incomePerMonth": {
+                        "type": "string"
+                    },
+                    "totalSaving": {
+                        "type": "string"
+                    },
+                    "totalDebt": {
                         "type": "string"
                     }
                 }
