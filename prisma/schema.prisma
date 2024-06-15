@@ -65,9 +65,9 @@ model Profile {
 
   investment     ProfileInvestmentAndInsurance?
   insurance      ProfileInvestmentAndInsurance?
-  incomePerMonth Int?
-  totalSaving    Int?
-  totalDebt      Int?
+  incomePerMonth Decimal?
+  totalSaving    Decimal?
+  totalDebt      Decimal?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
