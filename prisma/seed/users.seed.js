@@ -26,14 +26,14 @@ const seedUsers = async (count) => {
                 "Laki_laki",
                 "Perempuan",
             ]);
-            const age = faker.datatype.number({ min: 18, max: 80 });
+            const age = faker.number.int({ min: 18, max: 80 });
             const phoneNumber = faker.phone.number();
             const password = hashPassword;
             const avatarDefault =
                 gender === "Laki_laki"
                     ? getPublicUrl("male.png")
                     : getPublicUrl("female.png");
-            const about = faker.lorem.paragraph();
+            const about = faker.lorem.paragraph(1);
 
             const maritalStatus = faker.helpers.arrayElement([
                 "Lajang",
@@ -64,17 +64,17 @@ const seedUsers = async (count) => {
                 "Cryptocurrency",
             ]);
 
-            const incomePerMonth = faker.datatype.number({
+            const incomePerMonth = faker.number.int({
                 min: 0,
                 max: 25000000,
             });
 
-            const totalSaving = faker.datatype.number({
+            const totalSaving = faker.number.int({
                 min: 0,
                 max: 144000000,
             });
 
-            const totalDebt = faker.datatype.number({
+            const totalDebt = faker.number.int({
                 min: 0,
                 max: 144000000,
             });
