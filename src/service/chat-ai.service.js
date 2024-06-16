@@ -1,35 +1,48 @@
+import { findUserByEmail } from "../repository/users.repository.js";
+
 const GENERATIVE_AI_SERVICE_URL = process.env.GENERATIVE_AI_SERVICE_URL || "";
 const SUGGESTION_AI_SERVICE_URL = process.env.SUGGESTION_AI_SERVICE_URL || "";
 
-export const getGenerativeAi = async ({question}) => {
+export const getGenerativeAi = async (data) => {
     const response = await fetch(GENERATIVE_AI_SERVICE_URL , {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            question,
+            ...data,
         }),
     });
 
-    const data = await response.json();
+    const res = await response.json();
 
-    return data;
+    return res;
 }
 
-export const getSugesstionQuestion = async ({user_input, total_questions}) => {
+export const getSugesstionQuestion = async (data, emailUser) => {
+
+    const userData = await findUserByEmail(emailUser);
+
+    const profileData = userData?.profile ? {
+        incomePerMonth: userData.profile.incomePerMonth,
+        investments: userData.profile.investment,
+        totalSavings: userData.profile.totalSaving,
+        totalDebts: userData.profile.totalDebt,
+        insurances: userData.profile.insurance,
+    } : {};
+
     const response = await fetch(SUGGESTION_AI_SERVICE_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            user_input,
-            total_questions,
+            ...data,
+            ...profileData,
         }),
     });
 
-    const data = await response.json();
+    const res = await response.json();
 
-    return data;
+    return res;
 }

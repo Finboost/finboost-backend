@@ -2838,7 +2838,7 @@
                                 "New chat message": {
                                     "description": "Example of a new chat message",
                                     "value": {
-                                        "question": "Halo"
+                                        "prompt": "Halo"
                                     }
                                 }
                             }
@@ -2860,7 +2860,8 @@
                                             "status": "success",
                                             "message": "Predict chat message",
                                             "data": {
-                                                "answer": "Halo"
+                                                "response": "Halo, ada yang bisa saya bantu?",
+                                                "isExpert": false
                                             }
                                         }
                                     }
@@ -3813,7 +3814,7 @@
             "InsertAllFieldChatMessage": {
                 "type": "object",
                 "properties": {
-                    "question": {
+                    "prompt": {
                         "type": "string"
                     }
                 }
@@ -3840,8 +3841,11 @@
                             "data": {
                                 "type": "object",
                                 "properties": {
-                                    "answer": {
+                                    "response": {
                                         "type": "string"
+                                    },
+                                    "isExpert": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
@@ -3860,8 +3864,11 @@
                             "data": {
                                 "type": "object",
                                 "properties": {
-                                    "answer": {
+                                    "response": {
                                         "type": "string"
+                                    },
+                                    "isExpert": {
+                                        "type": "boolean"
                                     }
                                 }
                             }

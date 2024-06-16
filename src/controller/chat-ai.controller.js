@@ -27,7 +27,7 @@ export const getSugesstionQuestionHandler = async (req, res) => {
     try {
         const validateData = SugesstionQuestionInput.parse(req.body);
 
-        const data = await getSugesstionQuestion(validateData);
+        const data = await getSugesstionQuestion(validateData, req.email);
 
         res.status(200).send({
             status: "success",
