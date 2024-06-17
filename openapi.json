@@ -2923,7 +2923,7 @@
                                     "description": "Example of a new chat suggestion",
                                     "value": {
                                         "user_input": "Halo",
-                                        "total_questions": 4
+                                        "total_questions": "4"
                                     }
                                 }
                             }
@@ -3826,7 +3826,7 @@
                         "type": "string"
                     },
                     "total_questions": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 }
             },

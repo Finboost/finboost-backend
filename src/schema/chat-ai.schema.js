@@ -6,5 +6,5 @@ export const GenerativeAiInput = z.object({
 
 export const SugesstionQuestionInput = z.object({
     user_input: z.string(),
-    total_questions: z.number()
+    total_questions: z.string(),
 });
