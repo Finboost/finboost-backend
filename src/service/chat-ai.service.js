@@ -38,6 +38,7 @@ export const getSugesstionQuestion = async (data, emailUser) => {
         },
         body: JSON.stringify({
             ...data,
+            total_questions: parseInt(data.total_questions),
             ...profileData,
         }),
     });
