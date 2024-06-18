@@ -86,6 +86,10 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.production
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.production
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.production
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.production
+                    echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.production
+                    echo "GENERATIVE_AI_SERVICE_URL=${{ secrets.GENERATIVE_AI_SERVICE_URL }}" >> .env.production
+                    echo "SUGGESTION_AI_SERVICE_URL=${{ secrets.SUGGESTION_AI_SERVICE_URL }}" >> .env.production
                   elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
                     echo "NODE_ENV=staging" >> $GITHUB_ENV
                     echo "DOCKER_TAG=staging-${{ github.sha }}" >> $GITHUB_ENV
@@ -95,6 +99,10 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.staging
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.staging
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.staging
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.staging
+                    echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.staging
+                    echo "GENERATIVE_AI_SERVICE_URL=${{ secrets.GENERATIVE_AI_SERVICE_URL }}" >> .env.staging
+                    echo "SUGGESTION_AI_SERVICE_URL=${{ secrets.SUGGESTION_AI_SERVICE_URL }}" >> .env.staging
                   elif [[ "${GITHUB_REF##*/}" == "feat/setup-node" ]]; then
                     echo "NODE_ENV=dev" >> $GITHUB_ENV
                     echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
@@ -104,6 +112,10 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.dev
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.dev
+                    echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.dev
+                    echo "GENERATIVE_AI_SERVICE_URL=${{ secrets.GENERATIVE_AI_SERVICE_URL }}" >> .env.dev
+                    echo "SUGGESTION_AI_SERVICE_URL=${{ secrets.SUGGESTION_AI_SERVICE_URL }}" >> .env.dev
                   else
                     echo "NODE_ENV=dev" >> $GITHUB_ENV
                     echo "DOCKER_TAG=dev-${{ github.sha }}" >> $GITHUB_ENV
@@ -113,6 +125,10 @@ jobs:
                     echo "EXPRESS_PORT=${{ secrets.EXPRESS_PORT }}" >> .env.dev
                     echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env.dev
                     echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env.dev
+                    echo "GCLOUD_PROJECT_ID=${{ secrets.GCLOUD_PROJECT_ID }}" >> .env.dev
+                    echo "GCLOUD_BUCKET_NAME=${{ secrets.GCLOUD_BUCKET_NAME }}" >> .env.dev
+                    echo "GENERATIVE_AI_SERVICE_URL=${{ secrets.GENERATIVE_AI_SERVICE_URL }}" >> .env.dev
+                    echo "SUGGESTION_AI_SERVICE_URL=${{ secrets.SUGGESTION_AI_SERVICE_URL }}" >> .env.dev
                   fi
 
             - name: Clear Docker cache

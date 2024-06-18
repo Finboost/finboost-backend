@@ -20,6 +20,7 @@ model User {
   email        String     @unique
   gender       UserGender
   age          Int
+  phoneNumber  String
   password     String
   refreshToken String?    @db.VarChar(512)
   createdAt    DateTime   @default(now())
@@ -29,6 +30,9 @@ model User {
   roleId String
 
   profile Profile?
+
+  UserChatRoom   ChatRoom[] @relation("UserChatRoom")
+  ExpertChatRoom ChatRoom[] @relation("ExpertChatRoom")
 
   @@map("users")
 }
@@ -45,20 +49,27 @@ model Role {
 }
 
 model Profile {
-  id              String         @id @default(uuid())
-  avatar          String
-  maritalStatus   ProfileMarital
-  certifiedStatus String
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id              String          @id @default(uuid())
+  avatar          String?
+  about           String?
+  maritalStatus   ProfileMarital?
+  certifiedStatus String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
-  work   Work   @relation(fields: [workId], references: [id])
-  workId String
+  work   Work?   @relation(fields: [workId], references: [id])
+  workId String?
 
-  education   Education @relation(fields: [educationId], references: [id])
-  educationId String
+  education   Education? @relation(fields: [educationId], references: [id])
+  educationId String?
 
-  user   User   @relation(fields: [userId], references: [id])
+  investment     ProfileInvestmentAndInsurance?
+  insurance      ProfileInvestmentAndInsurance?
+  incomePerMonth Decimal?                       @db.Decimal(25, 2)
+  totalSaving    Decimal?                       @db.Decimal(25, 2)
+  totalDebt      Decimal?                       @db.Decimal(25, 2)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
   @@map("profiles")
@@ -86,6 +97,22 @@ model Education {
   @@map("educations")
 }
 
+model ChatRoom {
+  id   String       @id @default(uuid())
+  type ChatRoomType
+
+  user   User   @relation("UserChatRoom", fields: [userId], references: [id])
+  userId String
+
+  expert   User?   @relation("ExpertChatRoom", fields: [expertId], references: [id])
+  expertId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chat_rooms")
+}
+
 enum UserGender {
   Laki_laki @map("Laki-laki")
   Perempuan
@@ -95,4 +122,17 @@ enum ProfileMarital {
   Lajang
   Menikah
   Cerai
+}
+
+enum ProfileInvestmentAndInsurance {
+  Saham
+  Reksadana
+  Obligasi
+  Emas
+  Cryptocurrency
+}
+
+enum ChatRoomType {
+  Expert
+  AI
 }

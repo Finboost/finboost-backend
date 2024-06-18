@@ -17,14 +17,18 @@
             "variables": {
                 "environment": {
                     "description": "Server Information",
-                    "default": "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
+                    "default": "production---finboost-backend-rtalegstna-et.a.run.app",
                     "enum": [
-                        "production---finboost-backend-jzrwg5bjqq-et.a.run.app",
-                        "staging---finboost-backend-jzrwg5bjqq-et.a.run.app",
-                        "dev---finboost-backend-jzrwg5bjqq-et.a.run.app"
+                        "production---finboost-backend-rtalegstna-et.a.run.app",
+                        "staging---finboost-backend-rtalegstna-et.a.run.app",
+                        "dev---finboost-backend-rtalegstna-et.a.run.app"
                     ]
                 }
             }
+        },
+        {
+            "description": "Local Finboost Back-End URL",
+            "url": "http://localhost:3000/api/v1"
         }
     ],
     "tags": [
@@ -76,7 +80,7 @@
                                     "value": {
                                         "fullName": "John Doe",
                                         "email": "john.doe@example.com",
-                                        "gender": "Laki-laki",
+                                        "gender": "Laki_laki",
                                         "age": 23,
                                         "phoneNumber": "081234567890",
                                         "password": "Lts47S~^{yp^)$I",
@@ -114,7 +118,7 @@
                                             "status": "success",
                                             "message": "User created successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -124,7 +128,7 @@
                                             "status": "success",
                                             "message": "User created successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -178,6 +182,25 @@
                             }
                         }
                     },
+                    "409": {
+                        "description": "Failed signup user because email already exist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Email already exist": {
+                                        "description": "Fail signup because email already exist",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "email already exist"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "content": {
@@ -190,26 +213,14 @@
                                         "description": "Fail signup due to database connection issue",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "database",
-                                                    "message": "Failed to connect to the database"
-                                                }
-                                            ]
+                                            "message": "Database connection error"
                                         }
                                     },
                                     "Unexpected server error": {
                                         "description": "Fail signup due to unexpected server error",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "server",
-                                                    "message": "Unexpected condition encountered"
-                                                }
-                                            ]
+                                            "message": "Unexpected server error"
                                         }
                                     }
                                 }
@@ -371,26 +382,14 @@
                                         "description": "Fail sigin due to database connection issue",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "database",
-                                                    "message": "Failed to connect to the database"
-                                                }
-                                            ]
+                                            "message": "Database connection error"
                                         }
                                     },
                                     "Unexpected server error": {
                                         "description": "Fail sigin due to unexpected server error",
                                         "value": {
                                             "status": "error",
-                                            "message": "Internal server error",
-                                            "errors": [
-                                                {
-                                                    "field": "server",
-                                                    "message": "Unexpected condition encountered"
-                                                }
-                                            ]
+                                            "message": "Unexpected server error"
                                         }
                                     }
                                 }
@@ -427,6 +426,51 @@
                                         "value": {
                                             "status": "success",
                                             "message": "Logout successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "not provided refresh token": {
+                                        "description": "Fail to refresh token because the request not provided refresh token on cookies",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Unauthorized. Please provide `refreshToken` on cookies before request"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Fobidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "invalid refresh token": {
+                                        "description": "Fail to refresh token because invalid refresh token",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't find who the owner `refreshToken`"
+                                        }
+                                    },
+                                    "decode error": {
+                                        "description": "Fail to refresh token because decode error",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Forbidden. Can't decode or compare token with secret"
                                         }
                                     }
                                 }
@@ -803,7 +847,7 @@
                                             "status": "success",
                                             "message": "User data updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -813,7 +857,7 @@
                                             "status": "success",
                                             "message": "User data updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -936,7 +980,7 @@
                                             "status": "success",
                                             "message": "User data partially updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -946,7 +990,7 @@
                                             "status": "success",
                                             "message": "User data partially updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1035,7 +1079,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user data",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1045,7 +1089,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user data",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1100,6 +1144,7 @@
                                             "data": {
                                                 "profile": {
                                                     "id": "de5b1599-b1b7-4633-8a5d-331690ee9413",
+                                                    "about": "Sophismata tum crur tabgo angulus. Certe statua adfero statua talis aveho aspicio. Pel voluptatum strenuus.",
                                                     "avatar": "https://storage.googleapis.com/finboost/example.png",
                                                     "maritalStatus": "Lajang",
                                                     "certifiedStatus": null,
@@ -1110,7 +1155,12 @@
                                                     "education": {
                                                         "id": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
                                                         "name": "SMA / Sederajat"
-                                                    }
+                                                    },
+                                                    "investment": "Saham",
+                                                    "insurance": "Obligasi",
+                                                    "incomePerMonth": "9211156",
+                                                    "totalSaving": "111138960",
+                                                    "totalDebt": "10000000"
                                                 }
                                             }
                                         }
@@ -1123,6 +1173,7 @@
                                             "data": {
                                                 "profile": {
                                                     "id": "36429cef-96d1-41a7-b579-c2dc8d4f2beb",
+                                                    "about": null,
                                                     "avatar": "https://storage.googleapis.com/finboost/example2.png",
                                                     "maritalStatus": "Menikah",
                                                     "certifiedStatus": "Certified Financial Planner",
@@ -1133,194 +1184,13 @@
                                                     "education": {
                                                         "id": "b5fbeaee-812f-4ec3-b807-22dd2794e09a",
                                                         "name": "S1"
-                                                    }
+                                                    },
+                                                    "investment": null,
+                                                    "insurance": null,
+                                                    "incomePerMonth": null,
+                                                    "totalSaving": null,
+                                                    "totalDebt": null
                                                 }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/MiddlewareForbiddenError"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/ErrorUserNotFound"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": ["User", "Profile"],
-                "summary": "Insert user profile data by user id",
-                "description": "Insert specific user profile by user id. Requires valid access token",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/UserId"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InsertAllFieldProfile"
-                            },
-                            "examples": {
-                                "User 1": {
-                                    "description": "Example request to insert user profile",
-                                    "value": {
-                                        "avatar": "file",
-                                        "maritalStatus": "Menikah",
-                                        "certifiedStatus": null,
-                                        "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
-                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
-                                    }
-                                },
-                                "User 2": {
-                                    "description": "Example request to insert user profile",
-                                    "value": {
-                                        "avatar": "file",
-                                        "maritalStatus": "Cerai",
-                                        "certifiedStatus": "Certified Financial Planner",
-                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
-                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successfully updated user profile data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
-                                },
-                                "examples": {
-                                    "User 1": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
-                                            }
-                                        }
-                                    },
-                                    "User 2": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/MiddlewareForbiddenError"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/ErrorUserNotFound"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": ["User", "Profile"],
-                "summary": "Update user profile data by user id",
-                "description": "Update specific user profile by user id. Requires valid access token",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/UserId"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateAllFieldProfile"
-                            },
-                            "examples": {
-                                "User 1": {
-                                    "description": "Example request to update user profile",
-                                    "value": {
-                                        "avatar": "file",
-                                        "maritalStatus": "Menikah",
-                                        "certifiedStatus": null,
-                                        "workId": "72608273-18c1-4924-b67f-d67225e73faa",
-                                        "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
-                                    }
-                                },
-                                "User 2": {
-                                    "description": "Example request to update user profile",
-                                    "value": {
-                                        "avatar": "file",
-                                        "maritalStatus": "Cerai",
-                                        "certifiedStatus": "Certified Financial Planner",
-                                        "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
-                                        "educationId": "bd2bb42f-d42e-4b7d-a3f4-221a867d1836"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successfully updated user profile data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
-                                },
-                                "examples": {
-                                    "User 1": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
-                                            }
-                                        }
-                                    },
-                                    "User 2": {
-                                        "description": "Successfully updated user data",
-                                        "value": {
-                                            "status": "success",
-                                            "message": "User profile data updated successfully",
-                                            "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1359,7 +1229,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/UpdatePartialFieldProfile"
                             },
@@ -1367,15 +1237,23 @@
                                 "User 1": {
                                     "description": "Example request to partially update user profile",
                                     "value": {
+                                        "about": "Testing About",
                                         "maritalStatus": "Lajang",
+                                        "certifiedStatus": null,
                                         "workId": "319defd8-1836-4b9d-af2d-655a43a60bde",
-                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b"
+                                        "educationId": "7fe46a1f-fb32-4e36-9741-d96f22cf4b4b",
+                                        "investment": "Saham",
+                                        "insurance": "Obligasi",
+                                        "incomePerMonth": "2400000",
+                                        "totalSaving": "5000000",
+                                        "totalDebt": "10000000"
                                     }
                                 },
                                 "User 2": {
                                     "description": "Example request to update user profile",
                                     "value": {
                                         "maritalStatus": "Menikah",
+                                        "certifiedStatus": "Certified Financial Planner (CFP)",
                                         "workId": "dc4aa7d6-7cbf-4789-a7a6-5fdc9c1ca642",
                                         "educationId": "b5fbeaee-812f-4ec3-b807-22dd2794e09a"
                                     }
@@ -1399,7 +1277,7 @@
                                             "status": "success",
                                             "message": "User profile data updated successfully",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1409,7 +1287,7 @@
                                             "status": "success",
                                             "message": "User profile data updated successfully",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
                                         }
                                     }
@@ -1460,7 +1338,7 @@
                                             "status": "success",
                                             "message": "Successfully delete user profile data",
                                             "data": {
-                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
                                             }
                                         }
                                     },
@@ -1470,8 +1348,115 @@
                                             "status": "success",
                                             "message": "Successfully delete user profile data",
                                             "data": {
-                                                "id": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/MiddlewareUnauthorizedError"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/MiddlewareForbiddenError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorUserNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/{userId}/profile/avatar": {
+            "put": {
+                "tags": ["User", "Profile"],
+                "summary": "Update avatar user profile data by user id",
+                "description": "Update specific avatar user profile by user id. Requires valid access token",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAvatarUserProfile"
+                            },
+                            "examples": {
+                                "User 1": {
+                                    "description": "Example request to update avatar user profile",
+                                    "value": {
+                                        "avatar": "file"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated avatar user profile data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "User 1": {
+                                        "description": "Successfully updated avatar user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Avatar user updated successfully",
+                                            "data": {
+                                                "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    },
+                                    "User 2": {
+                                        "description": "Successfully updated avatar user data",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Avatar user updated successfully",
+                                            "data": {
+                                                "userId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Fail updated avatar user data because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Fail"
+                                },
+                                "examples": {
+                                    "Validation 1": {
+                                        "description": "Fail updated data avatar user because file type not allowed",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Invalid file type. Only JPG, PNG are allowed!"
+                                        }
+                                    },
+                                    "Validation 2": {
+                                        "description": "Fail updated data avatar user because file size is too large",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "File too large. Maximum size is 2MB."
                                         }
                                     }
                                 }
@@ -1503,6 +1488,28 @@
                 "tags": ["Role", "User"],
                 "summary": "Get all user role",
                 "description": "Retrieve all user role",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get role by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User": {
+                                "description": "Get role by name User",
+                                "value": "User"
+                            },
+                            "Expert": {
+                                "description": "Get role by name Expert",
+                                "value": "Expert"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all user role",
@@ -1579,7 +1586,7 @@
                                             "status": "success",
                                             "message": "Role created successfully",
                                             "data": {
-                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                                "roleId": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                                             }
                                         }
                                     }
@@ -1705,7 +1712,7 @@
                                             "status": "success",
                                             "message": "Role updated successfully",
                                             "data": {
-                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                                "roleId": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                                             }
                                         }
                                     }
@@ -1770,7 +1777,7 @@
                                             "status": "success",
                                             "message": "Role deleted successfully",
                                             "data": {
-                                                "id": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
+                                                "roleId": "fdc3462c-96fb-4797-8341-cd2b1cce88bb"
                                             }
                                         }
                                     }
@@ -1792,6 +1799,28 @@
                 "tags": ["Work", "User", "Profile"],
                 "summary": "Get all work profile user",
                 "description": "Retrieve all work profile user",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get specific work data by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "Work 1": {
+                                "description": "Get specific work data by name",
+                                "value": "Pegawai Swasta"
+                            },
+                            "Work 2": {
+                                "description": "Get specific work data by name",
+                                "value": "Profesional"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all work profile user",
@@ -1908,7 +1937,7 @@
                                             "status": "success",
                                             "message": "Work created successfully",
                                             "data": {
-                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                                "workId": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                                             }
                                         }
                                     }
@@ -2034,7 +2063,7 @@
                                             "status": "success",
                                             "message": "Work updated successfully",
                                             "data": {
-                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                                "workId": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                                             }
                                         }
                                     }
@@ -2099,7 +2128,7 @@
                                             "status": "success",
                                             "message": "Work deleted successfully",
                                             "data": {
-                                                "id": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
+                                                "workId": "6ce7e34b-93f9-406c-aa1d-09fac038b138"
                                             }
                                         }
                                     }
@@ -2121,6 +2150,28 @@
                 "tags": ["Education", "User", "Profile"],
                 "summary": "Get all education profile user",
                 "description": "Retrieve all education profile user",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Get specific education data by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "Education 1": {
+                                "description": "Get specific education data by name",
+                                "value": "SD"
+                            },
+                            "Education 2": {
+                                "description": "Get specific education data by name",
+                                "value": "Diploma"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved all education profile user",
@@ -2221,7 +2272,7 @@
                                             "status": "success",
                                             "message": "Education created successfully",
                                             "data": {
-                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                                "educationId": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                                             }
                                         }
                                     }
@@ -2347,7 +2398,7 @@
                                             "status": "success",
                                             "message": "Education updated successfully",
                                             "data": {
-                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                                "educationId": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                                             }
                                         }
                                     }
@@ -2412,7 +2463,7 @@
                                             "status": "success",
                                             "message": "Education deleted successfully",
                                             "data": {
-                                                "id": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                                                "educationId": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
                                             }
                                         }
                                     }
@@ -2427,6 +2478,498 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
+            }
+        },
+        "/chat-rooms": {
+            "get": {
+                "tags": ["Chat Room"],
+                "summary": "Get all chat rooms",
+                "description": "Retrieve all chat rooms",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "Get chat rooms by user id",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "examples": {
+                            "User 1": {
+                                "description": "Get chat rooms by user id 1",
+                                "value": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all chat rooms",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllChatRooms"
+                                },
+                                "examples": {
+                                    "All chat rooms": {
+                                        "description": "Successfully get all chat rooms",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all chat rooms",
+                                            "data": {
+                                                "chatRooms": [
+                                                    {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "type": "AI",
+                                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                    },
+                                                    {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "type": "Expert",
+                                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": ["Chat Room"],
+                "summary": "Create a new chat room",
+                "description": "Add a new chat room to the app",
+                "requestBody": {
+                    "description": "Chat room object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldChatRoom"
+                            },
+                            "examples": {
+                                "New chat room": {
+                                    "description": "Example of a new chat room",
+                                    "value": {
+                                        "type": "AI",
+                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room 1": {
+                                        "description": "Successfully created a new chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room created successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed add new chat room because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Fail add new chat room because name field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chat-rooms/{chatRoomId}": {
+            "get": {
+                "tags": ["Chat Room"],
+                "summary": "Get a chat room by id",
+                "description": "Get specific chat room by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessGetChatRoom"
+                                },
+                                "examples": {
+                                    "Chat Room": {
+                                        "description": "Successfully retrieved the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get chat room data by id",
+                                            "data": {
+                                                "chatRoom": {
+                                                    "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                    "type": "AI",
+                                                    "user": {
+                                                        "id": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                                        "name": "User 1"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": ["Chat Room"],
+                "summary": "Update a chat room by id",
+                "description": "Update specific chat room by id",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Chat room object that needs to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAllFieldChatRoom"
+                            },
+                            "examples": {
+                                "Update chat room": {
+                                    "description": "Example of a chat room update",
+                                    "value": {
+                                        "type": "Expert",
+                                        "userId": "d969ee14-3362-46cd-ace9-af4d7b131733",
+                                        "expertId": "f5e05c30-99ff-4693-a0aa-bc1e869dd3e5"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully update the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room updated": {
+                                        "description": "Successfully updated the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room updated successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update chat room due to validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "name empty": {
+                                        "description": "Failed to update chat room because name field is empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "name",
+                                                    "message": "name is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["Chat Room"],
+                "summary": "Delete a chat room by id",
+                "description": "Delete a specific chat room by its ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ChatRoomId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted the chat room",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessSignupOrRegisUser"
+                                },
+                                "examples": {
+                                    "Chat Room deleted": {
+                                        "description": "Successfully deleted the chat room",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Chat room deleted successfully",
+                                            "data": {
+                                                "id": "d969ee14-3362-46cd-ace9-af4d7b131733"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ErrorChatRoomNotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/ai/predict": {
+            "post": {
+                "tags": ["Chat Room"],
+                "summary": "Predict chat message",
+                "description": "Predict chat message",
+                "requestBody": {
+                    "description": "Chat message object that needs to be predicted",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldChatMessage"
+                            },
+                            "examples": {
+                                "New chat message": {
+                                    "description": "Example of a new chat message",
+                                    "value": {
+                                        "prompt": "Halo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully predicted the chat message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessPredictChatMessage"
+                                },
+                                "examples": {
+                                    "Chat Message": {
+                                        "description": "Successfully predicted the chat message",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Predict chat message",
+                                            "data": {
+                                                "response": "Halo, ada yang bisa saya bantu?",
+                                                "isExpert": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed predict chat message because validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailValidationSignupOrRegister"
+                                },
+                                "examples": {
+                                    "message empty": {
+                                        "description": "Fail predict chat message because message field empty",
+                                        "value": {
+                                            "status": "fail",
+                                            "message": "Validation error",
+                                            "errors": [
+                                                {
+                                                    "field": "message",
+                                                    "message": "message is required"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/ai/suggestions": {
+            "post": {
+                "tags": ["Chat Room"],
+                "summary": "Get all chat suggestions",
+                "description": "Retrieve all chat suggestions",
+                "requestBody": {
+                    "description": "Chat suggestion object that needs to be retrieved",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InsertAllFieldChatSuggestion"
+                            },
+                            "examples": {
+                                "New chat suggestion": {
+                                    "description": "Example of a new chat suggestion",
+                                    "value": {
+                                        "user_input": "Halo",
+                                        "total_questions": "4"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all chat suggestions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/SuccessGetAllChatSuggestions"
+                                },
+                                "examples": {
+                                    "All chat suggestions": {
+                                        "description": "Successfully get all chat suggestions",
+                                        "value": {
+                                            "status": "success",
+                                            "message": "Get all chat suggestions",
+                                            "data": {
+                                                "suggested_questions": [
+                                                    "Apa saja jenis reksadana yang tersedia di Indonesia?",
+                                                    "Apa itu reksadana offshore dan bagaimana cara berinvestasi di dalamnya?",
+                                                    "Apa itu reksadana terproteksi dan bagaimana cara kerjanya?",
+                                                    "Bagaimana cara menghindari penipuan dalam investasi reksadana?"
+                                                ],
+                                                "probability": 0.9,
+                                                "top_category": "Reksadana"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -2505,6 +3048,21 @@
                     "Education 1": {
                         "description": "Sample education id for education 1",
                         "value": "8a69ef80-8d1d-4832-9c6a-fba9d9f16230"
+                    }
+                }
+            },
+            "ChatRoomId": {
+                "name": "chatRoomId",
+                "in": "path",
+                "description": "Room chat ID",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "Room Chat 1": {
+                        "description": "Sample room chat id for room chat 1",
+                        "value": "d969ee14-3362-46cd-ace9-af4d7b131733"
                     }
                 }
             }
@@ -2792,6 +3350,9 @@
                     },
                     "phoneNumber": {
                         "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
                     }
                 }
             },
@@ -2799,6 +3360,9 @@
                 "type": "object",
                 "properties": {
                     "id": {
+                        "type": "string"
+                    },
+                    "about": {
                         "type": "string"
                     },
                     "avatar": {
@@ -2814,6 +3378,21 @@
                         "type": "string"
                     },
                     "educationId": {
+                        "type": "string"
+                    },
+                    "investment": {
+                        "type": "string"
+                    },
+                    "insurance": {
+                        "type": "string"
+                    },
+                    "incomePerMonth": {
+                        "type": "string"
+                    },
+                    "totalSaving": {
+                        "type": "string"
+                    },
+                    "totalDebt": {
                         "type": "string"
                     }
                 }
@@ -2841,10 +3420,6 @@
             "InsertAllFieldProfile": {
                 "type": "object",
                 "properties": {
-                    "avatar": {
-                        "type": "string",
-                        "format": "binary"
-                    },
                     "maritalStatus": {
                         "type": "string"
                     },
@@ -2862,10 +3437,6 @@
             "UpdateAllFieldProfile": {
                 "type": "object",
                 "properties": {
-                    "avatar": {
-                        "type": "string",
-                        "format": "binary"
-                    },
                     "maritalStatus": {
                         "type": "string"
                     },
@@ -2890,9 +3461,8 @@
             "UpdatePartialFieldProfile": {
                 "type": "object",
                 "properties": {
-                    "avatar": {
-                        "type": "string",
-                        "format": "binary"
+                    "about": {
+                        "type": "string"
                     },
                     "maritalStatus": {
                         "type": "string"
@@ -2905,6 +3475,30 @@
                     },
                     "educationId": {
                         "type": "string"
+                    },
+                    "investment": {
+                        "type": "string"
+                    },
+                    "insurance": {
+                        "type": "string"
+                    },
+                    "incomePerMonth": {
+                        "type": "string"
+                    },
+                    "totalSaving": {
+                        "type": "string"
+                    },
+                    "totalDebt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateAvatarUserProfile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary"
                     }
                 }
             },
@@ -3117,6 +3711,225 @@
                         "type": "string"
                     }
                 }
+            },
+            "GetChatRoom": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["Expert", "AI"]
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "expert": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessGetChatRoom": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "chatRoom": {
+                                        "$ref": "#/components/schemas/GetChatRoom"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllChatRooms": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "chatRooms": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/GetChatRoom"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "InsertAllFieldChatRoom": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["Expert", "AI"]
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "expertId": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "UpdateAllFieldChatRoom": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["Expert", "AI"]
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "expertId": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "InsertAllFieldChatMessage": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "InsertAllFieldChatSuggestion": {
+                "type": "object",
+                "properties": {
+                    "user_input": {
+                        "type": "string"
+                    },
+                    "total_questions": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SuccessPredictChatMessage": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "response": {
+                                        "type": "string"
+                                    },
+                                    "isExpert": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessPredictChatAi": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "response": {
+                                        "type": "string"
+                                    },
+                                    "isExpert": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessSuggestChatAi": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "suggested_questions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "probability": {
+                                        "type": "number"
+                                    },
+                                    "top_category": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SuccessGetAllChatSuggestions": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "suggestion_questions": {
+                                        "type": "array"
+                                    },
+                                    "probability": {
+                                        "type": "number"
+                                    },
+                                    "top_category": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         },
         "responses": {
@@ -3254,6 +4067,26 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Education not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorChatRoomNotFound": {
+                "description": "Chat room not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "fail"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Chat room not found"
                                 }
                             }
                         }
