@@ -1,0 +1,2736 @@
+{
+	"info": {
+		"_postman_id": "a3a07a5e-e6d6-409c-aaae-8dee3409a6ef",
+		"name": "Finboost Back-End",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22843638"
+	},
+	"item": [
+		{
+			"name": "Get all role data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all user role\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array roles and contains two items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('roles');\r",
+							"    pm.expect(data.roles).to.be.an('array');\r",
+							"    pm.expect(data.roles).to.lengthOf(2);\r",
+							"});\r",
+							"\r",
+							"pm.test('the roles should have contains only id, name, createdAt, and updatedAt property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { roles } } = responseJson;\r",
+							"\r",
+							"    roles.forEach((role) => {\r",
+							"        pm.expect(Object.keys(role)).to.lengthOf(4);\r",
+							"        pm.expect(role).to.haveOwnProperty('id');\r",
+							"        pm.expect(role).to.haveOwnProperty('name');\r",
+							"        pm.expect(role).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(role).to.haveOwnProperty('updatedAt');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/roles",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get role data by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all user role\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array roles and contains one items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('roles');\r",
+							"    pm.expect(data.roles).to.be.an('array');\r",
+							"    pm.expect(data.roles).to.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"pm.test('the roles should have contains only id, name, createdAt, and updatedAt property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { roles } } = responseJson;\r",
+							"\r",
+							"    roles.forEach((role) => {\r",
+							"        pm.expect(Object.keys(role)).to.lengthOf(4);\r",
+							"        pm.expect(role).to.haveOwnProperty('id');\r",
+							"        pm.expect(role).to.haveOwnProperty('name');\r",
+							"        pm.expect(role).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(role).to.haveOwnProperty('updatedAt');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/roles?name=User",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "User"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Role Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 201', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Role created successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data should contain roleId', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('roleId');\r",
+							"    pm.expect(data.roleId).to.not.equals('');\r",
+							"\r",
+							"    pm.environment.set('roleId', data.roleId);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{newRoleName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/roles",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a User Role by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should an object', () =>  {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Get role data by id');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should contain role object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('role');\r",
+							"    pm.expect(data.role).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('role object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { role } } = responseJson;\r",
+							"\r",
+							"    pm.expect(role).to.haveOwnProperty('id');\r",
+							"    pm.expect(role).to.haveOwnProperty('name');\r",
+							"    pm.expect(role).to.haveOwnProperty('createdAt');\r",
+							"    pm.expect(role).to.haveOwnProperty('updatedAt');\r",
+							"\r",
+							"    pm.expect(role.id).to.equals(pm.environment.get('roleId'));\r",
+							"    pm.expect(role.name).to.equals(pm.environment.get('newRoleName'));\r",
+							"    pm.expect(role.createdAt).to.not.equals('');\r",
+							"    pm.expect(role.updatedAt).to.not.equals('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/roles/{{roleId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles",
+						"{{roleId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Role By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Role updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail role', () => {\r",
+							"    pm.sendRequest(`${pm.environment.get('host')}/api/v1/roles/${pm.environment.get('roleId')}`, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { role } } = responseJson;\r",
+							"\r",
+							"       pm.test('role object should contain updated values', () => {\r",
+							"            pm.expect(role).to.haveOwnProperty('id');\r",
+							"            pm.expect(role).to.haveOwnProperty('name');\r",
+							"            pm.expect(role).to.haveOwnProperty('createdAt');\r",
+							"            pm.expect(role).to.haveOwnProperty('updatedAt');\r",
+							"            \r",
+							"            pm.expect(role.id).to.equals(pm.environment.get('roleId'));\r",
+							"            pm.expect(role.name).to.equals(pm.environment.get('updateRoleName'));\r",
+							"            pm.expect(role.createdAt).to.not.equals('');\r",
+							"            pm.expect(role.updatedAt).to.not.equals('');\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{updateRoleName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/roles/{{roleId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles",
+						"{{roleId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Role By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Role deleted successfully');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail roles', () => {\r",
+							"    pm.sendRequest(`${pm.environment.get('host')}/api/v1/roles/${pm.environment.get('roleId')}`, (error, response) => {\r",
+							"       pm.test('The role should be not found', () => {\r",
+							"          pm.expect(response.code).to.equals(404);\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/roles/{{roleId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"roles",
+						"{{roleId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 201', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('User signup successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data should contain userId', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('userId');\r",
+							"    pm.expect(data.userId).to.not.equals('');\r",
+							"\r",
+							"    pm.environment.set('userId', data.userId);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"{{newUserFullName}}\",\r\n    \"email\": \"{{newUserEmail}}\",\r\n    \"gender\": \"{{newUserGender}}\",\r\n    \"age\": {{newUserAge}},\r\n    \"phoneNumber\": \"{{newUserPhoneNumber}}\",\r\n    \"password\": \"{{newUserPassword}}\",\r\n    \"roleId\": \"{{roleId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/auth/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 values', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8')\r",
+							"})\r",
+							"\r",
+							"pm.test('response body should an object', () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"    pm.expect(responseJson).to.be.an('object')\r",
+							"})\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status')\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message')\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data')\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals(\"success\")\r",
+							"    pm.expect(responseJson.message).to.equals('Login successfully')\r",
+							"    pm.expect(responseJson.data).to.be.an(\"object\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body data object should contain `accessToken` string\", () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"    const { data } = responseJson\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty(\"accessToken\")\r",
+							"    pm.expect(data.accessToken).to.be.an('string')\r",
+							"\r",
+							"    pm.environment.set('accessToken', data.accessToken)\r",
+							"    \r",
+							"    const tokenParts = data.accessToken.split('.')\r",
+							"    const encodedPayload = tokenParts[1]\r",
+							"    const decodedPayload = Buffer.from(encodedPayload, 'base64').toString('utf-8')\r",
+							"    const payload = JSON.parse(decodedPayload)\r",
+							"    pm.environment.set('expiredAccessToken', payload.exp)\r",
+							"    \r",
+							"    pm.environment.set('refreshToken', pm.cookies.get('refreshToken'))\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{newUserEmail}}\",\r\n    \"password\": \"{{newUserPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/auth/signin",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 values', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8')\r",
+							"})\r",
+							"\r",
+							"pm.test('response body should an object', () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"    pm.expect(responseJson).to.be.an('object')\r",
+							"})\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status')\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message')\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data')\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals(\"success\")\r",
+							"    pm.expect(responseJson.message).to.equals('Refresh token successfully')\r",
+							"    pm.expect(responseJson.data).to.be.an(\"object\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body data object should contain `accessToken` string\", () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"    const { data } = responseJson\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty(\"accessToken\")\r",
+							"    pm.expect(data.accessToken).to.be.an('string')\r",
+							"\r",
+							"    pm.environment.set('accessToken', data.accessToken)\r",
+							"    \r",
+							"    const tokenParts = data.accessToken.split('.')\r",
+							"    const encodedPayload = tokenParts[1]\r",
+							"    const decodedPayload = Buffer.from(encodedPayload, 'base64').toString('utf-8')\r",
+							"    const payload = JSON.parse(decodedPayload)\r",
+							"    pm.environment.set('expiredAccessToken', payload.exp)\r",
+							"    \r",
+							"    pm.environment.set('refreshToken', pm.cookies.get('refreshToken'))\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/token/refresh",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"token",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signout User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 values', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8')\r",
+							"})\r",
+							"\r",
+							"pm.test('response body should an object', () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"    pm.expect(responseJson).to.be.an('object')\r",
+							"})\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json()\r",
+							"\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status')\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message')\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals(\"success\")\r",
+							"    pm.expect(responseJson.message).to.equals('Logout successfully')\r",
+							"\r",
+							"    pm.environment.set('refreshToken', null)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/auth/signout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"signout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all user data\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array users and contains eleven items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('users');\r",
+							"    pm.expect(data.users).to.be.an('array');\r",
+							"    pm.expect(data.users).to.lengthOf(11);\r",
+							"});\r",
+							"\r",
+							"pm.test('the users should have contains only id, fullName, email, gender, age, phoneNumber, createdAt, updatedAt, role, and profile property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { users } } = responseJson;\r",
+							"\r",
+							"    users.forEach((user) => {\r",
+							"        pm.expect(Object.keys(user)).to.lengthOf(10);\r",
+							"        pm.expect(user).to.haveOwnProperty('id');\r",
+							"        pm.expect(user).to.haveOwnProperty('fullName');\r",
+							"        pm.expect(user).to.haveOwnProperty('email');\r",
+							"        pm.expect(user).to.haveOwnProperty('gender');\r",
+							"        pm.expect(user).to.haveOwnProperty('age');\r",
+							"        pm.expect(user).to.haveOwnProperty('phoneNumber');\r",
+							"        pm.expect(user).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(user).to.haveOwnProperty('updatedAt');\r",
+							"        pm.expect(user).to.haveOwnProperty('role');\r",
+							"        pm.expect(user).to.haveOwnProperty('profile');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user data by filters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all user data\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array users and contains one items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('users');\r",
+							"    pm.expect(data.users).to.be.an('array');\r",
+							"    pm.expect(data.users).to.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"pm.test('the users should have contains only id, fullName, email, gender, age, phoneNumber, createdAt, updatedAt, role, and profile property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { users } } = responseJson;\r",
+							"\r",
+							"    users.forEach((user) => {\r",
+							"        pm.expect(Object.keys(user)).to.lengthOf(10);\r",
+							"        pm.expect(user).to.haveOwnProperty('id');\r",
+							"        pm.expect(user).to.haveOwnProperty('fullName');\r",
+							"        pm.expect(user).to.haveOwnProperty('email');\r",
+							"        pm.expect(user).to.haveOwnProperty('gender');\r",
+							"        pm.expect(user).to.haveOwnProperty('age');\r",
+							"        pm.expect(user).to.haveOwnProperty('phoneNumber');\r",
+							"        pm.expect(user).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(user).to.haveOwnProperty('updatedAt');\r",
+							"        pm.expect(user).to.haveOwnProperty('role');\r",
+							"        pm.expect(user).to.haveOwnProperty('profile');\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/users?role={{newRoleName}}&fullName={{newUserFullName}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "role",
+							"value": "{{newRoleName}}"
+						},
+						{
+							"key": "fullName",
+							"value": "{{newUserFullName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a user data by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should an object', () =>  {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Get user data by id');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should contain user object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('user');\r",
+							"    pm.expect(data.user).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('user object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { user } } = responseJson;\r",
+							"\r",
+							"    pm.expect(user).to.haveOwnProperty('id');\r",
+							"    pm.expect(user).to.haveOwnProperty('fullName');\r",
+							"    pm.expect(user).to.haveOwnProperty('email');\r",
+							"    pm.expect(user).to.haveOwnProperty('gender');\r",
+							"    pm.expect(user).to.haveOwnProperty('age');\r",
+							"    pm.expect(user).to.haveOwnProperty('phoneNumber');\r",
+							"    pm.expect(user).to.haveOwnProperty('password');\r",
+							"    pm.expect(user).to.haveOwnProperty('createdAt');\r",
+							"    pm.expect(user).to.haveOwnProperty('updatedAt');\r",
+							"    pm.expect(user).to.haveOwnProperty('role');\r",
+							"    pm.expect(user).to.haveOwnProperty('profile');\r",
+							"\r",
+							"    pm.expect(user.id).to.equals(pm.environment.get('userId'));\r",
+							"    pm.expect(user.fullName).to.equals(pm.environment.get('newUserFullName'));\r",
+							"    pm.expect(user.email).to.equals(pm.environment.get('newUserEmail'));\r",
+							"    pm.expect(user.gender).to.equals(pm.environment.get('newUserGender'));\r",
+							"    pm.expect(user.age).to.equals(pm.environment.get('newUserAge'));\r",
+							"    pm.expect(user.phoneNumber).to.equals(pm.environment.get('newUserPhoneNumber'));\r",
+							"    pm.expect(user.password).to.not.equals('');\r",
+							"    pm.expect(user.createdAt).to.not.equals('');\r",
+							"    pm.expect(user.updatedAt).to.not.equals('');\r",
+							"    pm.expect(user.role).to.not.equals('');\r",
+							"    pm.expect(user.profile).to.not.equals('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update all field user data by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('User data updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail user', () => {\r",
+							"    pm.sendRequest({\r",
+							"        url: `${pm.environment.get('host')}/api/v1/users/${pm.environment.get('userId')}`,\r",
+							"        auth: {\r",
+							"            type: \"bearer\",\r",
+							"            bearer: [\r",
+							"                {\r",
+							"                    key: \"token\",\r",
+							"                    value: `${pm.environment.get('accessToken')}`,\r",
+							"                    type: \"string\"\r",
+							"                }\r",
+							"            ]\r",
+							"        },\r",
+							"        headers: {\r",
+							"            \"Content-Type\": \"application/json\"\r",
+							"        }\r",
+							"    }, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { user } } = responseJson;\r",
+							"\r",
+							"       pm.test('user object should contain updated values', () => {\r",
+							"            pm.expect(user).to.haveOwnProperty('id');\r",
+							"            pm.expect(user).to.haveOwnProperty('fullName');\r",
+							"            pm.expect(user).to.haveOwnProperty('email');\r",
+							"            pm.expect(user).to.haveOwnProperty('age');\r",
+							"            pm.expect(user).to.haveOwnProperty('phoneNumber');\r",
+							"\r",
+							"            pm.expect(user.id).to.equals(pm.environment.get('userId'));\r",
+							"            pm.expect(user.fullName).to.equals(pm.environment.get('updateUserFullName'));\r",
+							"            pm.expect(user.email).to.equals(pm.environment.get('updateUserEmail'));\r",
+							"            pm.expect(user.gender).to.equals(pm.environment.get('newUserGender'));\r",
+							"            pm.expect(user.age).to.equals(parseInt(pm.environment.get('updateUserAge')));\r",
+							"            pm.expect(user.phoneNumber).to.equals(pm.environment.get('updateUserPhoneNumber'));\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"{{updateUserFullName}}\",\r\n    \"email\": \"{{updateUserEmail}}\",\r\n    \"age\": {{updateUserAge}},\r\n    \"phoneNumber\": \"{{updateUserPhoneNumber}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update partial field user data by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('User data partially updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail user', () => {\r",
+							"    pm.sendRequest({\r",
+							"        url: `${pm.environment.get('host')}/api/v1/users/${pm.environment.get('userId')}`,\r",
+							"        auth: {\r",
+							"            type: \"bearer\",\r",
+							"            bearer: [\r",
+							"                {\r",
+							"                    key: \"token\",\r",
+							"                    value: `${pm.environment.get('accessToken')}`,\r",
+							"                    type: \"string\"\r",
+							"                }\r",
+							"            ]\r",
+							"        },\r",
+							"        headers: {\r",
+							"            \"Content-Type\": \"application/json\"\r",
+							"        }\r",
+							"    }, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { user } } = responseJson;\r",
+							"\r",
+							"       pm.test('user object should contain updated values', () => {\r",
+							"            pm.expect(user).to.haveOwnProperty('id');\r",
+							"            pm.expect(user).to.haveOwnProperty('phoneNumber');\r",
+							"\r",
+							"            pm.expect(user.id).to.equals(pm.environment.get('userId'));\r",
+							"            pm.expect(user.phoneNumber).to.equals(pm.environment.get('updatePartialUserPhoneNumber'));\r",
+							"       });\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phoneNumber\": \"{{updatePartialUserPhoneNumber}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data')\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Successfully delete user data');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail users', () => {\r",
+							"    pm.sendRequest({\r",
+							"        url: `${pm.environment.get('host')}/api/v1/users/${pm.environment.get('userId')}`,\r",
+							"        auth: {\r",
+							"            type: \"bearer\",\r",
+							"            bearer: [\r",
+							"                {\r",
+							"                    key: \"token\",\r",
+							"                    value: `${pm.environment.get('accessToken')}`,\r",
+							"                    type: \"string\"\r",
+							"                }\r",
+							"            ]\r",
+							"        },\r",
+							"        headers: {\r",
+							"            \"Content-Type\": \"application/json\"\r",
+							"        }\r",
+							"    }, (error, response) => {\r",
+							"       pm.test('The user should be not found', () => {\r",
+							"          pm.expect(response.code).to.equals(404);\r",
+							"       });\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all work data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all work profile user\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array works and contains two items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('works');\r",
+							"    pm.expect(data.works).to.be.an('array');\r",
+							"    pm.expect(data.works).to.lengthOf(12);\r",
+							"});\r",
+							"\r",
+							"pm.test('the works should have contains only id, name, createdAt, and updatedAt property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { works } } = responseJson;\r",
+							"\r",
+							"    works.forEach((work) => {\r",
+							"        pm.expect(Object.keys(work)).to.lengthOf(4);\r",
+							"        pm.expect(work).to.haveOwnProperty('id');\r",
+							"        pm.expect(work).to.haveOwnProperty('name');\r",
+							"        pm.expect(work).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(work).to.haveOwnProperty('updatedAt');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/works",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"works"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get work data by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all work profile user\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array works and contains one items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('works');\r",
+							"    pm.expect(data.works).to.be.an('array');\r",
+							"    pm.expect(data.works).to.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"pm.test('the works should have contains only id, name, createdAt, and updatedAt property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { works } } = responseJson;\r",
+							"\r",
+							"    works.forEach((work) => {\r",
+							"        pm.expect(Object.keys(work)).to.lengthOf(4);\r",
+							"        pm.expect(work).to.haveOwnProperty('id');\r",
+							"        pm.expect(work).to.haveOwnProperty('name');\r",
+							"        pm.expect(work).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(work).to.haveOwnProperty('updatedAt');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/works?name=Pekerja Seni",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"works"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Pekerja Seni"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Work Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 201', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Work created successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data should contain workId', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('workId');\r",
+							"    pm.expect(data.workId).to.not.equals('');\r",
+							"\r",
+							"    pm.environment.set('workId', data.workId);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{newWorkName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/works",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"works"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Work by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should an object', () =>  {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Get work data by id');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should contain work object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('work');\r",
+							"    pm.expect(data.work).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('work object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { work } } = responseJson;\r",
+							"\r",
+							"    pm.expect(work).to.haveOwnProperty('id');\r",
+							"    pm.expect(work).to.haveOwnProperty('name');\r",
+							"    pm.expect(work).to.haveOwnProperty('createdAt');\r",
+							"    pm.expect(work).to.haveOwnProperty('updatedAt');\r",
+							"\r",
+							"    pm.expect(work.id).to.equals(pm.environment.get('workId'));\r",
+							"    pm.expect(work.name).to.equals(pm.environment.get('newWorkName'));\r",
+							"    pm.expect(work.createdAt).to.not.equals('');\r",
+							"    pm.expect(work.updatedAt).to.not.equals('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/works/{{workId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"works",
+						"{{workId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Work By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Work updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail work', () => {\r",
+							"    pm.sendRequest(`${pm.environment.get('host')}/api/v1/works/${pm.environment.get('workId')}`, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { work } } = responseJson;\r",
+							"\r",
+							"       pm.test('work object should contain updated values', () => {\r",
+							"            pm.expect(work).to.haveOwnProperty('id');\r",
+							"            pm.expect(work).to.haveOwnProperty('name');\r",
+							"            pm.expect(work).to.haveOwnProperty('createdAt');\r",
+							"            pm.expect(work).to.haveOwnProperty('updatedAt');\r",
+							"            \r",
+							"            pm.expect(work.id).to.equals(pm.environment.get('workId'));\r",
+							"            pm.expect(work.name).to.equals(pm.environment.get('updateWorkName'));\r",
+							"            pm.expect(work.createdAt).to.not.equals('');\r",
+							"            pm.expect(work.updatedAt).to.not.equals('');\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{updateWorkName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/works/{{workId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"works",
+						"{{workId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Work By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Work deleted successfully');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail works', () => {\r",
+							"    pm.sendRequest(`${pm.environment.get('host')}/api/v1/works/${pm.environment.get('workId')}`, (error, response) => {\r",
+							"       pm.test('The work should be not found', () => {\r",
+							"          pm.expect(response.code).to.equals(404);\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/works/{{workId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"works",
+						"{{workId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all education data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all education profile user\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array educations and contains two items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('educations');\r",
+							"    pm.expect(data.educations).to.be.an('array');\r",
+							"    pm.expect(data.educations).to.lengthOf(8);\r",
+							"});\r",
+							"\r",
+							"pm.test('the educations should have contains only id, name, createdAt, and updatedAt property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { educations } } = responseJson;\r",
+							"\r",
+							"    educations.forEach((education) => {\r",
+							"        pm.expect(Object.keys(education)).to.lengthOf(4);\r",
+							"        pm.expect(education).to.haveOwnProperty('id');\r",
+							"        pm.expect(education).to.haveOwnProperty('name');\r",
+							"        pm.expect(education).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(education).to.haveOwnProperty('updatedAt');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/educations",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"educations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get education data by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should have correct property and value', () => {\r",
+							"    const responsJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responsJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responsJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responsJson.status).to.equals('success');\r",
+							"    pm.expect(responsJson.message).to.equals(\"Get all education profile user\");\r",
+							"    pm.expect(responsJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should have a array educations and contains one items', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('educations');\r",
+							"    pm.expect(data.educations).to.be.an('array');\r",
+							"    pm.expect(data.educations).to.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"pm.test('the educations should have contains only id, name, createdAt, and updatedAt property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { educations } } = responseJson;\r",
+							"\r",
+							"    educations.forEach((education) => {\r",
+							"        pm.expect(Object.keys(education)).to.lengthOf(4);\r",
+							"        pm.expect(education).to.haveOwnProperty('id');\r",
+							"        pm.expect(education).to.haveOwnProperty('name');\r",
+							"        pm.expect(education).to.haveOwnProperty('createdAt');\r",
+							"        pm.expect(education).to.haveOwnProperty('updatedAt');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/educations?name=SMP / Sederajat",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"educations"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "SMP / Sederajat"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert education data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 201', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Education created successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data should contain educationId', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('educationId');\r",
+							"    pm.expect(data.educationId).to.not.equals('');\r",
+							"\r",
+							"    pm.environment.set('educationId', data.educationId);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{newEducationName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/educations",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"educations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Education by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should an object', () =>  {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Get education data by id');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should contain education object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('education');\r",
+							"    pm.expect(data.education).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('education object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { education } } = responseJson;\r",
+							"\r",
+							"    pm.expect(education).to.haveOwnProperty('id');\r",
+							"    pm.expect(education).to.haveOwnProperty('name');\r",
+							"    pm.expect(education).to.haveOwnProperty('createdAt');\r",
+							"    pm.expect(education).to.haveOwnProperty('updatedAt');\r",
+							"\r",
+							"    pm.expect(education.id).to.equals(pm.environment.get('educationId'));\r",
+							"    pm.expect(education.name).to.equals(pm.environment.get('newEducationName'));\r",
+							"    pm.expect(education.createdAt).to.not.equals('');\r",
+							"    pm.expect(education.updatedAt).to.not.equals('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/educations/{{educationId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"educations",
+						"{{educationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Education By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Education updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail education', () => {\r",
+							"    pm.sendRequest(`${pm.environment.get('host')}/api/v1/educations/${pm.environment.get('educationId')}`, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { education } } = responseJson;\r",
+							"\r",
+							"       pm.test('education object should contain updated values', () => {\r",
+							"            pm.expect(education).to.haveOwnProperty('id');\r",
+							"            pm.expect(education).to.haveOwnProperty('name');\r",
+							"            pm.expect(education).to.haveOwnProperty('createdAt');\r",
+							"            pm.expect(education).to.haveOwnProperty('updatedAt');\r",
+							"            \r",
+							"            pm.expect(education.id).to.equals(pm.environment.get('educationId'));\r",
+							"            pm.expect(education.name).to.equals(pm.environment.get('updateEducationName'));\r",
+							"            pm.expect(education.createdAt).to.not.equals('');\r",
+							"            pm.expect(education.updatedAt).to.not.equals('');\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{updateEducationName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/educations/{{educationId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"educations",
+						"{{educationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Education By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Education deleted successfully');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail educations', () => {\r",
+							"    pm.sendRequest(`${pm.environment.get('host')}/api/v1/educations/${pm.environment.get('educationId')}`, (error, response) => {\r",
+							"       pm.test('The education should be not found', () => {\r",
+							"          pm.expect(response.code).to.equals(404);\r",
+							"       }); \r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/educations/{{educationId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"educations",
+						"{{educationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users Profile by User Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should an object', () =>  {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty(\"message\");\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Get user data by id');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data object should contain user object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"\r",
+							"    pm.expect(data).to.haveOwnProperty('profile');\r",
+							"    pm.expect(data.profile).to.be.an('object');\r",
+							"\r",
+							"    pm.environment.set('profileId', data.profile.id);\r",
+							"});\r",
+							"\r",
+							"pm.test('profile object should contain correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const { data: { profile } } = responseJson;\r",
+							"\r",
+							"    pm.expect(profile).to.haveOwnProperty('id');\r",
+							"    pm.expect(profile).to.haveOwnProperty('avatar');\r",
+							"    pm.expect(profile).to.haveOwnProperty('maritalStatus');\r",
+							"    pm.expect(profile).to.haveOwnProperty('certifiedStatus');\r",
+							"    pm.expect(profile).to.haveOwnProperty('work');\r",
+							"    pm.expect(profile).to.haveOwnProperty('education');\r",
+							"    pm.expect(profile).to.haveOwnProperty('createdAt');\r",
+							"    pm.expect(profile).to.haveOwnProperty('updatedAt');\r",
+							"\r",
+							"    pm.expect(profile.id).to.equals(pm.environment.get('profileId'));\r",
+							"    const avatarUrl = pm.environment.get('newUserGender') === \"Perempuan\" ? \"https://storage.googleapis.com/finboost-avatar-user/female.png\" : \"https://storage.googleapis.com/finboost-avatar-user/male.png\"\r",
+							"    pm.expect(profile.avatar).to.equals(avatarUrl);\r",
+							"    pm.expect(profile.createdAt).to.not.equals('');\r",
+							"    pm.expect(profile.updatedAt).to.not.equals('');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}/profile",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Partial User Profile by User Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('User profile data updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail user', () => {\r",
+							"    pm.sendRequest({\r",
+							"        url: `${pm.environment.get('host')}/api/v1/users/${pm.environment.get('userId')}/profile`,\r",
+							"        auth: {\r",
+							"            type: \"bearer\",\r",
+							"            bearer: [\r",
+							"                {\r",
+							"                    key: \"token\",\r",
+							"                    value: `${pm.environment.get('accessToken')}`,\r",
+							"                    type: \"string\"\r",
+							"                }\r",
+							"            ]\r",
+							"        },\r",
+							"        headers: {\r",
+							"            \"Content-Type\": \"application/json\"\r",
+							"        }\r",
+							"    }, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { profile } } = responseJson;\r",
+							"\r",
+							"       pm.test('profile object should contain updated values', () => {\r",
+							"            pm.expect(profile).to.haveOwnProperty('id');\r",
+							"            pm.expect(profile).to.haveOwnProperty('maritalStatus');\r",
+							"\r",
+							"            pm.expect(profile.id).to.equals(pm.environment.get('profileId'));\r",
+							"            pm.expect(profile.maritalStatus).to.equals(pm.environment.get('updateUserProfileMaritalStatus'));\r",
+							"       });\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"maritalStatus\": \"{{updateUserProfileMaritalStatus}}\"\r\n    // \"workId\": \"{{workId}}\",\r\n    // \"educationId\": \"{{educationId}}\",\r\n    // \"certifiedStatus\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}/profile",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Profile by User Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data')\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Successfully delete user profile data');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail users', () => {\r",
+							"    pm.sendRequest({\r",
+							"        url: `${pm.environment.get('host')}/api/v1/users/${pm.environment.get('userId')}/profile`,\r",
+							"        auth: {\r",
+							"            type: \"bearer\",\r",
+							"            bearer: [\r",
+							"                {\r",
+							"                    key: \"token\",\r",
+							"                    value: `${pm.environment.get('accessToken')}`,\r",
+							"                    type: \"string\"\r",
+							"                }\r",
+							"            ]\r",
+							"        },\r",
+							"        headers: {\r",
+							"            \"Content-Type\": \"application/json\"\r",
+							"        }\r",
+							"    }, (error, response) => {\r",
+							"        const responseJson = response.json();\r",
+							"        const { data: { profile } } = responseJson;\r",
+							"\r",
+							"        pm.test('The profile should be null value', () => {\r",
+							"            pm.expect(profile).to.haveOwnProperty('id');\r",
+							"            pm.expect(profile).to.haveOwnProperty('maritalStatus');\r",
+							"\r",
+							"            pm.expect(profile.id).to.equals(pm.environment.get('profileId'));\r",
+							"            pm.expect(profile.maritalStatus).to.equals(null);\r",
+							"        });\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "payload",
+							"value": "{}",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}/profile",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update avatar user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.haveOwnProperty('status');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('data');\r",
+							"\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson.message).to.equals('Avatar user updated successfully');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('when get detail user', () => {\r",
+							"    pm.sendRequest({\r",
+							"        url: `${pm.environment.get('host')}/api/v1/users/${pm.environment.get('userId')}/profile`,\r",
+							"        auth: {\r",
+							"            type: \"bearer\",\r",
+							"            bearer: [\r",
+							"                {\r",
+							"                    key: \"token\",\r",
+							"                    value: `${pm.environment.get('accessToken')}`,\r",
+							"                    type: \"string\"\r",
+							"                }\r",
+							"            ]\r",
+							"        },\r",
+							"        headers: {\r",
+							"            \"Content-Type\": \"application/json\"\r",
+							"        }\r",
+							"    }, (error, response) => {\r",
+							"       const responseJson = response.json();\r",
+							"       const { data: { profile } } = responseJson;\r",
+							"\r",
+							"       pm.test('profile object should contain updated values', () => {\r",
+							"            pm.expect(profile).to.haveOwnProperty('id');\r",
+							"            pm.expect(profile).to.haveOwnProperty('avatar');\r",
+							"\r",
+							"            pm.expect(profile.id).to.equals(pm.environment.get('profileId'));\r",
+							"            const timestamp = pm.environment.get('timestamp');\r",
+							"            const avatarUrl = `https://storage.googleapis.com/finboost-avatar-user/${pm.environment.get('userId')}-${timestamp}.png`;\r",
+							"            pm.expect(profile.avatar).to.equals(avatarUrl);\r",
+							"       });\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Pre-request Script\r",
+							"const moment = require('moment');\r",
+							"\r",
+							"// Generate a timestamp in the desired format\r",
+							"const timestamp = moment().format('YYYYMMDD-HHmmss');\r",
+							"\r",
+							"// Set the timestamp as an environment variable\r",
+							"pm.environment.set('timestamp', timestamp);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/D:/Pictures/Me/me-circle.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/users/{{userId}}/profile/avatar",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"profile",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chat Predict",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"question\": \"Apa finansial?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/chats/ai/predict",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"chats",
+						"ai",
+						"predict"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
